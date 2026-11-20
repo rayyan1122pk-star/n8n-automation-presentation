@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 8400px;
+    height: 2200px;
+    background-color: #0e1117;
+    overflow: hidden;
+  }
+  svg {
+    display: block;
+    width: 8400px;
+    height: 2200px;
+  }
+</style>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8300 2200" width="8300" height="2200" style="background:#0e1117; font-family:'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+
+<defs>
+  <pattern id="grid-dots" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+    <circle cx="2" cy="2" r="1.2" fill="#222734" />
+  </pattern>
+  <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%">
+    <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.45" />
+  </filter>
+  <filter id="node-glow" x="-10%" y="-10%" width="120%" height="120%">
+    <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#5b21b6" flood-opacity="0.35" />
+  </filter>
+  <linearGradient id="conn-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#ff6d5a" />
+    <stop offset="100%" stop-color="#ff9066" />
+  </linearGradient>
+</defs>
+
+<rect width="8300" height="2200" fill="#0e1117" />
+<rect width="8300" height="2200" fill="url(#grid-dots)" />
+
+<g transform="translate(80, 20)">
+  <rect width="8140" height="42" rx="8" fill="#161b26" stroke="#262d3d" stroke-width="1.5" />
+  <circle cx="24" cy="21" r="6" fill="#10b981" />
+  <text x="38" y="26" fill="#f8fafc" font-size="14" font-weight="700" letter-spacing="0.5">FINFLOW: SMART DOCUMENT &amp; ACCOUNTING AUTOMATION — ARCHITECTURE MAP (n8n v2.48.5 · 50 NODES · STATUS: ACTIVE)</text>
+  <text x="7600" y="26" fill="#94a3b8" font-size="12" font-family="monospace">BIND: 127.0.0.1:5678 · STORAGE: D:\AI-Automation\n8n-data</text>
+</g>
+
+
+    <g transform="translate(80, 60)" filter="url(#shadow)">
+      <rect width="1020" height="560" rx="14" fill="#121b28" stroke="#2563eb" stroke-width="2" stroke-opacity="0.85" />
+      <rect width="1020" height="42" rx="14" fill="#2563eb" fill-opacity="0.18" />
+      <text x="20" y="27" fill="#60a5fa" font-size="16" font-weight="800" letter-spacing="0.4">📥 STAGE 1: MULTI-FORMAT INTAKE & ROUTING</text>
+    
+<text x="20" y="64" fill="#dbeafe" font-size="13" font-weight="700">Exact Function:</text>
+<text x="20" y="84" fill="#dbeafe" font-size="13" font-weight="700">* Ingests Incoming Requests: Listens on `POST /webhook/finflow` for document uploads (multipart/form-data) and dashboard polling events.</text>
+<text x="20" y="104" fill="#dbeafe" font-size="13" font-weight="700">* MIME-Type &amp; Format Detection: Inspects file headers and binary extensions (`.pdf`, `.csv`, `.xlsx`, `.txt`, `.jpg`, `.png`).</text>
+<text x="20" y="124" fill="#dbeafe" font-size="13" font-weight="700">* Conditional Branching: An 8-way Switch routes execution to the appropriate native parser or dashboard query pipeline.</text>
+<text x="20" y="144" fill="#dbeafe" font-size="13" font-weight="700">Nodes in this stage:</text>
+<text x="20" y="164" fill="#cbd5e1" font-size="12" font-weight="400">1. `FinFlow Webhook Intake` (HTTP listener)</text>
+<text x="20" y="184" fill="#cbd5e1" font-size="12" font-weight="400">2. `Detect Input &amp; Document Type` (MIME/payload analysis)</text>
+<text x="20" y="204" fill="#cbd5e1" font-size="12" font-weight="400">3. `Route Action or Document` (Execution branch router)</text>
+</g>
+
+    <g transform="translate(1180, 60)" filter="url(#shadow)">
+      <rect width="740" height="760" rx="14" fill="#231f14" stroke="#d97706" stroke-width="2" stroke-opacity="0.85" />
+      <rect width="740" height="42" rx="14" fill="#d97706" fill-opacity="0.18" />
+      <text x="20" y="27" fill="#fbbf24" font-size="16" font-weight="800" letter-spacing="0.4">📄 STAGE 2: NATIVE CONTENT EXTRACTION</text>
+    
+<text x="20" y="64" fill="#fef3c7" font-size="13" font-weight="700">Exact Function:</text>
+<text x="20" y="84" fill="#fef3c7" font-size="13" font-weight="700">* Unpacks Raw Data: Extracts textual and tabular data from binary files without loss.</text>
+<text x="20" y="104" fill="#fef3c7" font-size="13" font-weight="700">* Multi-Format Parsers: Dedicated nodes for PDF text streams, CSV row parsing, Excel worksheets, and plain text files.</text>
+<text x="20" y="124" fill="#fef3c7" font-size="13" font-weight="700">* Schema Normalization: Combines parsed rows into a standardized text representation for the AI extraction stage.</text>
+<text x="20" y="144" fill="#fef3c7" font-size="13" font-weight="700">Nodes in this stage:</text>
+<text x="20" y="164" fill="#cbd5e1" font-size="12" font-weight="400">1. `Extract PDF Content` (Extracts text layers from invoice PDFs)</text>
+<text x="20" y="184" fill="#cbd5e1" font-size="12" font-weight="400">2. `Extract CSV Content` (Parses comma-separated statement rows)</text>
+<text x="20" y="204" fill="#cbd5e1" font-size="12" font-weight="400">3. `Extract Excel Content` (Reads XLSX spreadsheet sheets)</text>
+<text x="20" y="224" fill="#cbd5e1" font-size="12" font-weight="400">4. `Extract Text File Content` (Ingests plain text accounting logs)</text>
+<text x="20" y="244" fill="#cbd5e1" font-size="12" font-weight="400">5. `Unify Extracted Content` (Aggregates and formats for LLM)</text>
+</g>
+
+    <g transform="translate(2000, 60)" filter="url(#shadow)">
+      <rect width="760" height="660" rx="14" fill="#201428" stroke="#9333ea" stroke-width="2" stroke-opacity="0.85" />
+      <rect width="760" height="42" rx="14" fill="#9333ea" fill-opacity="0.18" />
+      <text x="20" y="27" fill="#c084fc" font-size="16" font-weight="800" letter-spacing="0.4">🤖 STAGE 3: GEMINI AI STRUCTURED EXTRACTION</text>
+    
+<text x="20" y="64" fill="#f3e8ff" font-size="13" font-weight="700">Exact Function:</text>
+<text x="20" y="84" fill="#f3e8ff" font-size="13" font-weight="700">* Zero-Hallucination Information Extraction: Google Gemini 3.1 Flash-Lite analyzes invoice text to identify key financial fields.</text>
+<text x="20" y="104" fill="#f3e8ff" font-size="13" font-weight="700">* Strict JSON Schema: Extracts Vendor Name, Invoice #, Invoice Date, Due Date, Expense Category, Currency, Subtotal, Tax, and Total.</text>
+<text x="20" y="124" fill="#f3e8ff" font-size="13" font-weight="700">* Resilient Fallback: If LLM output fails validation or API errors occur, a regex/heuristic fallback parser ensures pipeline continuity.</text>
+<text x="20" y="144" fill="#f3e8ff" font-size="13" font-weight="700">Nodes in this stage:</text>
+<text x="20" y="164" fill="#cbd5e1" font-size="12" font-weight="400">1. `Gemini Financial Extractor` (Google Gemini LLM node)</text>
+<text x="20" y="184" fill="#cbd5e1" font-size="12" font-weight="400">2. `Parse &amp; Validate Gemini Output` (Validates JSON schema)</text>
+<text x="20" y="204" fill="#cbd5e1" font-size="12" font-weight="400">3. `AI Fallback &amp; Error Handler` (Regex/OCR heuristic safety net)</text>
+</g>
+
+    <g transform="translate(2840, 60)" filter="url(#shadow)">
+      <rect width="460" height="560" rx="14" fill="#251712" stroke="#ea580c" stroke-width="2" stroke-opacity="0.85" />
+      <rect width="460" height="42" rx="14" fill="#ea580c" fill-opacity="0.18" />
+      <text x="20" y="27" fill="#fb923c" font-size="16" font-weight="800" letter-spacing="0.4">🧮 STAGE 4: DETERMINISTIC ACCOUNTING ENGINE</text>
+    
+<text x="20" y="64" fill="#ffedd5" font-size="13" font-weight="700">Exact Function:</text>
+<text x="20" y="84" fill="#ffedd5" font-size="13" font-weight="700">* Strict Arithmetic Validation: Enforces `Subtotal + Tax = Total` using deterministic JavaScript math (avoids LLM calculation errors).</text>
+<text x="20" y="104" fill="#ffedd5" font-size="13" font-weight="700">* Currency Isolation: Preserves ISO currency codes (USD, EUR, GBP, INR). Prevents mixing different currencies without verified FX rates.</text>
+<text x="20" y="124" fill="#ffedd5" font-size="13" font-weight="700">* Debit/Credit Segregation: Strictly separates expense invoices from revenue streams.</text>
+<text x="20" y="144" fill="#ffedd5" font-size="13" font-weight="700">Nodes in this stage:</text>
+<text x="20" y="164" fill="#cbd5e1" font-size="12" font-weight="400">1. `Normalize &amp; Validate Financial Record` (Deterministic verification &amp; sanitization)</text>
+</g>
+
+    <g transform="translate(3380, 60)" filter="url(#shadow)">
+      <rect width="1420" height="560" rx="14" fill="#251214" stroke="#dc2626" stroke-width="2" stroke-opacity="0.85" />
+      <rect width="1420" height="42" rx="14" fill="#dc2626" fill-opacity="0.18" />
+      <text x="20" y="27" fill="#f87171" font-size="16" font-weight="800" letter-spacing="0.4">🛡️ STAGE 5: DUPLICATE PREVENTION & INTEGRITY GATE</text>
+    
+<text x="20" y="64" fill="#fee2e2" font-size="13" font-weight="700">Exact Function:</text>
+<text x="20" y="84" fill="#fee2e2" font-size="13" font-weight="700">* Historical Fingerprint Lookup: Queries existing transactions in SQLite by `invoice_number` and `vendor_name`.</text>
+<text x="20" y="104" fill="#fee2e2" font-size="13" font-weight="700">* Vendor Directory Check: Checks if the vendor already exists or needs to be registered.</text>
+<text x="20" y="124" fill="#fee2e2" font-size="13" font-weight="700">* Integrity Routing: Routes valid records to storage, duplicates to rejection, and incomplete scans to the review queue.</text>
+<text x="20" y="144" fill="#fee2e2" font-size="13" font-weight="700">Nodes in this stage:</text>
+<text x="20" y="164" fill="#cbd5e1" font-size="12" font-weight="400">1. `Check Existing Transactions` (Queries transaction ledger)</text>
+<text x="20" y="184" fill="#cbd5e1" font-size="12" font-weight="400">2. `Check Existing Vendors` (Queries vendor directory)</text>
+<text x="20" y="204" fill="#cbd5e1" font-size="12" font-weight="400">3. `Evaluate Duplicate &amp; Vendor` (Fingerprint matching logic)</text>
+<text x="20" y="224" fill="#cbd5e1" font-size="12" font-weight="400">4. `Quality &amp; Duplicate Router` (Multi-path conditional gate)</text>
+</g>
+
+    <g transform="translate(4880, 60)" filter="url(#shadow)">
+      <rect width="3280" height="460" rx="14" fill="#122319" stroke="#16a34a" stroke-width="2" stroke-opacity="0.85" />
+      <rect width="3280" height="42" rx="14" fill="#16a34a" fill-opacity="0.18" />
+      <text x="20" y="27" fill="#4ade80" font-size="16" font-weight="800" letter-spacing="0.4">🏦 STAGE 6: PERSISTENT STORAGE & CRM SYNC (SUCCESS PATH)</text>
+    
+<text x="20" y="64" fill="#dcfce7" font-size="13" font-weight="700">Exact Function:</text>
+<text x="20" y="84" fill="#dcfce7" font-size="13" font-weight="700">* Vendor Upsert: Registers new vendor or updates existing vendor spend statistics in SQLite.</text>
+<text x="20" y="104" fill="#dcfce7" font-size="13" font-weight="700">* Ledger Commitment: Inserts the validated transaction into `finflow_crm_transactions`.</text>
+<text x="20" y="124" fill="#dcfce7" font-size="13" font-weight="700">* Audit Trail: Appends timestamped log entry to `finflow_activity`.</text>
+<text x="20" y="144" fill="#dcfce7" font-size="13" font-weight="700">* Telemetry Refresh: Reloads all data tables and returns updated real-time CRM state with HTTP 200 OK.</text>
+<text x="20" y="164" fill="#dcfce7" font-size="13" font-weight="700">Nodes in this stage:</text>
+<text x="20" y="184" fill="#cbd5e1" font-size="12" font-weight="400">1. `Save Vendor Record` -&gt; `Store Validated Transaction` -&gt; `Log Success Activity`</text>
+<text x="20" y="204" fill="#cbd5e1" font-size="12" font-weight="400">2. `Reload CRM Transactions/Vendors/Queue/Activity` (Data table reloads)</text>
+<text x="20" y="224" fill="#cbd5e1" font-size="12" font-weight="400">3. `Format Processed CRM Response` -&gt; `Respond Document Processed` (HTTP 200)</text>
+</g>
+
+    <g transform="translate(4880, 580)" filter="url(#shadow)">
+      <rect width="780" height="280" rx="14" fill="#251214" stroke="#dc2626" stroke-width="2" stroke-opacity="0.85" />
+      <rect width="780" height="42" rx="14" fill="#dc2626" fill-opacity="0.18" />
+      <text x="20" y="27" fill="#f87171" font-size="16" font-weight="800" letter-spacing="0.4">⚠️ DUPLICATE DETECTED (HTTP 409)</text>
+    
+<text x="20" y="64" fill="#fee2e2" font-size="13" font-weight="700">Exact Function:</text>
+<text x="20" y="84" fill="#fee2e2" font-size="13" font-weight="700">* Audit Logging: Logs duplicate submission attempt with timestamp and offending invoice ID.</text>
+<text x="20" y="104" fill="#fee2e2" font-size="13" font-weight="700">* Client Alert: Returns `HTTP 409 Conflict` to prevent double-payment or double-counting in accounting.</text>
+</g>
+
+    <g transform="translate(4880, 920)" filter="url(#shadow)">
+      <rect width="1160" height="280" rx="14" fill="#1a1c22" stroke="#64748b" stroke-width="2" stroke-opacity="0.85" />
+      <rect width="1160" height="42" rx="14" fill="#64748b" fill-opacity="0.18" />
+      <text x="20" y="27" fill="#94a3b8" font-size="16" font-weight="800" letter-spacing="0.4">📋 HUMAN-IN-THE-LOOP REVIEW QUEUE (HTTP 202)</text>
+    
+<text x="20" y="64" fill="#e2e8f0" font-size="13" font-weight="700">Exact Function:</text>
+<text x="20" y="84" fill="#e2e8f0" font-size="13" font-weight="700">* Incomplete Document Handling: If key fields (e.g. Total, Invoice #) are missing or OCR confidence is low.</text>
+<text x="20" y="104" fill="#e2e8f0" font-size="13" font-weight="700">* Review Isolation: Writes to `finflow_review_queue` instead of main ledger to preserve accounting integrity.</text>
+<text x="20" y="124" fill="#e2e8f0" font-size="13" font-weight="700">* Client Status: Returns `HTTP 202 Accepted` indicating manual verification required.</text>
+</g>
+
+    <g transform="translate(980, 1200)" filter="url(#shadow)">
+      <rect width="2200" height="380" rx="14" fill="#121b28" stroke="#2563eb" stroke-width="2" stroke-opacity="0.85" />
+      <rect width="2200" height="42" rx="14" fill="#2563eb" fill-opacity="0.18" />
+      <text x="20" y="27" fill="#60a5fa" font-size="16" font-weight="800" letter-spacing="0.4">📊 STAGE 7: LIVE CRM DASHBOARD TELEMETRY PIPELINE</text>
+    
+<text x="20" y="64" fill="#dbeafe" font-size="13" font-weight="700">Exact Function:</text>
+<text x="20" y="84" fill="#dbeafe" font-size="13" font-weight="700">* Dedicated Data Aggregator: Triggered when the web app requests dashboard state (`action=dashboard_snapshot`).</text>
+<text x="20" y="104" fill="#dbeafe" font-size="13" font-weight="700">* Sequential SQLite Querying: Fetches all transactions, vendors, review items, and activity logs.</text>
+<text x="20" y="124" fill="#dbeafe" font-size="13" font-weight="700">* Deterministic Metrics Engine: Computes Income, Expenses, Net Profit, and Category distribution strictly per currency.</text>
+<text x="20" y="144" fill="#dbeafe" font-size="13" font-weight="700">* Response: Returns compiled JSON dashboard payload with HTTP 200 OK.</text>
+</g>
+
+    <g transform="translate(980, 1660)" filter="url(#shadow)">
+      <rect width="1440" height="340" rx="14" fill="#1a1c22" stroke="#64748b" stroke-width="2" stroke-opacity="0.85" />
+      <rect width="1440" height="42" rx="14" fill="#64748b" fill-opacity="0.18" />
+      <text x="20" y="27" fill="#94a3b8" font-size="16" font-weight="800" letter-spacing="0.4">🧯 STAGE 8: UNRECOVERABLE EXTRACTION ERROR HANDLER</text>
+    
+<text x="20" y="64" fill="#e2e8f0" font-size="13" font-weight="700">Exact Function:</text>
+<text x="20" y="84" fill="#e2e8f0" font-size="13" font-weight="700">* Exception Trapping: Catches corrupted files, password-protected PDFs, or invalid binary payloads.</text>
+<text x="20" y="104" fill="#e2e8f0" font-size="13" font-weight="700">* Safety Net: Writes failure details to review queue and activity log.</text>
+<text x="20" y="124" fill="#e2e8f0" font-size="13" font-weight="700">* Client Alert: Responds with `HTTP 400/422` with actionable error diagnostics.</text>
+</g>
+
+                    <path d="M 440 458.0 C 520 458.0, 460 458.0, 540 458.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="440" cy="458.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="540" cy="458.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 780 458.0 C 860 458.0, 800 458.0, 880 458.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="780" cy="458.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="880" cy="458.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 1120 458.0 C 1220.0 458.0, 1220.0 238.0, 1320 238.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="1120" cy="458.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="1320" cy="238.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 1120 458.0 C 1220.0 458.0, 1220.0 398.0, 1320 398.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="1120" cy="458.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="1320" cy="398.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 1120 458.0 C 1220.0 458.0, 1220.0 558.0, 1320 558.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="1120" cy="458.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="1320" cy="558.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 1120 458.0 C 1220.0 458.0, 1220.0 718.0, 1320 718.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="1120" cy="458.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="1320" cy="718.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 1120 458.0 C 1400.0 458.0, 1400.0 478.0, 1680 478.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="1120" cy="458.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="1680" cy="478.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 1120 458.0 C 2300.0 458.0, 2300.0 478.0, 3480 478.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="1120" cy="458.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="3480" cy="478.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 1120 458.0 C 1200 458.0, 1020 1418.0, 1100 1418.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="1120" cy="458.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="1100" cy="1418.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 1120 458.0 C 1200 458.0, 1020 1858.0, 1100 1858.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="1120" cy="458.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="1100" cy="1858.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 1560 238.0 C 1640 238.0, 1600 478.0, 1680 478.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="1560" cy="238.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="1680" cy="478.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 1560 238.0 C 1640 238.0, 1020 1858.0, 1100 1858.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="1560" cy="238.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="1100" cy="1858.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 1560 398.0 C 1640 398.0, 1600 478.0, 1680 478.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="1560" cy="398.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="1680" cy="478.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 1560 398.0 C 1640 398.0, 1020 1858.0, 1100 1858.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="1560" cy="398.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="1100" cy="1858.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 1560 558.0 C 1640 558.0, 1600 478.0, 1680 478.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="1560" cy="558.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="1680" cy="478.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 1560 558.0 C 1640 558.0, 1020 1858.0, 1100 1858.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="1560" cy="558.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="1100" cy="1858.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 1560 718.0 C 1640 718.0, 1600 478.0, 1680 478.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="1560" cy="718.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="1680" cy="478.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 1560 718.0 C 1640 718.0, 1020 1858.0, 1100 1858.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="1560" cy="718.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="1100" cy="1858.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 1920 478.0 C 2020.0 478.0, 2020.0 478.0, 2120 478.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="1920" cy="478.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="2120" cy="478.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 2360 478.0 C 2440 478.0, 2400 378.0, 2480 378.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="2360" cy="478.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="2480" cy="378.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 2360 478.0 C 2440 478.0, 2400 598.0, 2480 598.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="2360" cy="478.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="2480" cy="598.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 2720 378.0 C 2850.0 378.0, 2850.0 478.0, 2980 478.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="2720" cy="378.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="2980" cy="478.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 2720 598.0 C 2850.0 598.0, 2850.0 478.0, 2980 478.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="2720" cy="598.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="2980" cy="478.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 3220 478.0 C 3350.0 478.0, 3350.0 478.0, 3480 478.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="3220" cy="478.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="3480" cy="478.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 3720 478.0 C 3800 478.0, 3760 478.0, 3840 478.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="3720" cy="478.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="3840" cy="478.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 4080 478.0 C 4160 478.0, 4120 478.0, 4200 478.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="4080" cy="478.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="4200" cy="478.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 4440 478.0 C 4520 478.0, 4480 478.0, 4560 478.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="4440" cy="478.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="4560" cy="478.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 4800 478.0 C 4900.0 478.0, 4900.0 298.0, 5000 298.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="4800" cy="478.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="5000" cy="298.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 4800 478.0 C 5090.0 478.0, 5090.0 378.0, 5380 378.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="4800" cy="478.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="5380" cy="378.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 4800 478.0 C 4900.0 478.0, 4900.0 718.0, 5000 718.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="4800" cy="478.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="5000" cy="718.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 4800 478.0 C 4900.0 478.0, 4900.0 1078.0, 5000 1078.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="4800" cy="478.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="5000" cy="1078.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 5240 298.0 C 5320 298.0, 5300 378.0, 5380 378.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="5240" cy="298.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="5380" cy="378.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 5620 378.0 C 5700 378.0, 5660 378.0, 5740 378.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="5620" cy="378.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="5740" cy="378.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 5980 378.0 C 6060 378.0, 6020 378.0, 6100 378.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="5980" cy="378.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="6100" cy="378.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 6340 378.0 C 6420 378.0, 6380 378.0, 6460 378.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="6340" cy="378.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="6460" cy="378.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 6700 378.0 C 6780 378.0, 6740 378.0, 6820 378.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="6700" cy="378.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="6820" cy="378.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 7060 378.0 C 7140 378.0, 7100 378.0, 7180 378.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="7060" cy="378.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="7180" cy="378.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 7420 378.0 C 7500 378.0, 7460 378.0, 7540 378.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="7420" cy="378.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="7540" cy="378.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 7780 378.0 C 7860 378.0, 7820 378.0, 7900 378.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="7780" cy="378.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="7900" cy="378.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 5240 718.0 C 5320 718.0, 5320 718.0, 5400 718.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="5240" cy="718.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="5400" cy="718.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 5240 1078.0 C 5320 1078.0, 5320 1078.0, 5400 1078.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="5240" cy="1078.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="5400" cy="1078.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 5640 1078.0 C 5720 1078.0, 5720 1078.0, 5800 1078.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="5640" cy="1078.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="5800" cy="1078.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 1340 1418.0 C 1420 1418.0, 1380 1418.0, 1460 1418.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="1340" cy="1418.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="1460" cy="1418.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 1700 1418.0 C 1780 1418.0, 1740 1418.0, 1820 1418.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="1700" cy="1418.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="1820" cy="1418.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 2060 1418.0 C 2140 1418.0, 2100 1418.0, 2180 1418.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="2060" cy="1418.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="2180" cy="1418.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 2420 1418.0 C 2500 1418.0, 2480 1418.0, 2560 1418.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="2420" cy="1418.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="2560" cy="1418.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 2800 1418.0 C 2880 1418.0, 2860 1418.0, 2940 1418.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="2800" cy="1418.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="2940" cy="1418.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 1340 1858.0 C 1420 1858.0, 1380 1858.0, 1460 1858.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="1340" cy="1858.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="1460" cy="1858.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 1700 1858.0 C 1780 1858.0, 1740 1858.0, 1820 1858.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="1700" cy="1858.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="1820" cy="1858.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+                    <path d="M 2060 1858.0 C 2140 1858.0, 2100 1858.0, 2180 1858.0" 
+                          fill="none" stroke="url(#conn-grad)" stroke-width="3" stroke-linecap="round" opacity="0.85" />
+                    <circle cx="2060" cy="1858.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    <circle cx="2180" cy="1858.0" r="4.5" fill="#ff6d5a" stroke="#ffffff" stroke-width="1.5" />
+                    
+
+    <g transform="translate(200, 420)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#ec4899" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#ec4899" fill-opacity="0.25" stroke="#ec4899" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">⚡</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">FinFlow Webhook Intake</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">Webhook Trigger</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(540, 420)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#f97316" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#f97316" fill-opacity="0.25" stroke="#f97316" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">{ }</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Detect Input &amp; Docum</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">JavaScript Code</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(880, 420)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#6366f1" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#6366f1" fill-opacity="0.25" stroke="#6366f1" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">🔀</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Route Action or Document</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">Switch Router</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(1320, 200)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#f59e0b" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#f59e0b" fill-opacity="0.25" stroke="#f59e0b" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">📄</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Extract PDF Content</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">File Extractor</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(1320, 360)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#f59e0b" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#f59e0b" fill-opacity="0.25" stroke="#f59e0b" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">📄</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Extract CSV Content</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">File Extractor</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(1320, 520)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#f59e0b" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#f59e0b" fill-opacity="0.25" stroke="#f59e0b" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">📄</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Extract Excel Content</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">File Extractor</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(1320, 680)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#f59e0b" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#f59e0b" fill-opacity="0.25" stroke="#f59e0b" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">📄</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Extract Text File Conten</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">File Extractor</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(1680, 440)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#f97316" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#f97316" fill-opacity="0.25" stroke="#f97316" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">{ }</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Unify Extracted Content</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">JavaScript Code</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(2120, 440)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#8b5cf6" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#8b5cf6" fill-opacity="0.25" stroke="#8b5cf6" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">🤖</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Gemini Financial Extract</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">Gemini 3.1 AI</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(2480, 340)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#f97316" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#f97316" fill-opacity="0.25" stroke="#f97316" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">{ }</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Parse &amp; Validate Gem</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">JavaScript Code</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(2480, 560)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#f97316" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#f97316" fill-opacity="0.25" stroke="#f97316" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">{ }</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">AI Fallback &amp; Error </text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">JavaScript Code</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(2980, 440)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#f97316" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#f97316" fill-opacity="0.25" stroke="#f97316" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">{ }</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Normalize &amp; Validate</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">JavaScript Code</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(3480, 440)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#10b981" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#10b981" fill-opacity="0.25" stroke="#10b981" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">💾</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Check Existing Transacti</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">SQLite Data Table</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(3840, 440)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#10b981" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#10b981" fill-opacity="0.25" stroke="#10b981" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">💾</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Check Existing Vendors</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">SQLite Data Table</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(4200, 440)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#f97316" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#f97316" fill-opacity="0.25" stroke="#f97316" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">{ }</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Evaluate Duplicate &amp;</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">JavaScript Code</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(4560, 440)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#6366f1" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#6366f1" fill-opacity="0.25" stroke="#6366f1" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">🔀</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Quality &amp; Duplicate </text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">Switch Router</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(5000, 260)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#10b981" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#10b981" fill-opacity="0.25" stroke="#10b981" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">💾</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Save Vendor Record</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">SQLite Data Table</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(5380, 340)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#10b981" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#10b981" fill-opacity="0.25" stroke="#10b981" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">💾</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Store Validated Transact</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">SQLite Data Table</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(5740, 340)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#10b981" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#10b981" fill-opacity="0.25" stroke="#10b981" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">💾</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Log Success Activity</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">SQLite Data Table</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(6100, 340)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#10b981" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#10b981" fill-opacity="0.25" stroke="#10b981" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">💾</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Reload CRM Transactions</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">SQLite Data Table</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(6460, 340)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#10b981" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#10b981" fill-opacity="0.25" stroke="#10b981" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">💾</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Reload CRM Vendors</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">SQLite Data Table</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(6820, 340)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#10b981" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#10b981" fill-opacity="0.25" stroke="#10b981" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">💾</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Reload Review Queue</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">SQLite Data Table</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(7180, 340)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#10b981" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#10b981" fill-opacity="0.25" stroke="#10b981" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">💾</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Reload Activity Log</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">SQLite Data Table</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(7540, 340)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#f97316" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#f97316" fill-opacity="0.25" stroke="#f97316" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">{ }</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Format Processed CRM Res</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">JavaScript Code</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(7900, 340)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#ec4899" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#ec4899" fill-opacity="0.25" stroke="#ec4899" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">⚡</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Respond Document Process</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">Webhook Trigger</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(5000, 680)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#10b981" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#10b981" fill-opacity="0.25" stroke="#10b981" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">💾</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Log Duplicate Attempt</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">SQLite Data Table</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(5400, 680)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#ec4899" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#ec4899" fill-opacity="0.25" stroke="#ec4899" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">⚡</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Respond Duplicate Detect</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">Webhook Trigger</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(5000, 1040)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#10b981" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#10b981" fill-opacity="0.25" stroke="#10b981" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">💾</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Store in Review Queue</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">SQLite Data Table</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(5400, 1040)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#10b981" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#10b981" fill-opacity="0.25" stroke="#10b981" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">💾</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Log Pending Review Activ</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">SQLite Data Table</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(5800, 1040)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#ec4899" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#ec4899" fill-opacity="0.25" stroke="#ec4899" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">⚡</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Respond Needs Human Revi</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">Webhook Trigger</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(1100, 1380)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#10b981" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#10b981" fill-opacity="0.25" stroke="#10b981" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">💾</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Load CRM Transactions</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">SQLite Data Table</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(1460, 1380)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#10b981" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#10b981" fill-opacity="0.25" stroke="#10b981" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">💾</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Load CRM Vendors</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">SQLite Data Table</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(1820, 1380)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#10b981" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#10b981" fill-opacity="0.25" stroke="#10b981" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">💾</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Load CRM Review Queue</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">SQLite Data Table</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(2180, 1380)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#10b981" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#10b981" fill-opacity="0.25" stroke="#10b981" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">💾</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Load CRM Activity</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">SQLite Data Table</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(2560, 1380)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#f97316" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#f97316" fill-opacity="0.25" stroke="#f97316" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">{ }</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Build CRM Dashboard Snap</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">JavaScript Code</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(2940, 1380)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#ec4899" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#ec4899" fill-opacity="0.25" stroke="#ec4899" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">⚡</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Respond CRM Dashboard</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">Webhook Trigger</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(1100, 1820)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#f97316" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#f97316" fill-opacity="0.25" stroke="#f97316" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">{ }</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Format Extraction Failur</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">JavaScript Code</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(1460, 1820)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#10b981" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#10b981" fill-opacity="0.25" stroke="#10b981" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">💾</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Log Failed Document to R</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">SQLite Data Table</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(1820, 1820)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#10b981" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#10b981" fill-opacity="0.25" stroke="#10b981" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">💾</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Log Failed Processing Ac</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">SQLite Data Table</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+
+    <g transform="translate(2180, 1820)" filter="url(#shadow)">
+      <!-- Node Background Card -->
+      <rect width="240" height="76" rx="12" fill="#1e222e" stroke="#374151" stroke-width="1.5" />
+      <rect x="0" y="0" width="6" height="76" rx="3" fill="#ec4899" />
+      
+      <!-- Icon Circle -->
+      <circle cx="36" cy="38.0" r="18" fill="#ec4899" fill-opacity="0.25" stroke="#ec4899" stroke-width="1.5" />
+      <text x="36" y="43.0" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">⚡</text>
+      
+      <!-- Node Label -->
+      <text x="64" y="34" fill="#f8fafc" font-size="12.5" font-weight="700">Respond Document Error</text>
+      <text x="64" y="52" fill="#94a3b8" font-size="10.5" font-weight="500">Webhook Trigger</text>
+      
+      <!-- Input/Output Port Indicators -->
+      <circle cx="0" cy="38.0" r="4" fill="#64748b" stroke="#1e222e" stroke-width="1.5" />
+      <circle cx="240" cy="38.0" r="4" fill="#ff6d5a" stroke="#1e222e" stroke-width="1.5" />
+    </g>
+    
+</svg>
+</body>
+</html>

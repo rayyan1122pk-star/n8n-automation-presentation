@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AUTOMATE.AI — AI Automation Interactive Presentation Website
 
-## Getting Started
+**Tagline:** *Intelligent Automation. Endless Possibilities.*  
+**Theme:** *Transforming Repetitive Processes into Intelligent Workflows.*
 
-First, run the development server:
+An enterprise-grade interactive presentation website built with **Next.js (App Router)**, **TypeScript**, **Tailwind CSS**, **Framer Motion**, **Lucide Icons**, and **Recharts**, showcasing three AI automation solutions (**FinFlow**, **OpsFlow**, and **MailFlow**) with a full-screen Presentation Mode and an executive 17-slide PDF export layout.
+
+---
+
+## Quick Start
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.  
+Preview the print-formatted 17-slide PDF deck directly at [http://localhost:3000/print](http://localhost:3000/print).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Populating Your Real Project Assets
 
-## Learn More
+### 1. Screenshots & Recorded Videos
+Drop your real screenshots and `.mp4` screen recordings into `/public/media/`:
 
-To learn more about Next.js, take a look at the following resources:
+- **FinFlow**: `/public/media/finflow/`
+  - `finflow-workflow.png` (and optional `finflow-workflow-2.png`)
+  - `finflow-dashboard.png`, `finflow-reports.png`, `finflow-analytics.png`, `finflow-transactions.png`
+  - `finflow-demo.mp4` (and optional `finflow-demo-poster.png`)
+- **OpsFlow**: `/public/media/opsflow/`
+  - `opsflow-workflow.png` (and optional `opsflow-workflow-2.png`)
+  - `opsflow-dashboard.png`, `opsflow-orders.png`, `opsflow-inventory.png`
+  - `opsflow-demo.mp4` (and optional `opsflow-demo-poster.png`)
+- **MailFlow**: `/public/media/mailflow/`
+  - `mailflow-workflow.png` (and optional `mailflow-workflow-2.png`)
+  - `mailflow-dashboard.png`, `mailflow-inbox.png`, `mailflow-analytics.png`
+  - `mailflow-demo.mp4` (and optional `mailflow-demo-poster.png`)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+*(Fallback paths directly inside `/public/media/` are also automatically supported.)*
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 2. Updating Actual n8n Node Documentation
+Open `src/content/solutions.ts` and replace each solution's `nodes` array with your exact n8n nodes (setting `isPlaceholder: false`). Every node supports:
+- Exact node name, node type, execution sequence, category, and next connected node
+- All 7 mandatory technical explanations (What it is, What it does, Why used, Input, Processing, Output, Next connection) + Key configuration parameters
 
-## Deploy on Vercel
+### 3. Updating Your Active Technology Stack
+Edit `src/content/tech-stack.ts` so only the tools and databases genuinely used in your implementation are marked as active.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Presentation Mode & PDF Export
+
+- **Presentation Mode**: Click **Present** in the top navigation bar to enter full-screen projector mode with keyboard navigation (`←` / `→` / `PageUp` / `PageDown` / `Esc`) and a minimal bottom section HUD.
+- **Download PDF**: Click **Download PDF** in the navbar (or visit `/print`) to print or save the dedicated 17-slide A4 landscape presentation deck with proper page breaks, expanded node inventories, screenshots, and video poster frames.

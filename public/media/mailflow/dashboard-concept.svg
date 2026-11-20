@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720" font-family="Inter, Segoe UI, system-ui, sans-serif">
+  <defs>
+    <linearGradient id="mailPurple" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6D28D9"/>
+      <stop offset="100%" stop-color="#9333EA"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1280" height="720" fill="#F8F8FC"/>
+
+  <!-- Top Header -->
+  <rect width="1280" height="64" fill="#FFFFFF"/>
+  <line x1="0" y1="64" x2="1280" y2="64" stroke="#E5E7EB" stroke-width="1"/>
+  <rect x="32" y="18" width="28" height="28" rx="8" fill="url(#mailPurple)"/>
+  <text x="46" y="37" fill="#FFFFFF" font-size="14" font-weight="700" text-anchor="middle">M</text>
+  <text x="72" y="33" fill="#18181B" font-size="16" font-weight="700">MailFlow AI Triage &amp; Approval Console</text>
+  <text x="72" y="50" fill="#6B7280" font-size="11">Semantic Classification, Priority Detection &amp; Human-Approved Drafts</text>
+
+  <!-- Honest Concept Preview Badge -->
+  <rect x="920" y="18" width="328" height="28" rx="14" fill="#F5F3FF" stroke="#DDD6FE" stroke-width="1"/>
+  <circle cx="938" cy="32" r="4" fill="#7C3AED"/>
+  <text x="950" y="36" fill="#5B21B6" font-size="11" font-weight="700">CONCEPT PREVIEW · STATIC PRESENTATION VISUAL</text>
+
+  <!-- KPI Row -->
+  <rect x="32" y="88" width="288" height="100" rx="14" fill="#FFFFFF" stroke="#E5E7EB"/>
+  <text x="52" y="116" fill="#6B7280" font-size="12" font-weight="600">EMAILS TRIAGED (SAMPLE)</text>
+  <text x="52" y="156" fill="#18181B" font-size="30" font-weight="700">218</text>
+  <text x="140" y="154" fill="#7C3AED" font-size="12" font-weight="600">7 AI Categories</text>
+
+  <rect x="340" y="88" width="288" height="100" rx="14" fill="#FFFFFF" stroke="#E5E7EB"/>
+  <text x="360" y="116" fill="#6B7280" font-size="12" font-weight="600">HIGH PRIORITY / URGENT</text>
+  <text x="360" y="156" fill="#B91C1C" font-size="30" font-weight="700">14</text>
+  <rect x="424" y="135" width="166" height="24" rx="12" fill="#FEE2E2"/>
+  <text x="507" y="151" fill="#B91C1C" font-size="11" font-weight="700" text-anchor="middle">Hybrid SLA Escalation</text>
+
+  <rect x="648" y="88" width="288" height="100" rx="14" fill="#FFFFFF" stroke="#E5E7EB"/>
+  <text x="668" y="116" fill="#6B7280" font-size="12" font-weight="600">AWAITING HUMAN APPROVAL</text>
+  <text x="668" y="156" fill="#4C1D95" font-size="30" font-weight="700">19</text>
+  <rect x="734" y="135" width="176" height="24" rx="12" fill="#F5F3FF"/>
+  <text x="822" y="151" fill="#6D28D9" font-size="11" font-weight="700" text-anchor="middle">Zero Unapproved Sends</text>
+
+  <rect x="956" y="88" width="292" height="100" rx="14" fill="#FFFFFF" stroke="#E5E7EB"/>
+  <text x="976" y="116" fill="#6B7280" font-size="12" font-weight="600">AVG DRAFT READY TIME</text>
+  <text x="976" y="156" fill="#18181B" font-size="30" font-weight="700">2.4s</text>
+  <text x="1064" y="154" fill="#047857" font-size="12" font-weight="600">Gemini Contextual Draft</text>
+
+  <!-- Left Panel: Categorized Inbox & Urgency Queue -->
+  <rect x="32" y="212" width="660" height="450" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+  <text x="56" y="248" fill="#18181B" font-size="16" font-weight="700">AI-Classified Inbox Queue (Concept View)</text>
+  <text x="56" y="268" fill="#6B7280" font-size="12">Every incoming message is cleaned, deduplicated, classified, scored for urgency, and routed</text>
+
+  <!-- Email Item 1 (Selected) -->
+  <rect x="52" y="288" width="620" height="80" rx="12" fill="#FAF9FE" stroke="#7C3AED" stroke-width="1.5"/>
+  <text x="72" y="314" fill="#18181B" font-size="13" font-weight="700">David Park · URGENT: Production API outage blocking checkout</text>
+  <text x="72" y="335" fill="#4B5563" font-size="12">Extracted: ORD-2026-8812 · Routed to urgent_escalation_queue</text>
+  <rect x="72" y="344" width="96" height="18" rx="9" fill="#FEE2E2"/>
+  <text x="120" y="357" fill="#B91C1C" font-size="10" font-weight="700" text-anchor="middle">HIGH PRIORITY</text>
+  <rect x="176" y="344" width="94" height="18" rx="9" fill="#EDE9FE"/>
+  <text x="223" y="357" fill="#5B21B6" font-size="10" font-weight="700" text-anchor="middle">Urgent Email</text>
+  <rect x="536" y="344" width="120" height="18" rx="9" fill="#FEF3C7"/>
+  <text x="596" y="357" fill="#B45309" font-size="10" font-weight="700" text-anchor="middle">Awaiting Approval</text>
+
+  <!-- Email Item 2 -->
+  <rect x="52" y="380" width="620" height="74" rx="12" fill="#FFFFFF" stroke="#ECEBF2"/>
+  <text x="72" y="405" fill="#18181B" font-size="13" font-weight="700">Amira Al-Mansoor · Enterprise plan pricing and quote request</text>
+  <text x="72" y="425" fill="#6B7280" font-size="12">Routed to sales_pipeline_queue · Contextual draft generated</text>
+  <rect x="72" y="432" width="90" height="17" rx="8" fill="#F3F4F6"/>
+  <text x="117" y="444" fill="#374151" font-size="10" font-weight="700" text-anchor="middle">Sales Inquiry</text>
+  <rect x="170" y="432" width="66" height="17" rx="8" fill="#EEF2FF"/>
+  <text x="203" y="444" fill="#4338CA" font-size="10" font-weight="700" text-anchor="middle">Medium</text>
+  <rect x="556" y="432" width="100" height="17" rx="8" fill="#ECFDF5"/>
+  <text x="606" y="444" fill="#047857" font-size="10" font-weight="700" text-anchor="middle">Approved Ready</text>
+
+  <!-- Email Item 3 -->
+  <rect x="52" y="466" width="620" height="74" rx="12" fill="#FFFFFF" stroke="#ECEBF2"/>
+  <text x="72" y="491" fill="#18181B" font-size="13" font-weight="700">Billing Dept · Invoice INV-2026-4410 Payment Due ($1,250.00)</text>
+  <text x="72" y="511" fill="#6B7280" font-size="12">Extracted: INV-2026-4410, $1,250.00, 2026-12-01 · billing_accounts_queue</text>
+  <rect x="72" y="518" width="64" height="17" rx="8" fill="#F5F3FF"/>
+  <text x="104" y="530" fill="#6D28D9" font-size="10" font-weight="700" text-anchor="middle">Invoice</text>
+  <rect x="144" y="518" width="66" height="17" rx="8" fill="#EEF2FF"/>
+  <text x="177" y="530" fill="#4338CA" font-size="10" font-weight="700" text-anchor="middle">Medium</text>
+
+  <!-- Email Item 4 -->
+  <rect x="52" y="552" width="620" height="74" rx="12" fill="#FFFFFF" stroke="#ECEBF2"/>
+  <text x="72" y="577" fill="#18181B" font-size="13" font-weight="700">Lucas Meyer · Schedule a call next week for Q4 partnership review</text>
+  <text x="72" y="597" fill="#6B7280" font-size="12">Extracted: Tuesday, 10:00 AM · executive_calendar_queue</text>
+  <rect x="72" y="604" width="110" height="17" rx="8" fill="#F3F4F6"/>
+  <text x="127" y="616" fill="#374151" font-size="10" font-weight="700" text-anchor="middle">Meeting Request</text>
+  <rect x="190" y="604" width="52" height="17" rx="8" fill="#ECFDF5"/>
+  <text x="216" y="616" fill="#047857" font-size="10" font-weight="700" text-anchor="middle">Low</text>
+
+  <!-- Right Panel: Human-in-the-Loop Approval Draft Review -->
+  <rect x="716" y="212" width="532" height="450" rx="16" fill="#FFFFFF" stroke="#E5E7EB"/>
+  <text x="740" y="248" fill="#18181B" font-size="16" font-weight="700">Human Approval Review Panel</text>
+  <text x="740" y="268" fill="#6B7280" font-size="12">AI drafts are held in review until explicitly approved by a human reviewer</text>
+
+  <!-- Draft Box -->
+  <rect x="740" y="288" width="484" height="248" rx="12" fill="#FAFAFC" stroke="#E5E7EB"/>
+  <text x="760" y="314" fill="#6B7280" font-size="11" font-weight="700">PROPOSED REPLY SUBJECT</text>
+  <text x="760" y="334" fill="#18181B" font-size="13" font-weight="700">Re: URGENT: Production API outage blocking checkout</text>
+  <line x1="760" y1="348" x2="1204" y2="348" stroke="#E5E7EB"/>
+  <text x="760" y="372" fill="#374151" font-size="12">Hello David Park,</text>
+  <text x="760" y="396" fill="#374151" font-size="12">We have flagged your message regarding the production API outage</text>
+  <text x="760" y="416" fill="#374151" font-size="12">(Ref: ORD-2026-8812) as High Priority and routed it immediately</text>
+  <text x="760" y="436" fill="#374151" font-size="12">to our escalation engineering team.</text>
+  <text x="760" y="464" fill="#374151" font-size="12">Please share any error logs or affected endpoints so we can</text>
+  <text x="760" y="484" fill="#374151" font-size="12">investigate without delay.</text>
+  <text x="760" y="514" fill="#6B7280" font-size="11" font-style="italic">Guardrail: No unverified SLA credits or invented policies promised.</text>
+
+  <!-- Static Concept Action Buttons -->
+  <rect x="740" y="556" width="234" height="42" rx="10" fill="url(#mailPurple)"/>
+  <text x="857" y="582" fill="#FFFFFF" font-size="13" font-weight="700" text-anchor="middle">Approve &amp; Queue Reply</text>
+
+  <rect x="990" y="556" width="234" height="42" rx="10" fill="#FFFFFF" stroke="#D1D5DB"/>
+  <text x="1107" y="582" fill="#374151" font-size="13" font-weight="600" text-anchor="middle">Edit or Reject Draft</text>
+
+  <rect x="740" y="612" width="484" height="34" rx="8" fill="#FAF9FE" stroke="#EDE9FE"/>
+  <text x="756" y="633" fill="#5B21B6" font-size="11" font-weight="600">Safety Rule: Outbound Gmail node remains disabled until human approval &amp; OAuth setup.</text>
+
+  <text x="32" y="694" fill="#6B7280" font-size="11">MailFlow — Intelligent Email Automation · Static Dashboard Concept Preview (Non-Interactive Presentation Visual)</text>
+</svg>

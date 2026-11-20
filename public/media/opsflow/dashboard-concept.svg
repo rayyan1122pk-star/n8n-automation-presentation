@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720" font-family="Inter, Segoe UI, system-ui, sans-serif">
+  <defs>
+    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6D28D9"/>
+      <stop offset="100%" stop-color="#7C3AED"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect width="1280" height="720" fill="#F8F8FC"/>
+
+  <!-- Top Bar -->
+  <rect width="1280" height="64" fill="#FFFFFF"/>
+  <line x1="0" y1="64" x2="1280" y2="64" stroke="#E5E7EB" stroke-width="1"/>
+  <rect x="32" y="18" width="28" height="28" rx="8" fill="url(#purpleGrad)"/>
+  <text x="46" y="37" fill="#FFFFFF" font-size="14" font-weight="700" text-anchor="middle">O</text>
+  <text x="72" y="33" fill="#18181B" font-size="16" font-weight="700">OpsFlow Operations Hub</text>
+  <text x="72" y="50" fill="#6B7280" font-size="11">Order Processing, Inventory &amp; Invoicing Concept</text>
+
+  <!-- Honest Concept Preview Badge -->
+  <rect x="920" y="18" width="328" height="28" rx="14" fill="#F5F3FF" stroke="#DDD6FE" stroke-width="1"/>
+  <circle cx="938" cy="32" r="4" fill="#7C3AED"/>
+  <text x="950" y="36" fill="#5B21B6" font-size="11" font-weight="700">CONCEPT PREVIEW · STATIC PRESENTATION VISUAL</text>
+
+  <!-- KPI Row (4 Cards) -->
+  <!-- Card 1 -->
+  <rect x="32" y="88" width="288" height="104" rx="14" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+  <text x="52" y="116" fill="#6B7280" font-size="12" font-weight="600">ORDERS PROCESSED (SAMPLE)</text>
+  <text x="52" y="156" fill="#18181B" font-size="30" font-weight="700">142</text>
+  <rect x="200" y="136" width="98" height="24" rx="12" fill="#ECFDF5"/>
+  <text x="249" y="152" fill="#047857" font-size="11" font-weight="600" text-anchor="middle">128 Confirmed</text>
+
+  <!-- Card 2 -->
+  <rect x="340" y="88" width="288" height="104" rx="14" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+  <text x="360" y="116" fill="#6B7280" font-size="12" font-weight="600">PENDING STOCK ORDERS</text>
+  <text x="360" y="156" fill="#18181B" font-size="30" font-weight="700">9</text>
+  <rect x="492" y="136" width="116" height="24" rx="12" fill="#FEF3C7"/>
+  <text x="550" y="152" fill="#B45309" font-size="11" font-weight="600" text-anchor="middle">0 Stock Deducted</text>
+
+  <!-- Card 3 -->
+  <rect x="648" y="88" width="288" height="104" rx="14" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+  <text x="668" y="116" fill="#6B7280" font-size="12" font-weight="600">INVOICES GENERATED</text>
+  <text x="668" y="156" fill="#4C1D95" font-size="30" font-weight="700">$48,920</text>
+  <text x="668" y="177" fill="#7C3AED" font-size="11" font-weight="600">Deterministic Subtotal + Tax</text>
+
+  <!-- Card 4 -->
+  <rect x="956" y="88" width="292" height="104" rx="14" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+  <text x="976" y="116" fill="#6B7280" font-size="12" font-weight="600">LOW-STOCK REORDER ALERTS</text>
+  <text x="976" y="156" fill="#18181B" font-size="30" font-weight="700">2 SKUs</text>
+  <rect x="1104" y="136" width="124" height="24" rx="12" fill="#F5F3FF"/>
+  <text x="1166" y="152" fill="#6D28D9" font-size="11" font-weight="600" text-anchor="middle">Auto-Flagged</text>
+
+  <!-- Left Panel: Order Processing Queue Table -->
+  <rect x="32" y="216" width="760" height="444" rx="16" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+  <text x="56" y="252" fill="#18181B" font-size="16" font-weight="700">Recent Order Pipeline (Conceptual Data Layout)</text>
+  <text x="56" y="272" fill="#6B7280" font-size="12">Shows how OpsFlow validates orders, checks live inventory, generates invoices, and isolates stock shortages</text>
+
+  <!-- Table Header -->
+  <rect x="56" y="292" width="712" height="34" rx="8" fill="#F7F7FA"/>
+  <text x="72" y="313" fill="#6B7280" font-size="11" font-weight="700">ORDER ID</text>
+  <text x="195" y="313" fill="#6B7280" font-size="11" font-weight="700">CUSTOMER</text>
+  <text x="355" y="313" fill="#6B7280" font-size="11" font-weight="700">ITEMS</text>
+  <text x="485" y="313" fill="#6B7280" font-size="11" font-weight="700">TOTAL (USD)</text>
+  <text x="615" y="313" fill="#6B7280" font-size="11" font-weight="700">STATUS</text>
+
+  <!-- Row 1 -->
+  <text x="72" y="356" fill="#4C1D95" font-size="12" font-weight="700" font-family="monospace">ORD-2026-5001</text>
+  <text x="195" y="356" fill="#18181B" font-size="12" font-weight="600">Sarah Jenkins</text>
+  <text x="355" y="356" fill="#4B5563" font-size="12">2x Laptop, 3x Dock</text>
+  <text x="485" y="356" fill="#18181B" font-size="12" font-weight="700">$3,450.60</text>
+  <rect x="612" y="340" width="96" height="24" rx="12" fill="#ECFDF5"/>
+  <text x="660" y="356" fill="#047857" font-size="11" font-weight="700" text-anchor="middle">Confirmed</text>
+  <line x1="56" y1="376" x2="768" y2="376" stroke="#F1F1F5"/>
+
+  <!-- Row 2 -->
+  <text x="72" y="408" fill="#4C1D95" font-size="12" font-weight="700" font-family="monospace">ORD-2026-5002</text>
+  <text x="195" y="408" fill="#18181B" font-size="12" font-weight="600">Marcus Chen</text>
+  <text x="355" y="408" fill="#4B5563" font-size="12">10x Mech Keyboard</text>
+  <text x="485" y="408" fill="#18181B" font-size="12" font-weight="700">$1,393.20</text>
+  <rect x="612" y="392" width="112" height="24" rx="12" fill="#FEF3C7"/>
+  <text x="668" y="408" fill="#B45309" font-size="11" font-weight="700" text-anchor="middle">Pending Stock</text>
+  <line x1="56" y1="428" x2="768" y2="428" stroke="#F1F1F5"/>
+
+  <!-- Row 3 -->
+  <text x="72" y="460" fill="#4C1D95" font-size="12" font-weight="700" font-family="monospace">ORD-2026-5003</text>
+  <text x="195" y="460" fill="#18181B" font-size="12" font-weight="600">Elena Rostova</text>
+  <text x="355" y="460" fill="#4B5563" font-size="12">1x Unknown SKU</text>
+  <text x="485" y="460" fill="#6B7280" font-size="12">—</text>
+  <rect x="612" y="444" width="124" height="24" rx="12" fill="#FEE2E2"/>
+  <text x="674" y="460" fill="#B91C1C" font-size="11" font-weight="700" text-anchor="middle">Missing Product</text>
+  <line x1="56" y1="480" x2="768" y2="480" stroke="#F1F1F5"/>
+
+  <!-- Row 4 -->
+  <text x="72" y="512" fill="#4C1D95" font-size="12" font-weight="700" font-family="monospace">ORD-2026-5001</text>
+  <text x="195" y="512" fill="#18181B" font-size="12" font-weight="600">Sarah Jenkins</text>
+  <text x="355" y="512" fill="#4B5563" font-size="12">Re-submitted Order</text>
+  <text x="485" y="512" fill="#6B7280" font-size="12">Blocked</text>
+  <rect x="612" y="496" width="124" height="24" rx="12" fill="#F3F4F6"/>
+  <text x="674" y="512" fill="#374151" font-size="11" font-weight="700" text-anchor="middle">Duplicate (409)</text>
+  <line x1="56" y1="532" x2="768" y2="532" stroke="#F1F1F5"/>
+
+  <!-- Row 5 -->
+  <text x="72" y="564" fill="#4C1D95" font-size="12" font-weight="700" font-family="monospace">ORD-2026-5005</text>
+  <text x="195" y="564" fill="#18181B" font-size="12" font-weight="600">Apex Enterprise</text>
+  <text x="355" y="564" fill="#4B5563" font-size="12">4x Annual License</text>
+  <text x="485" y="564" fill="#18181B" font-size="12" font-weight="700">$1,996.00</text>
+  <rect x="612" y="548" width="96" height="24" rx="12" fill="#ECFDF5"/>
+  <text x="660" y="564" fill="#047857" font-size="11" font-weight="700" text-anchor="middle">Confirmed</text>
+
+  <!-- Note Footer inside Left Card -->
+  <rect x="56" y="600" width="712" height="40" rx="10" fill="#FAF9FE" stroke="#EDE9FE"/>
+  <text x="72" y="624" fill="#5B21B6" font-size="11" font-weight="600">Workflow Output: Confirmed orders automatically update stock, persist structured invoices, and queue status alerts.</text>
+
+  <!-- Right Panel: Inventory Stock Health -->
+  <rect x="816" y="216" width="432" height="444" rx="16" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+  <text x="840" y="252" fill="#18181B" font-size="16" font-weight="700">Inventory Availability Monitor</text>
+  <text x="840" y="272" fill="#6B7280" font-size="12">Real-time SKU stock levels &amp; reorder threshold checks</text>
+
+  <!-- Inventory Item 1 -->
+  <text x="840" y="314" fill="#18181B" font-size="13" font-weight="600">ProBook 15 Workstation (PROD-1001)</text>
+  <text x="1224" y="314" fill="#4C1D95" font-size="12" font-weight="700" text-anchor="end">23 in stock</text>
+  <rect x="840" y="324" width="384" height="10" rx="5" fill="#F3F4F6"/>
+  <rect x="840" y="324" width="310" height="10" rx="5" fill="#7C3AED"/>
+
+  <!-- Inventory Item 2 -->
+  <text x="840" y="370" fill="#18181B" font-size="13" font-weight="600">UltraSharp 27" 4K Display (PROD-1002)</text>
+  <text x="1224" y="370" fill="#4C1D95" font-size="12" font-weight="700" text-anchor="end">40 in stock</text>
+  <rect x="840" y="380" width="384" height="10" rx="5" fill="#F3F4F6"/>
+  <rect x="840" y="380" width="350" height="10" rx="5" fill="#7C3AED"/>
+
+  <!-- Inventory Item 3 -->
+  <text x="840" y="426" fill="#18181B" font-size="13" font-weight="600">Thunderbolt 4 Pro Dock (PROD-1003)</text>
+  <text x="1224" y="426" fill="#4C1D95" font-size="12" font-weight="700" text-anchor="end">9 in stock</text>
+  <rect x="840" y="436" width="384" height="10" rx="5" fill="#F3F4F6"/>
+  <rect x="840" y="436" width="210" height="10" rx="5" fill="#8B5CF6"/>
+
+  <!-- Inventory Item 4 (Low Stock) -->
+  <text x="840" y="482" fill="#18181B" font-size="13" font-weight="600">Wireless Mech Keyboard (PROD-1004)</text>
+  <text x="1224" y="482" fill="#B45309" font-size="12" font-weight="700" text-anchor="end">2 left · Low Stock</text>
+  <rect x="840" y="492" width="384" height="10" rx="5" fill="#FEF3C7"/>
+  <rect x="840" y="492" width="44" height="10" rx="5" fill="#D97706"/>
+
+  <!-- Inventory Item 5 -->
+  <text x="840" y="538" fill="#18181B" font-size="13" font-weight="600">Enterprise Annual License (PROD-1005)</text>
+  <text x="1224" y="538" fill="#4C1D95" font-size="12" font-weight="700" text-anchor="end">100 available</text>
+  <rect x="840" y="548" width="384" height="10" rx="5" fill="#F3F4F6"/>
+  <rect x="840" y="548" width="384" height="10" rx="5" fill="#6D28D9"/>
+
+  <!-- Honest Showcase Footer -->
+  <rect x="840" y="586" width="384" height="54" rx="10" fill="#F7F7FA" stroke="#E5E7EB"/>
+  <text x="856" y="608" fill="#374151" font-size="11" font-weight="700">Presentation Showcase Concept</text>
+  <text x="856" y="626" fill="#6B7280" font-size="11">Static concept visual illustrating OpsFlow reporting output.</text>
+
+  <!-- Bottom Attribution -->
+  <text x="32" y="694" fill="#6B7280" font-size="11">OpsFlow — Automated Business Operations · Static Dashboard Concept Preview (Non-Interactive Presentation Visual)</text>
+</svg>
