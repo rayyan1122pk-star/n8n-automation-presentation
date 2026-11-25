@@ -68,44 +68,44 @@ export function PracticalDemonstrationSection() {
                 idx === 1 && "md:col-span-3",
                 idx === 2 && "md:col-span-4",
                 active
-                  ? "neu-card-white ring-2 ring-[#5B3DF5]/35"
-                  : "neu-card opacity-95 hover:opacity-100"
+                  ? "glass-strong ring-2 ring-[#5B3DF5]/35"
+                  : "glass opacity-95 hover:opacity-100"
               )}
             >
               <div>
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <span className="neu-num-gradient font-display text-3xl font-extrabold leading-none">
+                  <span className="num-gradient font-display text-3xl font-extrabold leading-none">
                     0{idx + 1}.
                   </span>
                   {live ? (
-                    <span className="neu-purple-orb inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-bold tracking-wide text-white">
+                    <span className="btn-liquid btn-liquid-primary inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-bold tracking-wide text-white">
                       <Radio className="h-3 w-3 animate-pulse" />
                       LIVE DEMONSTRATION
                     </span>
                   ) : (
-                    <span className="inline-flex items-center gap-1 rounded-full bg-white/85 px-2.5 py-1 text-[11px] font-semibold text-[#4C5264] shadow-sm">
-                      <Presentation className="h-3 w-3 text-[#5B3DF5]" />
+                    <span className="inline-flex items-center gap-1 rounded-full bg-white/[0.08] px-2.5 py-1 text-[11px] font-semibold text-white/65 shadow-sm">
+                      <Presentation className="h-3 w-3 text-[#ff8a73]" />
                       PROJECT SHOWCASE
                     </span>
                   )}
                 </div>
 
-                <h3 className="mt-4 font-display text-lg font-bold text-[#1A1D26] sm:text-xl">
+                <h3 className="mt-4 font-display text-lg font-bold text-white sm:text-xl">
                   {sol.name.split(" — ")[0]}
                 </h3>
-                <p className="mt-0.5 text-xs font-semibold text-[#5B3DF5]">
+                <p className="mt-0.5 text-xs font-semibold text-[#ff8a73]">
                   {sol.name.split(" — ")[1] || sol.category}
                 </p>
-                <p className="mt-2.5 text-sm leading-relaxed text-[#4C5264]">
+                <p className="mt-2.5 text-sm leading-relaxed text-white/65">
                   {sol.shortDescription}
                 </p>
               </div>
 
               <div className="mt-4 flex items-center justify-between border-t border-white/80 pt-3 text-xs font-semibold">
-                <span className={active ? "text-[#5B3DF5]" : "text-[#70778C]"}>
+                <span className={active ? "text-[#ff8a73]" : "text-white/50"}>
                   {active ? "Currently Viewing" : live ? "Open Live Demo" : "View Showcase"}
                 </span>
-                <ArrowRight className="h-3.5 w-3.5 text-[#5B3DF5]" />
+                <ArrowRight className="h-3.5 w-3.5 text-[#ff8a73]" />
               </div>
             </button>
           );
@@ -115,82 +115,98 @@ export function PracticalDemonstrationSection() {
       {/* ================================================================
           SPACIOUS SINGLE-PROJECT PRESENTATION VIEW
           ================================================================ */}
-      <div className="neu-card-white mt-12 space-y-14 rounded-[34px] p-7 sm:p-12">
+      <div className="glass-strong ring-glow mt-14 rounded-[40px] p-2.5 sm:p-3">
+      {/* window chrome */}
+      <div className="flex items-center justify-between px-4 pb-3 pt-2">
+        <div className="flex items-center gap-2">
+          <span className="h-3 w-3 rounded-full bg-[#ff5f57]" />
+          <span className="h-3 w-3 rounded-full bg-[#febc2e]" />
+          <span className="h-3 w-3 rounded-full bg-[#28c840]" />
+        </div>
+        <span className="rounded-full bg-white/[0.06] px-4 py-1 font-mono text-[11px] text-white/55">
+          {solution.name.split(" — ")[0].toLowerCase()}.app · {isLive ? "live" : "showcase"}
+        </span>
+        <span className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-white/40">
+          <span className={isLive ? "h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" : "h-1.5 w-1.5 rounded-full bg-white/30"} />
+          {isLive ? "n8n connected" : "preview"}
+        </span>
+      </div>
+      <div className="space-y-14 rounded-[32px] border border-white/[0.06] bg-[#07080f]/85 p-7 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] sm:p-12">
         {/* 1. Project Header + Mode Badge + Learn More Link */}
-        <div className="border-b border-[#ECEBF2] pb-10">
+        <div className="border-b border-white/10 pb-10">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <div className="flex flex-wrap items-center gap-2.5">
-                <span className="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-[#7C3AED]">
+                <span className="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-[#ff8a73]">
                   Project 0{activeProjectIdx + 1}
                 </span>
                 {isLive ? (
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-800 border border-emerald-200">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-400/10 px-3 py-1 text-xs font-bold text-emerald-300 border border-emerald-400/30">
                     <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
                     PRIMARY LIVE DEMONSTRATION · LOCAL n8n CONNECTED
                   </span>
                 ) : (
-                  <span className="inline-flex items-center gap-1.5 rounded-full border border-[#DDD6FE] bg-[#FAF9FE] px-3 py-1 text-xs font-semibold text-[#5B21B6]">
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-[#ff6d5a]/25 bg-white/[0.035] px-3 py-1 text-xs font-semibold text-[#ffb4a6]">
                     <Presentation className="h-3.5 w-3.5" />
                     PROJECT SHOWCASE · PRESENTATION ONLY (NON-LIVE)
                   </span>
                 )}
               </div>
 
-              <h3 className="mt-3 font-display text-3xl font-bold text-[#4C1D95] sm:text-4xl">
+              <h3 className="mt-3 font-display text-3xl font-bold text-white sm:text-4xl">
                 {solution.name}
               </h3>
             </div>
 
             <Link
               href={`/projects/${solution.id}`}
-              className="inline-flex items-center gap-2 rounded-xl border border-[#DDD6FE] bg-[#FAF9FE] px-4 py-2.5 text-sm font-semibold text-[#5B21B6] transition-colors hover:border-[#7C3AED] hover:bg-[#F5F3FF]"
+              className="inline-flex items-center gap-2 rounded-xl border border-[#ff6d5a]/25 bg-white/[0.035] px-4 py-2.5 text-sm font-semibold text-[#ffb4a6] transition-colors hover:border-[#ff6d5a] hover:bg-[#ff6d5a]/10"
             >
               <span>Learn More</span>
               <ExternalLink className="h-4 w-4" />
             </Link>
           </div>
 
-          <p className="mt-4 max-w-4xl text-base leading-[1.8] text-[#4B5563] sm:text-lg">
+          <p className="mt-4 max-w-4xl text-base leading-[1.8] text-white/65 sm:text-lg">
             {solution.fullDescription}
           </p>
 
           {/* Problem & Solution */}
           <div className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-2">
             <div>
-              <h4 className="font-display text-lg font-bold text-[#18181B]">
+              <h4 className="font-display text-lg font-bold text-white">
                 The Business Problem It Solves
               </h4>
-              <p className="mt-2 text-base leading-[1.75] text-[#4B5563]">
+              <p className="mt-2 text-base leading-[1.75] text-white/65">
                 {solution.problem.summary}
               </p>
               <ul className="mt-4 space-y-2.5">
                 {solution.problem.painPoints.map((pt) => (
                   <li
                     key={pt}
-                    className="flex items-start gap-2.5 text-sm text-[#4B5563]"
+                    className="flex items-start gap-2.5 text-sm text-white/65"
                   >
-                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#9CA3AF]" />
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-white/30" />
                     <span className="leading-relaxed">{pt}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="rounded-2xl border border-[#ECEBF2] bg-[#FAF9FE] p-7">
-              <h4 className="font-display text-lg font-bold text-[#4C1D95]">
+            <div className="rounded-2xl border border-white/10 bg-white/[0.035] p-7">
+              <h4 className="font-display text-lg font-bold text-white">
                 How the Automation Works
               </h4>
-              <p className="mt-2 text-base leading-[1.75] text-[#374151]">
+              <p className="mt-2 text-base leading-[1.75] text-white/75">
                 {solution.solution.summary}
               </p>
               <ul className="mt-4 space-y-2.5">
                 {solution.solution.outcomes.map((out) => (
                   <li
                     key={out}
-                    className="flex items-start gap-2.5 text-sm text-[#18181B]"
+                    className="flex items-start gap-2.5 text-sm text-white"
                   >
-                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#7C3AED]" />
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#ff8a73]" />
                     <span className="leading-relaxed">{out}</span>
                   </li>
                 ))}
@@ -204,10 +220,10 @@ export function PracticalDemonstrationSection() {
           <div className="space-y-4">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#7C3AED]">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#ff8a73]">
                   Interactive Live Workspace
                 </p>
-                <h4 className="mt-1 font-display text-2xl font-bold text-[#18181B]">
+                <h4 className="mt-1 font-display text-2xl font-bold text-white">
                   Live FinFlow Document Upload, Vendor Workflow &amp; Accounting CRM
                 </h4>
               </div>
@@ -217,28 +233,28 @@ export function PracticalDemonstrationSection() {
         )}
 
         {/* 3. High-Level Process Flow & Important Automation Steps */}
-        <div className={cn(isLive && "border-t border-[#ECEBF2] pt-12")}>
-          <h4 className="font-display text-xl font-bold text-[#18181B]">
+        <div className={cn(isLive && "border-t border-white/10 pt-12")}>
+          <h4 className="font-display text-xl font-bold text-white">
             How the Workflow Operates — Key Automation Steps
           </h4>
-          <p className="mt-1.5 text-sm text-[#6B7280]">
+          <p className="mt-1.5 text-sm text-white/50">
             Clear stage-by-stage breakdown of how information moves through {solution.name.split(" — ")[0]}.
           </p>
 
           <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-5">
             {solution.highLevelDataFlow.map((item, idx) => (
               <div key={item.stage} className="flex items-center gap-2">
-                <div className="w-full rounded-xl border border-[#ECEBF2] bg-[#FAF9FE] px-4 py-4">
-                  <span className="font-mono text-xs font-semibold text-[#7C3AED]">
+                <div className="w-full rounded-xl border border-white/10 bg-white/[0.035] px-4 py-4">
+                  <span className="font-mono text-xs font-semibold text-[#ff8a73]">
                     Stage {item.stage}
                   </span>
-                  <p className="mt-1 font-display text-base font-bold text-[#18181B]">
+                  <p className="mt-1 font-display text-base font-bold text-white">
                     {item.label}
                   </p>
-                  <p className="mt-1 text-xs text-[#6B7280]">{item.payload}</p>
+                  <p className="mt-1 text-xs text-white/50">{item.payload}</p>
                 </div>
                 {idx < solution.highLevelDataFlow.length - 1 && (
-                  <ArrowRight className="hidden h-4 w-4 shrink-0 text-[#7C3AED] md:block" />
+                  <ArrowRight className="hidden h-4 w-4 shrink-0 text-[#ff8a73] md:block" />
                 )}
               </div>
             ))}
@@ -248,15 +264,15 @@ export function PracticalDemonstrationSection() {
             {solution.functionalSteps.map((s) => (
               <div
                 key={s.step}
-                className="rounded-xl border border-[#ECEBF2] bg-white p-5"
+                className="rounded-xl border border-white/10 bg-white/[0.04] p-5"
               >
-                <span className="font-mono text-xs font-bold text-[#7C3AED]">
+                <span className="font-mono text-xs font-bold text-[#ff8a73]">
                   STEP {s.step}
                 </span>
-                <h5 className="mt-1 font-display text-base font-bold text-[#18181B]">
+                <h5 className="mt-1 font-display text-base font-bold text-white">
                   {s.title}
                 </h5>
-                <p className="mt-1.5 text-sm leading-relaxed text-[#4B5563]">
+                <p className="mt-1.5 text-sm leading-relaxed text-white/65">
                   {s.detail}
                 </p>
               </div>
@@ -265,16 +281,16 @@ export function PracticalDemonstrationSection() {
         </div>
 
         {/* 4. Large Unobstructed Actual n8n Workflow Screenshots (Zoomed Part 1 / Part 2 / Full) */}
-        <div className="border-t border-[#ECEBF2] pt-12">
+        <div className="border-t border-white/10 pt-12">
           <div className="mb-5 flex flex-wrap items-end justify-between gap-4">
             <div>
-              <span className="inline-flex items-center rounded-full bg-[#F5F3FF] px-3 py-1 text-xs font-semibold text-[#6D28D9]">
+              <span className="inline-flex items-center rounded-full bg-[#ff6d5a]/10 px-3 py-1 text-xs font-semibold text-[#ff8a73]">
                 Actual Local n8n Capture · Zoomed for Node Readability
               </span>
-              <h4 className="mt-2 font-display text-2xl font-bold text-[#18181B]">
+              <h4 className="mt-2 font-display text-2xl font-bold text-white">
                 Actual n8n Workflow Architecture
               </h4>
-              <p className="mt-1 text-sm text-[#6B7280]">
+              <p className="mt-1 text-sm text-white/50">
                 Switch between Part 1 and Part 2 close-ups so every node name is clearly visible (click any screenshot to inspect full-screen).
               </p>
             </div>
@@ -289,8 +305,8 @@ export function PracticalDemonstrationSection() {
                     className={cn(
                       "cursor-pointer rounded-xl border px-3.5 py-2 text-xs font-semibold transition-colors",
                       workflowShotIdx === idx
-                        ? "border-[#7C3AED] bg-[#7C3AED] text-white"
-                        : "border-[#E5E7EB] bg-white text-[#4B5563] hover:border-[#C4B5FD] hover:text-[#5B21B6]"
+                        ? "border-[#ff6d5a] bg-[#ff5a6e] text-white"
+                        : "border-white/10 bg-white/[0.04] text-white/65 hover:border-[#ff6d5a]/40 hover:text-[#ffb4a6]"
                     )}
                   >
                     {shot.tag ?? `View ${idx + 1}`}
@@ -311,16 +327,16 @@ export function PracticalDemonstrationSection() {
 
         {/* 5. Dashboard Concept Preview (For OpsFlow & MailFlow Presentation Showcases) */}
         {!isLive && activeDashboardShot && (
-          <div className="border-t border-[#ECEBF2] pt-12">
+          <div className="border-t border-white/10 pt-12">
             <div className="mb-5 flex flex-wrap items-end justify-between gap-4">
               <div>
-                <span className="inline-flex items-center rounded-full border border-[#DDD6FE] bg-[#FAF9FE] px-3 py-1 text-xs font-semibold text-[#5B21B6]">
+                <span className="inline-flex items-center rounded-full border border-[#ff6d5a]/25 bg-white/[0.035] px-3 py-1 text-xs font-semibold text-[#ffb4a6]">
                   Static Concept Preview · Presentation Only
                 </span>
-                <h4 className="mt-2 font-display text-2xl font-bold text-[#18181B]">
+                <h4 className="mt-2 font-display text-2xl font-bold text-white">
                   {solution.name.split(" — ")[0]} Dashboard Concept Visual
                 </h4>
-                <p className="mt-1 text-sm text-[#6B7280]">
+                <p className="mt-1 text-sm text-white/50">
                   Static visual concept illustrating the dashboard experience powered by this workflow (not a live application).
                 </p>
               </div>
@@ -337,13 +353,13 @@ export function PracticalDemonstrationSection() {
         )}
 
         {/* 6. Interactive Relevant n8n Nodes Explanation */}
-        <div className="border-t border-[#ECEBF2] pt-12">
+        <div className="border-t border-white/10 pt-12">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <h4 className="font-display text-2xl font-bold text-[#4C1D95]">
+              <h4 className="font-display text-2xl font-bold text-white">
                 Key n8n Nodes Explained
               </h4>
-              <p className="mt-1.5 max-w-2xl text-base text-[#4B5563]">
+              <p className="mt-1.5 max-w-2xl text-base text-white/65">
                 Inspect the actual n8n nodes configured inside {solution.name.split(" — ")[0]}—their role, input/output mapping, and parameters.
               </p>
             </div>
@@ -353,7 +369,7 @@ export function PracticalDemonstrationSection() {
                 type="button"
                 onClick={() => setSelectedNodeIdx((i) => Math.max(0, i - 1))}
                 disabled={selectedNodeIdx === 0}
-                className="inline-flex cursor-pointer items-center gap-1 rounded-xl border border-[#E5E7EB] bg-white px-3.5 py-2 text-xs font-semibold text-[#374151] transition-colors hover:border-[#C4B5FD] hover:text-[#6D28D9] disabled:cursor-not-allowed disabled:opacity-40"
+                className="inline-flex cursor-pointer items-center gap-1 rounded-xl border border-white/10 bg-white/[0.04] px-3.5 py-2 text-xs font-semibold text-white/75 transition-colors hover:border-[#ff6d5a]/40 hover:text-[#ff8a73] disabled:cursor-not-allowed disabled:opacity-40"
               >
                 <ChevronLeft className="h-4 w-4" />
                 <span>Previous</span>
@@ -364,7 +380,7 @@ export function PracticalDemonstrationSection() {
                   setSelectedNodeIdx((i) => Math.min(nodes.length - 1, i + 1))
                 }
                 disabled={selectedNodeIdx === nodes.length - 1}
-                className="inline-flex cursor-pointer items-center gap-1 rounded-xl bg-[#7C3AED] px-3.5 py-2 text-xs font-semibold text-white transition-colors hover:bg-[#6D28D9] disabled:cursor-not-allowed disabled:opacity-40"
+                className="inline-flex cursor-pointer items-center gap-1 rounded-xl bg-[#ff5a6e] px-3.5 py-2 text-xs font-semibold text-white transition-colors hover:bg-[#ea4b71] disabled:cursor-not-allowed disabled:opacity-40"
               >
                 <span>Next</span>
                 <ChevronRight className="h-4 w-4" />
@@ -374,7 +390,7 @@ export function PracticalDemonstrationSection() {
 
           <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-12">
             <div className="space-y-2 lg:col-span-4">
-              <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-[#6B7280]">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-white/50">
                 Key Workflow Nodes ({nodes.length})
               </p>
               {nodes.map((node, idx) => {
@@ -387,14 +403,14 @@ export function PracticalDemonstrationSection() {
                     className={cn(
                       "flex w-full cursor-pointer items-start gap-3 rounded-xl border px-4 py-3.5 text-left transition-colors",
                       selected
-                        ? "border-[#7C3AED] bg-[#F5F3FF] text-[#4C1D95]"
-                        : "border-[#ECEBF2] bg-white text-[#374151] hover:border-[#D1D5DB] hover:bg-[#FAFAFC]"
+                        ? "border-[#ff6d5a] bg-[#ff6d5a]/10 text-white"
+                        : "border-white/10 bg-white/[0.04] text-white/75 hover:border-white/15 hover:bg-white/[0.035]"
                     )}
                   >
                     <span
                       className={cn(
                         "mt-0.5 font-mono text-xs font-bold",
-                        selected ? "text-[#7C3AED]" : "text-[#9CA3AF]"
+                        selected ? "text-[#ff8a73]" : "text-white/35"
                       )}
                     >
                       {String(node.sequence).padStart(2, "0")}
@@ -403,7 +419,7 @@ export function PracticalDemonstrationSection() {
                       <p className="text-sm font-semibold leading-snug">
                         {node.nodeName}
                       </p>
-                      <p className="mt-0.5 text-xs text-[#6B7280]">
+                      <p className="mt-0.5 text-xs text-white/50">
                         {node.category}
                       </p>
                     </div>
@@ -412,82 +428,82 @@ export function PracticalDemonstrationSection() {
               })}
             </div>
 
-            <div className="rounded-2xl border border-[#E5E7EB] bg-[#FAFAFC] p-7 sm:p-8 lg:col-span-8">
-              <div className="border-b border-[#E5E7EB] pb-5">
+            <div className="rounded-2xl border border-white/10 bg-white/[0.035] p-7 sm:p-8 lg:col-span-8">
+              <div className="border-b border-white/10 pb-5">
                 <div className="flex flex-wrap items-center gap-2.5">
-                  <span className="rounded-md bg-[#7C3AED] px-2.5 py-1 font-mono text-xs font-semibold text-white">
+                  <span className="rounded-md bg-[#ff5a6e] px-2.5 py-1 font-mono text-xs font-semibold text-white">
                     Node {String(activeNode.sequence).padStart(2, "0")} of{" "}
                     {String(nodes.length).padStart(2, "0")}
                   </span>
-                  <span className="rounded-md bg-[#F5F3FF] px-2.5 py-1 text-xs font-semibold text-[#6D28D9]">
+                  <span className="rounded-md bg-[#ff6d5a]/10 px-2.5 py-1 text-xs font-semibold text-[#ff8a73]">
                     {activeNode.category}
                   </span>
                 </div>
-                <h5 className="mt-3 font-display text-2xl font-bold text-[#18181B]">
+                <h5 className="mt-3 font-display text-2xl font-bold text-white">
                   {activeNode.nodeName}
                 </h5>
-                <p className="mt-1 font-mono text-xs text-[#6B7280]">
+                <p className="mt-1 font-mono text-xs text-white/50">
                   Node Type: {activeNode.nodeType}
                 </p>
               </div>
 
               <div className="mt-6 space-y-5 text-sm sm:text-base">
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-[#7C3AED]">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-[#ff8a73]">
                     Role &amp; Function
                   </p>
-                  <p className="mt-1.5 leading-relaxed text-[#18181B]">
+                  <p className="mt-1.5 leading-relaxed text-white">
                     {activeNode.whatIsIt} {activeNode.whatDoesItDo}
                   </p>
                 </div>
 
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-[#7C3AED]">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-[#ff8a73]">
                     Why It Is Used
                   </p>
-                  <p className="mt-1.5 leading-relaxed text-[#4B5563]">
+                  <p className="mt-1.5 leading-relaxed text-white/65">
                     {activeNode.whyUsed}
                   </p>
                 </div>
 
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  <div className="rounded-xl border border-[#E5E7EB] bg-white p-4">
-                    <p className="text-xs font-semibold uppercase tracking-wider text-[#6B7280]">
+                  <div className="rounded-xl border border-white/10 bg-white/[0.04] p-4">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-white/50">
                       Input Received
                     </p>
-                    <p className="mt-1.5 text-sm leading-relaxed text-[#374151]">
+                    <p className="mt-1.5 text-sm leading-relaxed text-white/75">
                       {activeNode.inputData}
                     </p>
                   </div>
-                  <div className="rounded-xl border border-[#DDD6FE] bg-[#FAF9FE] p-4">
-                    <p className="text-xs font-semibold uppercase tracking-wider text-[#6D28D9]">
+                  <div className="rounded-xl border border-[#ff6d5a]/25 bg-white/[0.035] p-4">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-[#ff8a73]">
                       Output Generated
                     </p>
-                    <p className="mt-1.5 text-sm leading-relaxed text-[#18181B]">
+                    <p className="mt-1.5 text-sm leading-relaxed text-white">
                       {activeNode.outputData}
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between gap-4 rounded-xl border border-[#E5E7EB] bg-white px-5 py-4">
+                <div className="flex items-center justify-between gap-4 rounded-xl border border-white/10 bg-white/[0.04] px-5 py-4">
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-wider text-[#7C3AED]">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-[#ff8a73]">
                       Connects Next To
                     </p>
-                    <p className="mt-1 text-sm font-semibold text-[#18181B]">
+                    <p className="mt-1 text-sm font-semibold text-white">
                       {activeNode.nextConnection}
                     </p>
                   </div>
-                  <ArrowRight className="h-5 w-5 shrink-0 text-[#7C3AED]" />
+                  <ArrowRight className="h-5 w-5 shrink-0 text-[#ff8a73]" />
                 </div>
 
                 {activeNode.keyConfig.length > 0 && (
-                  <div className="border-t border-[#E5E7EB] pt-4">
-                    <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#6B7280]">
-                      <Sliders className="h-3.5 w-3.5 text-[#7C3AED]" />
+                  <div className="border-t border-white/10 pt-4">
+                    <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-white/50">
+                      <Sliders className="h-3.5 w-3.5 text-[#ff8a73]" />
                       <span>Verified Configuration Highlights</span>
                     </div>
-                    <ul className="mt-2 space-y-1 text-sm text-[#4B5563]">
+                    <ul className="mt-2 space-y-1 text-sm text-white/65">
                       {activeNode.keyConfig.map((cfg, i) => (
                         <li key={i}>• {cfg}</li>
                       ))}
@@ -500,22 +516,22 @@ export function PracticalDemonstrationSection() {
         </div>
 
         {/* 7. Expected Business Benefits */}
-        <div className="border-t border-[#ECEBF2] pt-12">
-          <div className="rounded-2xl border border-[#DDD6FE] bg-[#FAF9FE] p-7 sm:p-8">
-            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#7C3AED]">
+        <div className="border-t border-white/10 pt-12">
+          <div className="rounded-2xl border border-[#ff6d5a]/25 bg-white/[0.035] p-7 sm:p-8">
+            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#ff8a73]">
               <Sparkles className="h-4 w-4" />
               <span>Expected Business Benefits</span>
             </div>
-            <h4 className="mt-2 font-display text-xl font-bold text-[#18181B]">
+            <h4 className="mt-2 font-display text-xl font-bold text-white">
               Why {solution.name.split(" — ")[0]} Delivers Operational Value
             </h4>
             <div className="mt-5 grid grid-cols-1 gap-3.5 md:grid-cols-2">
               {solution.expectedBenefits.map((benefit) => (
                 <div
                   key={benefit}
-                  className="flex items-start gap-2.5 rounded-xl border border-[#ECEBF2] bg-white p-4 text-sm text-[#18181B]"
+                  className="flex items-start gap-2.5 rounded-xl border border-white/10 bg-white/[0.04] p-4 text-sm text-white"
                 >
-                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#7C3AED]" />
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#ff8a73]" />
                   <span className="leading-relaxed">{benefit}</span>
                 </div>
               ))}
@@ -524,24 +540,24 @@ export function PracticalDemonstrationSection() {
         </div>
 
         {/* 8. Collapsible Technical Deep Dive + Dedicated Learn More CTA */}
-        <div className="border-t border-[#ECEBF2] pt-8">
+        <div className="border-t border-white/10 pt-8">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <button
               type="button"
               onClick={() => setShowTechnicalDetails((v) => !v)}
-              className="flex flex-1 cursor-pointer items-center justify-between rounded-2xl border border-[#E5E7EB] bg-[#FAFAFC] px-6 py-4 text-left transition-colors hover:border-[#C4B5FD]"
+              className="flex flex-1 cursor-pointer items-center justify-between rounded-2xl border border-white/10 bg-white/[0.035] px-6 py-4 text-left transition-colors hover:border-[#ff6d5a]/40"
             >
               <div>
-                <p className="font-display text-base font-bold text-[#18181B]">
+                <p className="font-display text-base font-bold text-white">
                   Technical Deep Dive: Branching, APIs &amp; Error Handling
                 </p>
-                <p className="mt-0.5 text-sm text-[#6B7280]">
+                <p className="mt-0.5 text-sm text-white/50">
                   Expand for architecture Q&amp;A or open the full Learn More page.
                 </p>
               </div>
               <ChevronDown
                 className={cn(
-                  "h-5 w-5 shrink-0 text-[#7C3AED] transition-transform duration-200",
+                  "h-5 w-5 shrink-0 text-[#ff8a73] transition-transform duration-200",
                   showTechnicalDetails && "rotate-180"
                 )}
               />
@@ -549,7 +565,7 @@ export function PracticalDemonstrationSection() {
 
             <Link
               href={`/projects/${solution.id}`}
-              className="inline-flex items-center gap-2 rounded-2xl bg-[#7C3AED] px-6 py-4 text-sm font-bold text-white transition-colors hover:bg-[#6D28D9]"
+              className="inline-flex items-center gap-2 rounded-2xl bg-[#ff5a6e] px-6 py-4 text-sm font-bold text-white transition-colors hover:bg-[#ea4b71]"
             >
               <span>Open Full {solution.name.split(" — ")[0]} Page</span>
               <ExternalLink className="h-4 w-4" />
@@ -558,56 +574,56 @@ export function PracticalDemonstrationSection() {
 
           {showTechnicalDetails && (
             <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
-              <div className="rounded-2xl border border-[#E5E7EB] bg-white p-6">
-                <h5 className="font-display text-base font-bold text-[#4C1D95]">
+              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
+                <h5 className="font-display text-base font-bold text-white">
                   {solution.technicalDeepDive.conditionalBranching.title}
                 </h5>
-                <p className="mt-1.5 text-xs leading-relaxed text-[#6B7280]">
+                <p className="mt-1.5 text-xs leading-relaxed text-white/50">
                   {solution.technicalDeepDive.conditionalBranching.summary}
                 </p>
                 <div className="mt-4 space-y-3">
                   {solution.technicalDeepDive.conditionalBranching.branches.map((b) => (
-                    <div key={b.condition} className="rounded-xl bg-[#FAFAFC] p-3 text-xs">
-                      <p className="font-mono font-semibold text-[#6D28D9]">{b.condition}</p>
-                      <p className="mt-1 text-[#374151]">{b.path}</p>
-                      <p className="mt-1 text-[#6B7280]">{b.outcome}</p>
+                    <div key={b.condition} className="rounded-xl bg-white/[0.035] p-3 text-xs">
+                      <p className="font-mono font-semibold text-[#ff8a73]">{b.condition}</p>
+                      <p className="mt-1 text-white/75">{b.path}</p>
+                      <p className="mt-1 text-white/50">{b.outcome}</p>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="rounded-2xl border border-[#E5E7EB] bg-white p-6">
-                <h5 className="font-display text-base font-bold text-[#4C1D95]">
+              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
+                <h5 className="font-display text-base font-bold text-white">
                   {solution.technicalDeepDive.apisAndIntegrations.title}
                 </h5>
-                <p className="mt-1.5 text-xs leading-relaxed text-[#6B7280]">
+                <p className="mt-1.5 text-xs leading-relaxed text-white/50">
                   {solution.technicalDeepDive.apisAndIntegrations.summary}
                 </p>
                 <div className="mt-4 space-y-3">
                   {solution.technicalDeepDive.apisAndIntegrations.connections.map((c) => (
-                    <div key={c.service} className="rounded-xl bg-[#FAFAFC] p-3 text-xs">
-                      <p className="font-semibold text-[#18181B]">
+                    <div key={c.service} className="rounded-xl bg-white/[0.035] p-3 text-xs">
+                      <p className="font-semibold text-white">
                         {c.service}{" "}
-                        <span className="font-mono font-normal text-[#7C3AED]">({c.protocol})</span>
+                        <span className="font-mono font-normal text-[#ff8a73]">({c.protocol})</span>
                       </p>
-                      <p className="mt-1 text-[#6B7280]">{c.purpose}</p>
+                      <p className="mt-1 text-white/50">{c.purpose}</p>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="rounded-2xl border border-[#E5E7EB] bg-white p-6">
-                <h5 className="font-display text-base font-bold text-[#4C1D95]">
+              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
+                <h5 className="font-display text-base font-bold text-white">
                   {solution.technicalDeepDive.errorHandling.title}
                 </h5>
-                <p className="mt-1.5 text-xs leading-relaxed text-[#6B7280]">
+                <p className="mt-1.5 text-xs leading-relaxed text-white/50">
                   {solution.technicalDeepDive.errorHandling.summary}
                 </p>
                 <div className="mt-4 space-y-3">
                   {solution.technicalDeepDive.errorHandling.safeguards.map((s) => (
-                    <div key={s.failureMode} className="rounded-xl bg-[#FAFAFC] p-3 text-xs">
-                      <p className="font-semibold text-[#18181B]">{s.failureMode}</p>
-                      <p className="mt-1 text-[#6B7280]">{s.handling}</p>
+                    <div key={s.failureMode} className="rounded-xl bg-white/[0.035] p-3 text-xs">
+                      <p className="font-semibold text-white">{s.failureMode}</p>
+                      <p className="mt-1 text-white/50">{s.handling}</p>
                     </div>
                   ))}
                 </div>
@@ -615,6 +631,7 @@ export function PracticalDemonstrationSection() {
             </div>
           )}
         </div>
+      </div>
       </div>
     </SectionShell>
   );

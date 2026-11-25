@@ -25,6 +25,7 @@ import { ExploreFurtherSection } from "@/components/sections/ExploreFurtherSecti
 import { PresentationModeOverlay } from "@/components/presentation/PresentationModeOverlay";
 import { RobotMascot } from "@/components/mascot/RobotMascot";
 import { PrintDeckDocument } from "@/components/print/PrintDeckDocument";
+import { AmbientBackdrop, ScrollProgressBar, SmoothScroll } from "@/components/premium/Ambient";
 
 export function PresentationApp() {
   const [activeSectionId, setActiveSectionId] = useState<string>("home");
@@ -227,7 +228,10 @@ export function PresentationApp() {
 
   return (
     <>
-      <div className="no-print min-h-screen w-full overflow-x-clip bg-[#DFE2F0]">
+      <div className="no-print relative min-h-screen w-full overflow-x-clip bg-[#04050a]">
+        <AmbientBackdrop />
+        <SmoothScroll enabled={!presentationMode} />
+        {!presentationMode && <ScrollProgressBar />}
         {!presentationMode && (
           <Navbar
             activeSectionId={activeSectionId}
@@ -244,7 +248,7 @@ export function PresentationApp() {
              TRUE SINGLE-SLIDE FULLSCREEN PRESENTATION MODE
              Only the active section is visible on screen — zero bleed!
              ============================================================= */
-          <main className="min-h-screen w-full bg-[#DFE2F0]">
+          <main className="relative z-10 min-h-screen w-full">
             {exploreOpen ? (
               <ExploreFurtherSection
                 isOpen={true}
@@ -260,7 +264,7 @@ export function PresentationApp() {
         ) : (
           /* Normal Scrolling Website Mode */
           <>
-            <main>
+            <main className="relative z-10">
               <HeroSection onStartPresentation={handleStartPresentation} />
               <TableOfContentsSlide />
               <SectionOneIntroduction />

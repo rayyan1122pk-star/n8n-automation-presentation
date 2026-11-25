@@ -44,7 +44,7 @@ export function ExploreFurtherSection({
     <aside
       id="explore-further"
       aria-label="Optional supporting material"
-      className="w-full border-t border-white/90 bg-[#DCDFF0] text-[#171924]"
+      className="relative z-10 w-full border-t border-white/[0.06] text-[#171924]"
     >
       <div className="mx-auto max-w-[1180px] px-6 py-16 sm:px-10">
         {/* Subtle Optional Material Header */}

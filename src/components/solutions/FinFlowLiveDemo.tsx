@@ -160,7 +160,15 @@ interface ExecutionResultBanner {
 
 type CrmTab = "transactions" | "vendors" | "expense_analytics" | "financial_analytics" | "activity";
 
-const CHART_COLORS = ["#6D28D9", "#7C3AED", "#9333EA", "#A78BFA", "#4C1D95", "#C4B5FD"];
+const TOOLTIP_STYLE = {
+  background: "rgba(12,13,24,0.92)",
+  border: "1px solid rgba(255,255,255,0.12)",
+  borderRadius: 14,
+  color: "#fff",
+  boxShadow: "0 20px 40px -12px rgba(0,0,0,0.7)",
+};
+
+const CHART_COLORS = ["#ff6d5a", "#ea4b71", "#a78bfa", "#22d3ee", "#34d399", "#fbbf24"];
 
 function fmtMoney(amount: number, currency: string) {
   try {
@@ -499,38 +507,38 @@ export function FinFlowLiveDemo() {
   return (
     <div className="space-y-8">
       {/* Live n8n Status & Controls Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-[#DDD6FE] bg-[#FAF9FE] px-6 py-4">
+      <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-[#ff6d5a]/25 bg-white/[0.035] px-6 py-4">
         <div className="flex flex-wrap items-center gap-3">
           <span
             className={cn(
               "inline-flex items-center gap-2 rounded-full px-3.5 py-1 text-xs font-semibold",
               n8nConnected
-                ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
-                : "bg-purple-50 text-[#5B21B6] border border-[#DDD6FE]"
+                ? "bg-emerald-400/10 text-emerald-300 border border-emerald-400/30"
+                : "bg-[#ff6d5a]/10 text-[#ffb4a6] border border-[#ff6d5a]/25"
             )}
           >
             <span
               className={cn(
                 "h-2 w-2 rounded-full",
-                n8nConnected ? "bg-emerald-500 animate-pulse" : "bg-[#7C3AED] animate-pulse"
+                n8nConnected ? "bg-emerald-500 animate-pulse" : "bg-[#ff5a6e] animate-pulse"
               )}
             />
             {n8nConnected ? "Connected to Local n8n (localhost:5678)" : "Presentation Demo Mode (Pre-Loaded Live Data)"}
           </span>
           {lastExecId && (
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#DDD6FE] bg-white px-3 py-1 font-mono text-xs font-medium text-[#5B21B6]">
-              <Database className="h-3.5 w-3.5 text-[#7C3AED]" />
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#ff6d5a]/25 bg-white/[0.04] px-3 py-1 font-mono text-xs font-medium text-[#ffb4a6]">
+              <Database className="h-3.5 w-3.5 text-[#ff8a73]" />
               Last n8n Execution #{lastExecId}
             </span>
           )}
-          <span className="text-xs text-[#6B7280]">
+          <span className="text-xs text-white/50">
             Persistent SQLite Data Tables · Deterministic Multi-Currency Accounting
           </span>
         </div>
 
         <div className="flex items-center gap-2.5">
           {dashboard && dashboard.currencies.length > 1 && (
-            <div className="flex items-center gap-1 rounded-xl border border-[#E5E7EB] bg-white p-1">
+            <div className="flex items-center gap-1 rounded-xl border border-white/10 bg-white/[0.04] p-1">
               {dashboard.currencies.map((ccy) => (
                 <button
                   key={ccy}
@@ -539,8 +547,8 @@ export function FinFlowLiveDemo() {
                   className={cn(
                     "cursor-pointer rounded-lg px-2.5 py-1 font-mono text-xs font-semibold transition-colors",
                     selectedCurrency === ccy
-                      ? "bg-[#7C3AED] text-white"
-                      : "text-[#4B5563] hover:bg-[#F5F3FF]"
+                      ? "bg-[#ff5a6e] text-white"
+                      : "text-white/65 hover:bg-[#ff6d5a]/10"
                   )}
                 >
                   {ccy}
@@ -553,7 +561,7 @@ export function FinFlowLiveDemo() {
             type="button"
             onClick={loadDashboard}
             disabled={loadingDashboard}
-            className="inline-flex cursor-pointer items-center gap-1.5 rounded-xl border border-[#E5E7EB] bg-white px-3.5 py-2 text-xs font-semibold text-[#374151] transition-colors hover:border-[#C4B5FD] hover:text-[#6D28D9] disabled:opacity-50"
+            className="inline-flex cursor-pointer items-center gap-1.5 rounded-xl border border-white/10 bg-white/[0.04] px-3.5 py-2 text-xs font-semibold text-white/75 transition-colors hover:border-[#ff6d5a]/40 hover:text-[#ff8a73] disabled:opacity-50"
           >
             <RefreshCw className={cn("h-3.5 w-3.5", loadingDashboard && "animate-spin")} />
             <span>Refresh CRM</span>
@@ -562,9 +570,9 @@ export function FinFlowLiveDemo() {
       </div>
 
       {!n8nConnected && (
-        <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#DDD6FE] bg-[#F5F3FF] px-5 py-3 text-xs text-[#5B21B6]">
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#ff6d5a]/25 bg-[#ff6d5a]/10 px-5 py-3 text-xs text-[#ffb4a6]">
           <div className="flex items-center gap-2">
-            <Sparkles className="h-4 w-4 shrink-0 text-[#7C3AED]" />
+            <Sparkles className="h-4 w-4 shrink-0 text-[#ff8a73]" />
             <span>
               <strong>Presentation Demo Data Active:</strong> Displaying realistic accounting records, category analytics, and human review items. Start local n8n on port 5678 to enable live webhook execution.
             </span>
@@ -572,7 +580,7 @@ export function FinFlowLiveDemo() {
           <button
             type="button"
             onClick={loadDashboard}
-            className="cursor-pointer rounded-lg border border-[#C4B5FD] bg-white px-3 py-1 font-semibold text-[#6D28D9] transition-colors hover:bg-[#EDE9FE]"
+            className="cursor-pointer rounded-lg border border-[#ff6d5a]/40 bg-white/[0.04] px-3 py-1 font-semibold text-[#ff8a73] transition-colors hover:bg-[#ff6d5a]/15"
           >
             Connect Live n8n
           </button>
@@ -582,19 +590,19 @@ export function FinFlowLiveDemo() {
       {/* Dual Live Interactive Action Panels */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* 1. Live Invoice / Receipt Upload */}
-        <div className="flex flex-col justify-between rounded-2xl border border-[#E5E7EB] bg-white p-6 shadow-xs">
+        <div className="flex flex-col justify-between rounded-2xl border border-white/10 bg-white/[0.04] p-6 shadow-xs">
           <div>
             <div className="flex items-center justify-between gap-2">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#F5F3FF] px-3 py-1 text-xs font-semibold text-[#6D28D9]">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#ff6d5a]/10 px-3 py-1 text-xs font-semibold text-[#ff8a73]">
                 <Upload className="h-3.5 w-3.5" />
                 Live Document Upload
               </span>
-              <span className="font-mono text-xs text-[#6B7280]">PDF · JPG · PNG · CSV · XLSX</span>
+              <span className="font-mono text-xs text-white/50">PDF · JPG · PNG · CSV · XLSX</span>
             </div>
-            <h4 className="mt-3 font-display text-xl font-bold text-[#18181B]">
+            <h4 className="mt-3 font-display text-xl font-bold text-white">
               Upload Invoice or Financial Receipt
             </h4>
-            <p className="mt-1.5 text-sm leading-relaxed text-[#4B5563]">
+            <p className="mt-1.5 text-sm leading-relaxed text-white/65">
               Sends the real file directly to your local n8n FinFlow webhook for text extraction,
               AI/structured parsing, duplicate detection, arithmetic verification, and persistent CRM storage.
             </p>
@@ -615,24 +623,24 @@ export function FinFlowLiveDemo() {
             <label
               htmlFor="finflow-file-upload"
               className={cn(
-                "flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-[#DDD6FE] bg-[#FAF9FE] px-5 py-7 text-center transition-colors hover:border-[#7C3AED] hover:bg-[#F5F3FF]",
+                "flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-[#ff6d5a]/25 bg-white/[0.035] px-5 py-7 text-center transition-colors hover:border-[#ff6d5a] hover:bg-[#ff6d5a]/10",
                 uploading && "pointer-events-none opacity-60"
               )}
             >
               {uploading ? (
                 <>
-                  <RefreshCw className="h-7 w-7 animate-spin text-[#7C3AED]" />
-                  <p className="mt-2.5 text-sm font-semibold text-[#4C1D95]">
+                  <RefreshCw className="h-7 w-7 animate-spin text-[#ff8a73]" />
+                  <p className="mt-2.5 text-sm font-semibold text-white">
                     Executing n8n FinFlow Document Pipeline…
                   </p>
                 </>
               ) : (
                 <>
-                  <FileText className="h-7 w-7 text-[#7C3AED]" />
-                  <p className="mt-2.5 text-sm font-semibold text-[#18181B]">
+                  <FileText className="h-7 w-7 text-[#ff8a73]" />
+                  <p className="mt-2.5 text-sm font-semibold text-white">
                     Click to select a real invoice, receipt, CSV, or Excel file
                   </p>
-                  <p className="mt-1 text-xs text-[#6B7280]">
+                  <p className="mt-1 text-xs text-white/50">
                     Sample files ready in D:\AI-Automation\projects\test-data\ · Duplicates blocked automatically
                   </p>
                 </>
@@ -641,7 +649,7 @@ export function FinFlowLiveDemo() {
 
             {/* Quick-Test Sample Invoice Shortcuts */}
             <div className="mt-3 flex flex-wrap items-center gap-2 text-xs">
-              <span className="font-medium text-[#6B7280]">Quick Test Samples:</span>
+              <span className="font-medium text-white/50">Quick Test Samples:</span>
               <button
                 type="button"
                 disabled={uploading}
@@ -657,7 +665,7 @@ export function FinFlowLiveDemo() {
                     console.error(e);
                   }
                 }}
-                className="inline-flex cursor-pointer items-center gap-1 rounded-lg border border-[#DDD6FE] bg-[#F5F3FF] px-2.5 py-1 font-medium text-[#6D28D9] transition-colors hover:bg-[#EDE9FE] disabled:opacity-50"
+                className="inline-flex cursor-pointer items-center gap-1 rounded-lg border border-[#ff6d5a]/25 bg-[#ff6d5a]/10 px-2.5 py-1 font-medium text-[#ff8a73] transition-colors hover:bg-[#ff6d5a]/15 disabled:opacity-50"
               >
                 <FileText className="h-3 w-3" />
                 <span>Cloud Invoice ($1,595)</span>
@@ -677,7 +685,7 @@ export function FinFlowLiveDemo() {
                     console.error(e);
                   }
                 }}
-                className="inline-flex cursor-pointer items-center gap-1 rounded-lg border border-[#DDD6FE] bg-[#F5F3FF] px-2.5 py-1 font-medium text-[#6D28D9] transition-colors hover:bg-[#EDE9FE] disabled:opacity-50"
+                className="inline-flex cursor-pointer items-center gap-1 rounded-lg border border-[#ff6d5a]/25 bg-[#ff6d5a]/10 px-2.5 py-1 font-medium text-[#ff8a73] transition-colors hover:bg-[#ff6d5a]/15 disabled:opacity-50"
               >
                 <FileText className="h-3 w-3" />
                 <span>AI Services ($935)</span>
@@ -685,7 +693,7 @@ export function FinFlowLiveDemo() {
               <a
                 href="/samples/sample_invoice_cloud_services.pdf"
                 download="sample_invoice_cloud_services.pdf"
-                className="inline-flex items-center gap-1 text-[#7C3AED] hover:underline ml-auto font-medium"
+                className="inline-flex items-center gap-1 text-[#ff8a73] hover:underline ml-auto font-medium"
               >
                 <span>Download PDF ↗</span>
               </a>
@@ -694,21 +702,21 @@ export function FinFlowLiveDemo() {
         </div>
 
         {/* 2. Live Vendor Workflow Demonstration */}
-        <div className="flex flex-col justify-between rounded-2xl border border-[#DDD6FE] bg-gradient-to-br from-white to-[#FAF9FE] p-6 shadow-xs">
+        <div className="flex flex-col justify-between rounded-2xl border border-[#ff6d5a]/25 bg-gradient-to-br from-white/[0.06] to-white/[0.02] p-6 shadow-xs">
           <div>
             <div className="flex items-center justify-between gap-2">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#EDE9FE] px-3 py-1 text-xs font-semibold text-[#5B21B6]">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#ff6d5a]/15 px-3 py-1 text-xs font-semibold text-[#ffb4a6]">
                 <Sparkles className="h-3.5 w-3.5" />
                 Live n8n Execution
               </span>
-              <span className="rounded-full border border-amber-200 bg-amber-50 px-2.5 py-0.5 font-mono text-[11px] font-semibold text-amber-800">
+              <span className="rounded-full border border-amber-400/30 bg-amber-400/10 px-2.5 py-0.5 font-mono text-[11px] font-semibold text-amber-200">
                 Labels Records: DEMO DATA
               </span>
             </div>
-            <h4 className="mt-3 font-display text-xl font-bold text-[#18181B]">
+            <h4 className="mt-3 font-display text-xl font-bold text-white">
               Vendor Onboarding &amp; Expense Workflow
             </h4>
-            <p className="mt-1.5 text-sm leading-relaxed text-[#4B5563]">
+            <p className="mt-1.5 text-sm leading-relaxed text-white/65">
               Generates a unique realistic vendor and associated expense invoice, sends them into your
               live local n8n webhook, saves both to SQLite Data Tables, and updates CRM metrics in real time.
             </p>
@@ -733,8 +741,8 @@ export function FinFlowLiveDemo() {
                 </>
               )}
             </button>
-            <p className="text-center text-xs text-[#6B7280]">
-              Triggers POST <code className="font-mono text-[#5B21B6]">/webhook/finflow</code>{" "}
+            <p className="text-center text-xs text-white/50">
+              Triggers POST <code className="font-mono text-[#ffb4a6]">/webhook/finflow</code>{" "}
               (real n8n execution — unique sample vendor &amp; invoice every click)
             </p>
           </div>
@@ -746,64 +754,64 @@ export function FinFlowLiveDemo() {
         <div
           className={cn(
             "rounded-2xl border p-6",
-            lastExecution.kind === "success" && "border-emerald-200 bg-emerald-50/60",
-            lastExecution.kind === "duplicate" && "border-amber-200 bg-amber-50/70",
-            lastExecution.kind === "review" && "border-[#DDD6FE] bg-[#FAF9FE]",
-            lastExecution.kind === "error" && "border-red-200 bg-red-50/70"
+            lastExecution.kind === "success" && "border-emerald-400/30 bg-emerald-50/60",
+            lastExecution.kind === "duplicate" && "border-amber-400/30 bg-amber-50/70",
+            lastExecution.kind === "review" && "border-[#ff6d5a]/25 bg-white/[0.035]",
+            lastExecution.kind === "error" && "border-red-400/30 bg-red-50/70"
           )}
         >
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div className="flex items-start gap-3">
               {lastExecution.kind === "success" && (
-                <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600" />
+                <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-300" />
               )}
               {lastExecution.kind === "duplicate" && (
-                <CopyCheck className="mt-0.5 h-5 w-5 shrink-0 text-amber-600" />
+                <CopyCheck className="mt-0.5 h-5 w-5 shrink-0 text-amber-300" />
               )}
               {lastExecution.kind === "review" && (
-                <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-[#7C3AED]" />
+                <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-[#ff8a73]" />
               )}
               {lastExecution.kind === "error" && (
-                <XCircle className="mt-0.5 h-5 w-5 shrink-0 text-red-600" />
+                <XCircle className="mt-0.5 h-5 w-5 shrink-0 text-red-300" />
               )}
               <div>
                 <div className="flex flex-wrap items-center gap-2">
-                  <h5 className="font-display text-base font-bold text-[#18181B]">
+                  <h5 className="font-display text-base font-bold text-white">
                     {lastExecution.title}
                   </h5>
                   {lastExecution.isDemo && (
-                    <span className="rounded-full bg-amber-100 px-2.5 py-0.5 font-mono text-[11px] font-bold text-amber-900">
+                    <span className="rounded-full bg-amber-400/15 px-2.5 py-0.5 font-mono text-[11px] font-bold text-amber-200">
                       DEMO DATA
                     </span>
                   )}
                 </div>
-                <p className="mt-1 text-sm text-[#374151]">{lastExecution.message}</p>
+                <p className="mt-1 text-sm text-white/75">{lastExecution.message}</p>
               </div>
             </div>
             {lastExecution.executionId && (
-              <span className="rounded-lg border border-[#E5E7EB] bg-white px-3 py-1 font-mono text-xs font-semibold text-[#4C1D95]">
+              <span className="rounded-lg border border-white/10 bg-white/[0.04] px-3 py-1 font-mono text-xs font-semibold text-white">
                 n8n Execution #{lastExecution.executionId}
               </span>
             )}
           </div>
 
           {lastExecution.record && (
-            <div className="mt-4 grid grid-cols-2 gap-3 rounded-xl border border-[#E5E7EB] bg-white p-4 text-xs sm:grid-cols-4">
+            <div className="mt-4 grid grid-cols-2 gap-3 rounded-xl border border-white/10 bg-white/[0.04] p-4 text-xs sm:grid-cols-4">
               <div>
-                <span className="text-[#6B7280]">Vendor</span>
-                <p className="mt-0.5 font-semibold text-[#18181B]">
+                <span className="text-white/50">Vendor</span>
+                <p className="mt-0.5 font-semibold text-white">
                   {lastExecution.record.vendor_name || "Missing (Review)"}
                 </p>
               </div>
               <div>
-                <span className="text-[#6B7280]">Invoice #</span>
-                <p className="mt-0.5 font-mono font-semibold text-[#4C1D95]">
+                <span className="text-white/50">Invoice #</span>
+                <p className="mt-0.5 font-mono font-semibold text-white">
                   {lastExecution.record.invoice_number || "Missing"}
                 </p>
               </div>
               <div>
-                <span className="text-[#6B7280]">Total / Currency</span>
-                <p className="mt-0.5 font-semibold text-[#18181B]">
+                <span className="text-white/50">Total / Currency</span>
+                <p className="mt-0.5 font-semibold text-white">
                   {lastExecution.record.total_amount
                     ? fmtMoney(
                         Number(lastExecution.record.total_amount),
@@ -813,8 +821,8 @@ export function FinFlowLiveDemo() {
                 </p>
               </div>
               <div>
-                <span className="text-[#6B7280]">Category / Method</span>
-                <p className="mt-0.5 font-semibold text-[#18181B]">
+                <span className="text-white/50">Category / Method</span>
+                <p className="mt-0.5 font-semibold text-white">
                   {lastExecution.record.expense_category || "Uncategorized"}
                   {lastExecution.record.extraction_method
                     ? ` · ${lastExecution.record.extraction_method}`
@@ -826,11 +834,11 @@ export function FinFlowLiveDemo() {
 
           {lastExecution.missingFields && lastExecution.missingFields.length > 0 && (
             <div className="mt-3 flex flex-wrap items-center gap-2 text-xs">
-              <span className="font-semibold text-[#4C1D95]">Missing Fields Flagged:</span>
+              <span className="font-semibold text-white">Missing Fields Flagged:</span>
               {lastExecution.missingFields.map((f) => (
                 <span
                   key={f}
-                  className="rounded-md border border-[#DDD6FE] bg-white px-2 py-0.5 font-mono text-[#6D28D9]"
+                  className="rounded-md border border-[#ff6d5a]/25 bg-white/[0.04] px-2 py-0.5 font-mono text-[#ff8a73]"
                 >
                   {f}
                 </span>
@@ -843,28 +851,28 @@ export function FinFlowLiveDemo() {
       {/* ================================================================
           FINFLOW LIVE CRM DASHBOARD (100% REAL STORED RECORDS)
           ================================================================ */}
-      <div className="overflow-hidden rounded-3xl border border-[#E5E7EB] bg-white">
-        <div className="border-b border-[#ECEBF2] bg-[#FAF9FE] px-6 py-5 sm:px-8">
+      <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04]">
+        <div className="border-b border-white/10 bg-white/[0.035] px-6 py-5 sm:px-8">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#7C3AED]">
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#ff8a73]">
                 Live Accounting CRM Dashboard
               </p>
-              <h4 className="mt-1 font-display text-2xl font-bold text-[#18181B]">
+              <h4 className="mt-1 font-display text-2xl font-bold text-white">
                 FinFlow Financial &amp; Vendor Ledger ({selectedCurrency})
               </h4>
             </div>
-            <div className="flex items-center gap-2 text-xs text-[#6B7280]">
+            <div className="flex items-center gap-2 text-xs text-white/50">
               <span>
                 Real Records:{" "}
-                <strong className="text-[#18181B]">
+                <strong className="text-white">
                   {dashboard?.overview.real_records_count ?? 0}
                 </strong>
               </span>
               <span>·</span>
               <span>
                 Demo Records:{" "}
-                <strong className="text-amber-700">
+                <strong className="text-amber-300">
                   {dashboard?.overview.demo_records_count ?? 0}
                 </strong>
               </span>
@@ -873,67 +881,67 @@ export function FinFlowLiveDemo() {
 
           {/* Overview KPI Cards (6 Required Metrics) */}
           <div className="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-6">
-            <div className="rounded-2xl border border-[#E5E7EB] bg-white p-4">
-              <p className="text-xs font-medium text-[#6B7280]">Total Income</p>
-              <p className="mt-2 font-display text-xl font-bold text-emerald-700">
+            <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+              <p className="text-xs font-medium text-white/50">Total Income</p>
+              <p className="mt-2 font-display text-xl font-bold text-emerald-300">
                 {fmtMoney(activeCurrencyTotals.total_income, selectedCurrency)}
               </p>
-              <p className="mt-1 text-[11px] text-[#6B7280]">
+              <p className="mt-1 text-[11px] text-white/50">
                 {activeCurrencyTotals.income_count} income entries
               </p>
             </div>
 
-            <div className="rounded-2xl border border-[#E5E7EB] bg-white p-4">
-              <p className="text-xs font-medium text-[#6B7280]">Total Expenses</p>
-              <p className="mt-2 font-display text-xl font-bold text-[#18181B]">
+            <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+              <p className="text-xs font-medium text-white/50">Total Expenses</p>
+              <p className="mt-2 font-display text-xl font-bold text-white">
                 {fmtMoney(activeCurrencyTotals.total_expenses, selectedCurrency)}
               </p>
-              <p className="mt-1 text-[11px] text-[#6B7280]">
+              <p className="mt-1 text-[11px] text-white/50">
                 {activeCurrencyTotals.expense_count} expense invoices
               </p>
             </div>
 
-            <div className="rounded-2xl border border-[#DDD6FE] bg-[#F5F3FF]/60 p-4">
-              <p className="text-xs font-medium text-[#5B21B6]">Net Profit</p>
+            <div className="rounded-2xl border border-[#ff6d5a]/25 bg-[#ff6d5a]/10 p-4">
+              <p className="text-xs font-medium text-[#ffb4a6]">Net Profit</p>
               <p
                 className={cn(
                   "mt-2 font-display text-xl font-bold",
-                  activeCurrencyTotals.net_profit >= 0 ? "text-[#4C1D95]" : "text-red-700"
+                  activeCurrencyTotals.net_profit >= 0 ? "text-white" : "text-red-300"
                 )}
               >
                 {fmtMoney(activeCurrencyTotals.net_profit, selectedCurrency)}
               </p>
-              <p className="mt-1 text-[11px] text-[#6D28D9]">Income − Expenses ({selectedCurrency})</p>
+              <p className="mt-1 text-[11px] text-[#ff8a73]">Income − Expenses ({selectedCurrency})</p>
             </div>
 
-            <div className="rounded-2xl border border-[#E5E7EB] bg-white p-4">
-              <p className="text-xs font-medium text-[#6B7280]">Total Vendors</p>
-              <p className="mt-2 font-display text-xl font-bold text-[#18181B]">
+            <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+              <p className="text-xs font-medium text-white/50">Total Vendors</p>
+              <p className="mt-2 font-display text-xl font-bold text-white">
                 {dashboard?.overview.total_vendors ?? 0}
               </p>
-              <p className="mt-1 text-[11px] text-[#6B7280]">Persisted directory</p>
+              <p className="mt-1 text-[11px] text-white/50">Persisted directory</p>
             </div>
 
-            <div className="rounded-2xl border border-[#E5E7EB] bg-white p-4">
-              <p className="text-xs font-medium text-[#6B7280]">Total Transactions</p>
-              <p className="mt-2 font-display text-xl font-bold text-[#18181B]">
+            <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+              <p className="text-xs font-medium text-white/50">Total Transactions</p>
+              <p className="mt-2 font-display text-xl font-bold text-white">
                 {dashboard?.overview.total_transactions ?? 0}
               </p>
-              <p className="mt-1 text-[11px] text-[#6B7280]">Duplicates excluded</p>
+              <p className="mt-1 text-[11px] text-white/50">Duplicates excluded</p>
             </div>
 
-            <div className="rounded-2xl border border-[#E5E7EB] bg-white p-4">
-              <p className="text-xs font-medium text-[#6B7280]">Pending Reviews</p>
-              <p className="mt-2 font-display text-xl font-bold text-amber-700">
+            <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+              <p className="text-xs font-medium text-white/50">Pending Reviews</p>
+              <p className="mt-2 font-display text-xl font-bold text-amber-300">
                 {dashboard?.overview.pending_reviews ?? 0}
               </p>
-              <p className="mt-1 text-[11px] text-[#6B7280]">Human review queue</p>
+              <p className="mt-1 text-[11px] text-white/50">Human review queue</p>
             </div>
           </div>
         </div>
 
         {/* CRM Navigation Tabs */}
-        <div className="flex flex-wrap items-center gap-2 border-b border-[#ECEBF2] bg-white px-6 py-3 sm:px-8">
+        <div className="flex flex-wrap items-center gap-2 border-b border-white/10 bg-white/[0.04] px-6 py-3 sm:px-8">
           {(
             [
               { key: "transactions", label: "Transactions", icon: ListChecks },
@@ -950,8 +958,8 @@ export function FinFlowLiveDemo() {
               className={cn(
                 "inline-flex cursor-pointer items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition-colors",
                 activeTab === key
-                  ? "bg-[#7C3AED] text-white"
-                  : "text-[#4B5563] hover:bg-[#F5F3FF] hover:text-[#5B21B6]"
+                  ? "bg-[#ff5a6e] text-white"
+                  : "text-white/65 hover:bg-[#ff6d5a]/10 hover:text-[#ffb4a6]"
               )}
             >
               <Icon className="h-4 w-4" />
@@ -966,10 +974,10 @@ export function FinFlowLiveDemo() {
           {activeTab === "transactions" && (
             <div className="space-y-4">
               <div className="flex flex-wrap items-center justify-between gap-3">
-                <p className="text-sm text-[#4B5563]">
+                <p className="text-sm text-white/65">
                   All validated transactions stored in local n8n SQLite (<code className="font-mono text-xs">finflow_crm_transactions</code>).
                 </p>
-                <div className="flex items-center gap-1 rounded-xl border border-[#E5E7EB] bg-[#F9FAFB] p-1 text-xs">
+                <div className="flex items-center gap-1 rounded-xl border border-white/10 bg-white/[0.035] p-1 text-xs">
                   {(["all", "real", "demo"] as const).map((f) => (
                     <button
                       key={f}
@@ -978,8 +986,8 @@ export function FinFlowLiveDemo() {
                       className={cn(
                         "cursor-pointer rounded-lg px-3 py-1 font-semibold capitalize transition-colors",
                         recordFilter === f
-                          ? "bg-white text-[#5B21B6] shadow-xs"
-                          : "text-[#6B7280] hover:text-[#18181B]"
+                          ? "bg-white/[0.04] text-[#ffb4a6] shadow-xs"
+                          : "text-white/50 hover:text-white"
                       )}
                     >
                       {f === "all" ? "All Records" : f === "real" ? "Uploaded Invoices" : "DEMO DATA"}
@@ -988,9 +996,9 @@ export function FinFlowLiveDemo() {
                 </div>
               </div>
 
-              <div className="overflow-x-auto rounded-2xl border border-[#E5E7EB]">
+              <div className="overflow-x-auto rounded-2xl border border-white/10">
                 <table className="w-full text-left text-sm">
-                  <thead className="border-b border-[#E5E7EB] bg-[#F7F7FA] text-xs font-semibold uppercase tracking-wider text-[#6B7280]">
+                  <thead className="border-b border-white/10 bg-white/[0.035] text-xs font-semibold uppercase tracking-wider text-white/50">
                     <tr>
                       <th className="px-4 py-3">Transaction ID</th>
                       <th className="px-4 py-3">Vendor</th>
@@ -1001,39 +1009,39 @@ export function FinFlowLiveDemo() {
                       <th className="px-4 py-3">Status</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#F1F1F5]">
+                  <tbody className="divide-y divide-white/[0.07]">
                     {filteredTransactions.length === 0 ? (
                       <tr>
-                        <td colSpan={7} className="px-4 py-10 text-center text-sm text-[#6B7280]">
+                        <td colSpan={7} className="px-4 py-10 text-center text-sm text-white/50">
                           No transactions recorded yet. Upload an invoice or click{" "}
                           <strong>Run Vendor Workflow</strong> above.
                         </td>
                       </tr>
                     ) : (
                       filteredTransactions.map((tx) => (
-                        <tr key={tx.record_id} className="hover:bg-[#FAF9FE]/70">
-                          <td className="whitespace-nowrap px-4 py-3.5 font-mono text-xs font-semibold text-[#4C1D95]">
+                        <tr key={tx.record_id} className="hover:bg-white/[0.04]">
+                          <td className="whitespace-nowrap px-4 py-3.5 font-mono text-xs font-semibold text-white">
                             <div>{tx.record_id}</div>
-                            <div className="text-[11px] font-normal text-[#6B7280]">
+                            <div className="text-[11px] font-normal text-white/50">
                               {tx.invoice_number}
                             </div>
                           </td>
                           <td className="px-4 py-3.5">
-                            <div className="font-semibold text-[#18181B]">{tx.vendor_name}</div>
+                            <div className="font-semibold text-white">{tx.vendor_name}</div>
                             {tx.is_demo && (
-                              <span className="mt-0.5 inline-block rounded bg-amber-100 px-1.5 py-0.5 font-mono text-[10px] font-bold text-amber-900">
+                              <span className="mt-0.5 inline-block rounded bg-amber-400/15 px-1.5 py-0.5 font-mono text-[10px] font-bold text-amber-200">
                                 DEMO DATA
                               </span>
                             )}
                           </td>
-                          <td className="whitespace-nowrap px-4 py-3.5 text-xs text-[#4B5563]">
+                          <td className="whitespace-nowrap px-4 py-3.5 text-xs text-white/65">
                             {tx.invoice_date || "—"}
                           </td>
-                          <td className="max-w-[220px] truncate px-4 py-3.5 text-xs text-[#374151]">
+                          <td className="max-w-[220px] truncate px-4 py-3.5 text-xs text-white/75">
                             {tx.description || tx.source_filename}
                           </td>
                           <td className="whitespace-nowrap px-4 py-3.5">
-                            <span className="rounded-full bg-[#F5F3FF] px-2.5 py-1 text-xs font-medium text-[#5B21B6]">
+                            <span className="rounded-full bg-[#ff6d5a]/10 px-2.5 py-1 text-xs font-medium text-[#ffb4a6]">
                               {tx.expense_category}
                             </span>
                           </td>
@@ -1041,14 +1049,14 @@ export function FinFlowLiveDemo() {
                             <span
                               className={
                                 tx.transaction_type === "income"
-                                  ? "text-emerald-700"
-                                  : "text-[#18181B]"
+                                  ? "text-emerald-300"
+                                  : "text-white"
                               }
                             >
                               {tx.transaction_type === "income" ? "+" : "−"}
                               {fmtMoney(tx.total_amount, tx.currency)}
                             </span>
-                            <div className="text-[10px] font-normal text-[#6B7280]">
+                            <div className="text-[10px] font-normal text-white/50">
                               {tx.currency} · {tx.transaction_type}
                             </div>
                           </td>
@@ -1057,8 +1065,8 @@ export function FinFlowLiveDemo() {
                               className={cn(
                                 "rounded-full px-2.5 py-1 text-xs font-semibold capitalize",
                                 tx.payment_status === "paid"
-                                  ? "bg-emerald-50 text-emerald-700"
-                                  : "bg-amber-50 text-amber-800"
+                                  ? "bg-emerald-400/10 text-emerald-300"
+                                  : "bg-amber-400/10 text-amber-200"
                               )}
                             >
                               {tx.payment_status || tx.review_status}
@@ -1077,54 +1085,54 @@ export function FinFlowLiveDemo() {
           {activeTab === "vendors" && (
             <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
               {(dashboard?.vendors || []).length === 0 ? (
-                <p className="col-span-2 py-8 text-center text-sm text-[#6B7280]">
+                <p className="col-span-2 py-8 text-center text-sm text-white/50">
                   No vendors saved yet. Run the Vendor Workflow or upload an invoice to create vendor records automatically.
                 </p>
               ) : (
                 (dashboard?.vendors || []).map((v) => (
                   <div
                     key={v.vendor_id}
-                    className="rounded-2xl border border-[#E5E7EB] bg-[#FAFAFC] p-5"
+                    className="rounded-2xl border border-white/10 bg-white/[0.035] p-5"
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div>
                         <div className="flex flex-wrap items-center gap-2">
-                          <h5 className="font-display text-lg font-bold text-[#18181B]">
+                          <h5 className="font-display text-lg font-bold text-white">
                             {v.vendor_name}
                           </h5>
                           {v.is_demo && (
-                            <span className="rounded-full bg-amber-100 px-2 py-0.5 font-mono text-[10px] font-bold text-amber-900">
+                            <span className="rounded-full bg-amber-400/15 px-2 py-0.5 font-mono text-[10px] font-bold text-amber-200">
                               DEMO DATA
                             </span>
                           )}
                         </div>
-                        <p className="mt-0.5 text-xs text-[#6B7280]">
+                        <p className="mt-0.5 text-xs text-white/50">
                           {v.default_category} · ID:{" "}
                           <span className="font-mono">{v.vendor_id}</span>
                         </p>
                       </div>
-                      <span className="rounded-xl border border-[#DDD6FE] bg-white px-3 py-1.5 text-xs font-semibold text-[#5B21B6]">
+                      <span className="rounded-xl border border-[#ff6d5a]/25 bg-white/[0.04] px-3 py-1.5 text-xs font-semibold text-[#ffb4a6]">
                         {v.invoice_count} {v.invoice_count === 1 ? "Invoice" : "Invoices"}
                       </span>
                     </div>
 
-                    <div className="mt-4 grid grid-cols-2 gap-3 rounded-xl border border-[#ECEBF2] bg-white p-3.5 text-xs">
+                    <div className="mt-4 grid grid-cols-2 gap-3 rounded-xl border border-white/10 bg-white/[0.04] p-3.5 text-xs">
                       <div>
-                        <span className="text-[#6B7280]">Contact Details</span>
-                        <p className="mt-0.5 font-medium text-[#374151]">
+                        <span className="text-white/50">Contact Details</span>
+                        <p className="mt-0.5 font-medium text-white/75">
                           {v.contact_email || "Not provided on document"}
                         </p>
                         {v.contact_phone && (
-                          <p className="text-[#6B7280]">{v.contact_phone}</p>
+                          <p className="text-white/50">{v.contact_phone}</p>
                         )}
                       </div>
                       <div>
-                        <span className="text-[#6B7280]">Total Expenses</span>
+                        <span className="text-white/50">Total Expenses</span>
                         {Object.keys(v.total_expenses_by_currency).length === 0 ? (
-                          <p className="mt-0.5 font-semibold text-[#6B7280]">$0.00 (Income/None)</p>
+                          <p className="mt-0.5 font-semibold text-white/50">$0.00 (Income/None)</p>
                         ) : (
                           Object.entries(v.total_expenses_by_currency).map(([ccy, amt]) => (
-                            <p key={ccy} className="mt-0.5 font-mono font-bold text-[#18181B]">
+                            <p key={ccy} className="mt-0.5 font-mono font-bold text-white">
                               {fmtMoney(amt, ccy)}
                             </p>
                           ))
@@ -1134,17 +1142,17 @@ export function FinFlowLiveDemo() {
 
                     {v.recent_transactions.length > 0 && (
                       <div className="mt-3 space-y-1.5">
-                        <p className="text-[11px] font-semibold uppercase tracking-wider text-[#6B7280]">
+                        <p className="text-[11px] font-semibold uppercase tracking-wider text-white/50">
                           Recent Transactions
                         </p>
                         {v.recent_transactions.slice(0, 3).map((rt) => (
                           <div
                             key={rt.record_id}
-                            className="flex items-center justify-between rounded-lg bg-white px-3 py-2 text-xs border border-[#ECEBF2]"
+                            className="flex items-center justify-between rounded-lg bg-white/[0.04] px-3 py-2 text-xs border border-white/10"
                           >
-                            <span className="font-mono text-[#4C1D95]">{rt.invoice_number}</span>
-                            <span className="text-[#6B7280]">{rt.invoice_date}</span>
-                            <span className="font-mono font-semibold text-[#18181B]">
+                            <span className="font-mono text-white">{rt.invoice_number}</span>
+                            <span className="text-white/50">{rt.invoice_date}</span>
+                            <span className="font-mono font-semibold text-white">
                               {fmtMoney(rt.total_amount, rt.currency)}
                             </span>
                           </div>
@@ -1160,25 +1168,25 @@ export function FinFlowLiveDemo() {
           {/* TAB 3: EXPENSE ANALYTICS */}
           {activeTab === "expense_analytics" && (
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-              <div className="rounded-2xl border border-[#E5E7EB] bg-white p-5">
-                <h5 className="font-display text-base font-bold text-[#18181B]">
+              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+                <h5 className="font-display text-base font-bold text-white">
                   Expenses by Category ({selectedCurrency})
                 </h5>
-                <p className="mt-0.5 text-xs text-[#6B7280]">
+                <p className="mt-0.5 text-xs text-white/50">
                   Deterministic aggregation from stored expense transactions
                 </p>
                 <div className="mt-4 h-[260px] w-full">
                   {categoryChartData.length === 0 ? (
-                    <div className="flex h-full items-center justify-center text-sm text-[#6B7280]">
+                    <div className="flex h-full items-center justify-center text-sm text-white/50">
                       No expense data for {selectedCurrency} yet.
                     </div>
                   ) : (
                     <ResponsiveContainer width="100%" height="100%">
                       <BarChart data={categoryChartData} margin={{ top: 8, right: 12, left: 0, bottom: 16 }}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#ECEBF2" />
-                        <XAxis dataKey="category" stroke="#6B7280" fontSize={11} tickLine={false} />
-                        <YAxis stroke="#6B7280" fontSize={11} tickLine={false} />
-                        <Tooltip formatter={(v) => [fmtMoney(Number(v), selectedCurrency), "Expense"]} />
+                        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.08)" />
+                        <XAxis dataKey="category" stroke="rgba(255,255,255,0.5)" fontSize={11} tickLine={false} />
+                        <YAxis stroke="rgba(255,255,255,0.5)" fontSize={11} tickLine={false} />
+                        <Tooltip contentStyle={TOOLTIP_STYLE} labelStyle={{ color: "#fff" }} itemStyle={{ color: "#ffb4a6" }} cursor={{ fill: "rgba(255,255,255,0.04)" }} formatter={(v) => [fmtMoney(Number(v), selectedCurrency), "Expense"]} />
                         <Bar dataKey="amount" radius={[6, 6, 0, 0]}>
                           {categoryChartData.map((_, i) => (
                             <Cell key={i} fill={CHART_COLORS[i % CHART_COLORS.length]} />
@@ -1190,16 +1198,16 @@ export function FinFlowLiveDemo() {
                 </div>
               </div>
 
-              <div className="rounded-2xl border border-[#E5E7EB] bg-white p-5">
-                <h5 className="font-display text-base font-bold text-[#18181B]">
+              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+                <h5 className="font-display text-base font-bold text-white">
                   Vendor-Wise Expenses ({selectedCurrency})
                 </h5>
-                <p className="mt-0.5 text-xs text-[#6B7280]">
+                <p className="mt-0.5 text-xs text-white/50">
                   Top vendors ranked by total verified expense spend
                 </p>
                 <div className="mt-4 h-[260px] w-full">
                   {vendorChartData.length === 0 ? (
-                    <div className="flex h-full items-center justify-center text-sm text-[#6B7280]">
+                    <div className="flex h-full items-center justify-center text-sm text-white/50">
                       No vendor expenses recorded yet.
                     </div>
                   ) : (
@@ -1209,11 +1217,11 @@ export function FinFlowLiveDemo() {
                         layout="vertical"
                         margin={{ top: 6, right: 16, left: 10, bottom: 6 }}
                       >
-                        <CartesianGrid strokeDasharray="3 3" stroke="#ECEBF2" />
-                        <XAxis type="number" stroke="#6B7280" fontSize={11} />
-                        <YAxis type="category" dataKey="vendor" width={130} stroke="#374151" fontSize={11} />
-                        <Tooltip formatter={(v) => [fmtMoney(Number(v), selectedCurrency), "Vendor Spend"]} />
-                        <Bar dataKey="amount" fill="#7C3AED" radius={[0, 6, 6, 0]} />
+                        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.08)" />
+                        <XAxis type="number" stroke="rgba(255,255,255,0.5)" fontSize={11} />
+                        <YAxis type="category" dataKey="vendor" width={130} stroke="rgba(255,255,255,0.7)" fontSize={11} />
+                        <Tooltip contentStyle={TOOLTIP_STYLE} labelStyle={{ color: "#fff" }} itemStyle={{ color: "#ffb4a6" }} cursor={{ fill: "rgba(255,255,255,0.04)" }} formatter={(v) => [fmtMoney(Number(v), selectedCurrency), "Vendor Spend"]} />
+                        <Bar dataKey="amount" fill="#ff6d5a" radius={[0, 6, 6, 0]} />
                       </BarChart>
                     </ResponsiveContainer>
                   )}
@@ -1225,33 +1233,33 @@ export function FinFlowLiveDemo() {
           {/* TAB 4: FINANCIAL ANALYTICS */}
           {activeTab === "financial_analytics" && (
             <div className="space-y-6">
-              <div className="rounded-xl border border-[#DDD6FE] bg-[#FAF9FE] px-5 py-3.5 text-xs text-[#4C1D95]">
+              <div className="rounded-xl border border-[#ff6d5a]/25 bg-white/[0.035] px-5 py-3.5 text-xs text-white">
                 <strong>Deterministic Accounting Policy:</strong> {dashboard?.multi_currency_policy}
               </div>
 
-              <div className="rounded-2xl border border-[#E5E7EB] bg-white p-6">
-                <h5 className="font-display text-lg font-bold text-[#18181B]">
+              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
+                <h5 className="font-display text-lg font-bold text-white">
                   Monthly Income vs. Expenses &amp; Net Profit ({selectedCurrency})
                 </h5>
-                <p className="mt-0.5 text-xs text-[#6B7280]">
+                <p className="mt-0.5 text-xs text-white/50">
                   Calculated deterministically from persisted ledger entries (income and expenses kept strictly separate)
                 </p>
                 <div className="mt-5 h-[300px] w-full">
                   {monthlyChartData.length === 0 ? (
-                    <div className="flex h-full items-center justify-center text-sm text-[#6B7280]">
+                    <div className="flex h-full items-center justify-center text-sm text-white/50">
                       No monthly financial data yet.
                     </div>
                   ) : (
                     <ResponsiveContainer width="100%" height="100%">
                       <BarChart data={monthlyChartData} margin={{ top: 10, right: 16, left: 0, bottom: 6 }}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#ECEBF2" />
-                        <XAxis dataKey="month" stroke="#6B7280" fontSize={12} />
-                        <YAxis stroke="#6B7280" fontSize={12} />
-                        <Tooltip formatter={(v) => fmtMoney(Number(v), selectedCurrency)} />
+                        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.08)" />
+                        <XAxis dataKey="month" stroke="rgba(255,255,255,0.5)" fontSize={12} />
+                        <YAxis stroke="rgba(255,255,255,0.5)" fontSize={12} />
+                        <Tooltip contentStyle={TOOLTIP_STYLE} labelStyle={{ color: "#fff" }} itemStyle={{ color: "#ffb4a6" }} cursor={{ fill: "rgba(255,255,255,0.04)" }} formatter={(v) => fmtMoney(Number(v), selectedCurrency)} />
                         <Legend />
                         <Bar dataKey="income" name="Monthly Income" fill="#10B981" radius={[5, 5, 0, 0]} />
-                        <Bar dataKey="expenses" name="Monthly Expenses" fill="#7C3AED" radius={[5, 5, 0, 0]} />
-                        <Bar dataKey="net_profit" name="Net Profit" fill="#18181B" radius={[5, 5, 0, 0]} />
+                        <Bar dataKey="expenses" name="Monthly Expenses" fill="#ff6d5a" radius={[5, 5, 0, 0]} />
+                        <Bar dataKey="net_profit" name="Net Profit" fill="#a78bfa" radius={[5, 5, 0, 0]} />
                       </BarChart>
                     </ResponsiveContainer>
                   )}
@@ -1264,35 +1272,35 @@ export function FinFlowLiveDemo() {
           {activeTab === "activity" && (
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
               <div className="space-y-3 lg:col-span-7">
-                <h5 className="font-display text-base font-bold text-[#18181B]">
+                <h5 className="font-display text-base font-bold text-white">
                   Recent Workflow &amp; Processing Activity
                 </h5>
                 {(dashboard?.recent_activity || []).length === 0 ? (
-                  <p className="text-sm text-[#6B7280]">No activity logged yet.</p>
+                  <p className="text-sm text-white/50">No activity logged yet.</p>
                 ) : (
                   (dashboard?.recent_activity || []).map((act) => (
                     <div
                       key={act.activity_id}
-                      className="flex items-start justify-between gap-3 rounded-xl border border-[#ECEBF2] bg-[#FAFAFC] px-4 py-3.5"
+                      className="flex items-start justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.035] px-4 py-3.5"
                     >
                       <div>
                         <div className="flex flex-wrap items-center gap-2">
-                          <span className="text-sm font-semibold text-[#18181B]">{act.title}</span>
+                          <span className="text-sm font-semibold text-white">{act.title}</span>
                           {act.is_demo && (
-                            <span className="rounded bg-amber-100 px-1.5 py-0.5 font-mono text-[10px] font-bold text-amber-900">
+                            <span className="rounded bg-amber-400/15 px-1.5 py-0.5 font-mono text-[10px] font-bold text-amber-200">
                               DEMO DATA
                             </span>
                           )}
                         </div>
-                        <p className="mt-0.5 text-xs text-[#4B5563]">{act.detail}</p>
+                        <p className="mt-0.5 text-xs text-white/65">{act.detail}</p>
                       </div>
                       <span
                         className={cn(
                           "shrink-0 rounded-full px-2.5 py-0.5 text-[11px] font-semibold capitalize",
-                          act.status === "success" && "bg-emerald-50 text-emerald-700",
-                          act.status === "duplicate" && "bg-amber-50 text-amber-800",
-                          act.status === "needs_review" && "bg-[#F5F3FF] text-[#6D28D9]",
-                          act.status === "failed" && "bg-red-50 text-red-700"
+                          act.status === "success" && "bg-emerald-400/10 text-emerald-300",
+                          act.status === "duplicate" && "bg-amber-400/10 text-amber-200",
+                          act.status === "needs_review" && "bg-[#ff6d5a]/10 text-[#ff8a73]",
+                          act.status === "failed" && "bg-red-400/10 text-red-300"
                         )}
                       >
                         {act.status.replace("_", " ")}
@@ -1304,13 +1312,13 @@ export function FinFlowLiveDemo() {
 
               <div className="space-y-3 lg:col-span-5">
                 <div className="flex items-center gap-2">
-                  <ShieldAlert className="h-4 w-4 text-amber-600" />
-                  <h5 className="font-display text-base font-bold text-[#18181B]">
+                  <ShieldAlert className="h-4 w-4 text-amber-300" />
+                  <h5 className="font-display text-base font-bold text-white">
                     Pending Human Reviews ({dashboard?.pending_reviews?.length ?? 0})
                   </h5>
                 </div>
                 {(dashboard?.pending_reviews || []).length === 0 ? (
-                  <p className="rounded-xl border border-[#ECEBF2] bg-[#FAFAFC] p-4 text-xs text-[#6B7280]">
+                  <p className="rounded-xl border border-white/10 bg-white/[0.035] p-4 text-xs text-white/50">
                     No documents currently flagged for human review.
                   </p>
                 ) : (
@@ -1320,10 +1328,10 @@ export function FinFlowLiveDemo() {
                       className="rounded-xl border border-amber-200/80 bg-amber-50/40 p-4 text-xs"
                     >
                       <div className="flex items-center justify-between gap-2">
-                        <span className="font-semibold text-[#18181B]">{rev.source_filename}</span>
-                        <span className="font-mono text-[10px] text-amber-900">{rev.status}</span>
+                        <span className="font-semibold text-white">{rev.source_filename}</span>
+                        <span className="font-mono text-[10px] text-amber-200">{rev.status}</span>
                       </div>
-                      <p className="mt-1 text-[#4B5563]">{rev.failure_reason}</p>
+                      <p className="mt-1 text-white/65">{rev.failure_reason}</p>
                     </div>
                   ))
                 )}

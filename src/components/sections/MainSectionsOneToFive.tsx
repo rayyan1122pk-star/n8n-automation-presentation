@@ -1,14 +1,21 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  AnimatePresence,
+  motion,
+  useInView,
+  useMotionValueEvent,
+  useScroll,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 import {
   Zap,
   SlidersHorizontal,
   GitBranch,
   PlayCircle,
   CheckCircle2,
-  Cpu,
-  ChevronDown,
   Workflow,
   Boxes,
   KeyRound,
@@ -18,6 +25,19 @@ import {
   Braces,
   Database,
   Link2,
+  Receipt,
+  BellRing,
+  CalendarClock,
+  Timer,
+  AlertTriangle,
+  Hourglass,
+  EyeOff,
+  ArrowRight,
+  X,
+  FileText,
+  MessageSquareText,
+  Cpu,
+  Braces as JsonIcon,
 } from "lucide-react";
 import { SectionShell } from "@/components/ui/SectionShell";
 import {
@@ -28,19 +48,15 @@ import {
   SECTION_5_N8N_AND_AI,
 } from "@/content/presentation-sections";
 import { cn } from "@/lib/utils";
+import { EASE, GlassCard, Reveal, Stagger, StaggerItem } from "@/components/premium/motion";
+import { DarkRender } from "@/components/premium/DarkRender";
 
-const WORKFLOW_STAGE_ICONS = [
-  Zap,
-  SlidersHorizontal,
-  GitBranch,
-  PlayCircle,
-  CheckCircle2,
-];
+const WORKFLOW_STAGE_ICONS = [Zap, SlidersHorizontal, GitBranch, PlayCircle, CheckCircle2];
+const PROBLEM_ICONS = [Timer, AlertTriangle, Hourglass, EyeOff];
+const EXAMPLE_ICONS = [Receipt, BellRing, CalendarClock];
+const AI_STEP_ICONS = [FileText, MessageSquareText, Cpu, JsonIcon];
 
-const COMPONENT_ICON_MAP: Record<
-  string,
-  React.ComponentType<{ className?: string }>
-> = {
+const COMPONENT_ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
   Workflows: Workflow,
   Nodes: Boxes,
   Triggers: Zap,
@@ -55,13 +71,85 @@ const COMPONENT_ICON_MAP: Record<
   "Error Handling": ShieldAlert,
 };
 
+function Label({ children, tone = "warm" }: { children: React.ReactNode; tone?: "warm" | "cool" }) {
+  return (
+    <span
+      className={cn(
+        "inline-flex items-center gap-2 font-mono text-[11px] font-medium uppercase tracking-[0.2em]",
+        tone === "warm" ? "text-[#ff8a73]" : "text-[#a5b4fc]"
+      )}
+    >
+      <span className={cn("h-px w-6", tone === "warm" ? "bg-[#ff8a73]" : "bg-[#a5b4fc]")} />
+      {children}
+    </span>
+  );
+}
+
+function SubHeading({ children, className }: { children: React.ReactNode; className?: string }) {
+  return (
+    <Reveal>
+      <h3 className={cn("font-display text-3xl font-bold tracking-[-0.035em] text-white sm:text-[44px] sm:leading-[1.1]", className)}>
+        {children}
+      </h3>
+    </Reveal>
+  );
+}
+
 /* ============================================================================
    1. INTRODUCTION TO AUTOMATION
-   Inspired by Reference Slide 3 (Central Matte 3D Sphere + 4 Orbital Nodes)
    ============================================================================ */
+function ProblemCard({
+  idx,
+  title,
+  detail,
+  onActive,
+  active,
+}: {
+  idx: number;
+  title: string;
+  detail: string;
+  onActive: (i: number) => void;
+  active: boolean;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { amount: 0.6, margin: "-20% 0px -20% 0px" });
+  useEffect(() => {
+    if (inView) onActive(idx);
+  }, [inView, idx, onActive]);
+  const Icon = PROBLEM_ICONS[idx] ?? Timer;
+  return (
+    <div ref={ref} className="flex min-h-[46vh] items-center py-6">
+      <motion.div
+        animate={{ opacity: active ? 1 : 0.35, scale: active ? 1 : 0.96 }}
+        transition={{ duration: 0.6, ease: EASE }}
+        className="w-full"
+      >
+        <GlassCard className={cn("rounded-[32px] p-8 sm:p-10", active && "ring-glow")}>
+          <div className="flex items-start gap-6">
+            <span className={cn("squircle h-14 w-14 shrink-0", active && "squircle-hot")}>
+              <Icon className="h-6 w-6 text-white" />
+            </span>
+            <div>
+              <span className="font-mono text-xs text-white/40">Problem 0{idx + 1}</span>
+              <h4 className="mt-1 font-display text-2xl font-bold tracking-[-0.03em] text-white sm:text-3xl">{title}</h4>
+              <p className="mt-3 text-base leading-[1.75] text-white/60 sm:text-lg">{detail}</p>
+            </div>
+          </div>
+        </GlassCard>
+      </motion.div>
+    </div>
+  );
+}
+
 export function SectionOneIntroduction() {
-  const [activeProblemIdx, setActiveProblemIdx] = useState(0);
+  const [active, setActive] = useState(0);
   const problems = SECTION_1_INTRO.manualProblems;
+  const orbitPos = [
+    "left-[6%] top-[10%]",
+    "right-[6%] top-[10%]",
+    "left-[6%] bottom-[10%]",
+    "right-[6%] bottom-[10%]",
+  ];
 
   return (
     <SectionShell
@@ -70,175 +158,112 @@ export function SectionOneIntroduction() {
       eyebrow="Main Presentation"
       title="Introduction to Automation"
       subtitle={SECTION_1_INTRO.lead}
-      surface="white"
-      canvasVariant="center"
     >
-      {/* Clean Two-Column Foundations Card */}
-      <div className="neu-card-white grid grid-cols-1 gap-10 rounded-[30px] p-8 sm:p-10 lg:grid-cols-2">
-        <div>
-          <span className="inline-block rounded-full bg-[#EDE9FE] px-3 py-1 text-xs font-semibold text-[#5B3DF5]">
-            Definition
-          </span>
-          <h3 className="mt-3 font-display text-2xl font-bold text-[#1A1D26]">
-            What Automation Means
-          </h3>
-          <p className="mt-3 text-base leading-[1.8] text-[#4C5264]">
-            {SECTION_1_INTRO.whatIsAutomation}
-          </p>
-        </div>
+      {/* Definition + Business need */}
+      <Stagger className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        {[
+          { tag: "Definition", title: "What Automation Means", body: SECTION_1_INTRO.whatIsAutomation, tone: "warm" as const },
+          { tag: "Business Need", title: "Why Businesses Need Automation", body: SECTION_1_INTRO.whyImportant, tone: "cool" as const },
+        ].map((c) => (
+          <StaggerItem key={c.title}>
+            <GlassCard tilt className="h-full rounded-[36px] p-9 sm:p-12">
+              <Label tone={c.tone}>{c.tag}</Label>
+              <h3 className="mt-6 font-display text-3xl font-bold tracking-[-0.035em] text-white sm:text-4xl">{c.title}</h3>
+              <p className="mt-5 text-base leading-[1.85] text-white/60 sm:text-[17px]">{c.body}</p>
+            </GlassCard>
+          </StaggerItem>
+        ))}
+      </Stagger>
 
-        <div className="border-t border-[#E3E7F2] pt-8 lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0">
-          <span className="inline-block rounded-full bg-[#EDE9FE] px-3 py-1 text-xs font-semibold text-[#5B3DF5]">
-            Business Need
-          </span>
-          <h3 className="mt-3 font-display text-2xl font-bold text-[#1A1D26]">
-            Why Businesses Need Automation
-          </h3>
-          <p className="mt-3 text-base leading-[1.8] text-[#4C5264]">
-            {SECTION_1_INTRO.whyImportant}
-          </p>
-        </div>
-      </div>
+      {/* Sticky scroll-story: four problems */}
+      <div className="mt-36">
+        <Label>Scroll story</Label>
+        <SubHeading className="mt-5 max-w-2xl">
+          Four Core Problems With <span className="font-serif font-normal italic text-gradient-warm">Manual Processes</span>
+        </SubHeading>
 
-      {/* Reference Slide 3 Composition: Central 3D White Sphere + 4 Radial Nodes */}
-      <div className="mt-20">
-        <p className="mb-10 text-center font-display text-xl font-bold text-[#1A1D26]">
-          Four Core Problems With Manual Processes
-        </p>
-
-        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12">
-          {/* Left Pair (01 & 03) */}
-          <div className="space-y-10 lg:col-span-4 lg:text-right">
-            {[0, 2].map((idx) => {
-              const item = problems[idx];
-              const active = activeProblemIdx === idx;
-              return (
-                <button
-                  key={item.title}
-                  type="button"
-                  onClick={() => setActiveProblemIdx(idx)}
-                  className={cn(
-                    "block w-full cursor-pointer rounded-2xl p-4 text-left transition-colors lg:text-right",
-                    active ? "bg-white/75 shadow-sm" : "hover:bg-white/45"
-                  )}
-                >
-                  <h4
-                    className={cn(
-                      "font-display text-lg font-bold",
-                      active ? "text-[#5B3DF5]" : "text-[#1A1D26]"
-                    )}
-                  >
-                    {item.title}
-                  </h4>
-                  <p className="mt-2 text-sm leading-[1.7] text-[#4C5264]">
-                    {item.detail}
-                  </p>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Center Matte White 3D Sphere + 4 Orbital Interactive Circles */}
-          <div className="relative mx-auto flex h-[280px] w-[280px] items-center justify-center lg:col-span-4">
-            {/* Soft central 3D white sphere */}
-            <div className="matte-white-sphere h-44 w-44" />
-
-            {/* 4 Positioned Circular Nodes (TL, TR, BL, BR) matching S/W/O/T slide */}
-            {[
-              { idx: 0, label: "01", pos: "left-2 top-3" },
-              { idx: 1, label: "02", pos: "right-2 top-3" },
-              { idx: 2, label: "03", pos: "left-2 bottom-3" },
-              { idx: 3, label: "04", pos: "right-2 bottom-3" },
-            ].map((orb) => {
-              const active = activeProblemIdx === orb.idx;
-              return (
-                <button
-                  key={orb.label}
-                  type="button"
-                  onClick={() => setActiveProblemIdx(orb.idx)}
-                  aria-label={`Highlight ${problems[orb.idx].title}`}
-                  className={cn(
-                    "absolute flex h-20 w-20 cursor-pointer items-center justify-center rounded-full font-display text-lg font-bold transition-transform duration-200 hover:scale-105",
-                    orb.pos,
-                    active
-                      ? "neu-purple-orb text-white"
-                      : "neu-glass-circle text-[#1A1D26]"
-                  )}
-                >
-                  {orb.label}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Right Pair (02 & 04) */}
-          <div className="space-y-10 lg:col-span-4 lg:text-left">
-            {[1, 3].map((idx) => {
-              const item = problems[idx];
-              const active = activeProblemIdx === idx;
-              return (
-                <button
-                  key={item.title}
-                  type="button"
-                  onClick={() => setActiveProblemIdx(idx)}
-                  className={cn(
-                    "block w-full cursor-pointer rounded-2xl p-4 text-left transition-colors",
-                    active ? "bg-white/75 shadow-sm" : "hover:bg-white/45"
-                  )}
-                >
-                  <h4
-                    className={cn(
-                      "font-display text-lg font-bold",
-                      active ? "text-[#5B3DF5]" : "text-[#1A1D26]"
-                    )}
-                  >
-                    {item.title}
-                  </h4>
-                  <p className="mt-2 text-sm leading-[1.7] text-[#4C5264]">
-                    {item.detail}
-                  </p>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-
-      {/* Sculpted Neumorphic Everyday Examples Strip */}
-      <div className="mt-20">
-        <p className="mb-6 text-center text-xs font-semibold uppercase tracking-[0.16em] text-[#5B3DF5]">
-          Everyday Examples of Automation
-        </p>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-          {SECTION_1_INTRO.basicExamples.map((ex, idx) => (
-            <div
-              key={ex.title}
-              className="neu-card flex items-start gap-4 rounded-[24px] p-6"
-            >
-              <span className="neu-num-gradient shrink-0 font-display text-4xl font-extrabold">
-                0{idx + 1}.
-              </span>
-              <div>
-                <h4 className="font-display text-base font-bold text-[#1A1D26]">
-                  {ex.title}
-                </h4>
-                <p className="mt-1.5 text-sm leading-relaxed text-[#4C5264]">
-                  {ex.detail}
-                </p>
+        <div className="mt-8 grid grid-cols-1 gap-10 lg:grid-cols-12">
+          <div className="hidden lg:col-span-5 lg:block">
+            <div className="sticky top-[18vh] flex h-[64vh] items-center justify-center">
+              <div className="relative aspect-square w-full max-w-[440px]">
+                <div className="spin-slow absolute inset-[4%] rounded-full border border-dashed border-white/10" />
+                <div className="spin-slower absolute inset-[18%] rounded-full border border-white/[0.07]" />
+                <div className="orb float-y absolute inset-[30%]" />
+                {orbitPos.map((pos, i) => {
+                  const Icon = PROBLEM_ICONS[i];
+                  const on = active === i;
+                  return (
+                    <motion.div
+                      key={i}
+                      animate={{ scale: on ? 1.15 : 1, opacity: on ? 1 : 0.5 }}
+                      transition={{ duration: 0.6, ease: EASE }}
+                      className={cn("absolute", pos)}
+                    >
+                      <div className={cn("flex h-20 w-20 flex-col items-center justify-center rounded-[26px]", on ? "squircle squircle-hot" : "glass")}>
+                        <Icon className="h-6 w-6 text-white" />
+                        <span className="mt-1 font-mono text-[10px] text-white/70">0{i + 1}</span>
+                      </div>
+                    </motion.div>
+                  );
+                })}
               </div>
             </div>
-          ))}
+          </div>
+          <div className="lg:col-span-7">
+            {problems.map((p, i) => (
+              <ProblemCard key={p.title} idx={i} title={p.title} detail={p.detail} onActive={setActive} active={active === i} />
+            ))}
+          </div>
         </div>
+      </div>
+
+      {/* Everyday examples */}
+      <div className="mt-28">
+        <Label tone="cool">In the wild</Label>
+        <SubHeading className="mt-5">Everyday Examples of Automation</SubHeading>
+        <Stagger className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
+          {SECTION_1_INTRO.basicExamples.map((ex, idx) => {
+            const Icon = EXAMPLE_ICONS[idx] ?? Receipt;
+            return (
+              <StaggerItem key={ex.title}>
+                <GlassCard tilt className="group h-full rounded-[32px] p-8">
+                  <div className="flex items-center justify-between">
+                    <span className="squircle squircle-hot h-14 w-14 transition-transform duration-500 group-hover:rotate-[-8deg] group-hover:scale-110">
+                      <Icon className="h-6 w-6 text-white" />
+                    </span>
+                    <span className="num-gradient font-display text-5xl font-extrabold">0{idx + 1}</span>
+                  </div>
+                  <h4 className="mt-10 font-display text-xl font-bold tracking-[-0.02em] text-white">{ex.title}</h4>
+                  <p className="mt-2 text-[15px] leading-relaxed text-white/55">{ex.detail}</p>
+                </GlassCard>
+              </StaggerItem>
+            );
+          })}
+        </Stagger>
       </div>
     </SectionShell>
   );
 }
 
 /* ============================================================================
-   2. WORKFLOW AUTOMATION
-   Inspired by Reference Slide 5 (Sculpted Vertical Pillar Cards 01–05)
+   2. WORKFLOW AUTOMATION — pinned, scroll-scrubbed pipeline
    ============================================================================ */
 export function SectionTwoWorkflowAutomation() {
+  const pinRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: pinRef, offset: ["start start", "end end"] });
+  const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 24, mass: 0.4 });
+  const lineWidth = useTransform(progress, [0.05, 0.9], ["0%", "100%"]);
+  const [stage, setStage] = useState(0);
+  const stages = SECTION_2_WORKFLOW.pipelineStages;
+
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    const s = Math.min(stages.length - 1, Math.max(0, Math.floor(((v - 0.05) / 0.85) * stages.length)));
+    setStage(s);
+  });
+
+  const current = stages[stage];
+  const CurrentIcon = WORKFLOW_STAGE_ICONS[stage] ?? Zap;
+
   return (
     <SectionShell
       id="workflow-automation"
@@ -246,102 +271,153 @@ export function SectionTwoWorkflowAutomation() {
       eyebrow="Main Presentation"
       title="Workflow Automation"
       subtitle={SECTION_2_WORKFLOW.lead}
-      surface="subtle"
-      canvasVariant="right-arc"
     >
-      {/* Clear Two-Column Explanation */}
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-        <div className="neu-card-white rounded-[26px] p-8">
-          <h3 className="font-display text-xl font-bold text-[#1A1D26]">
-            What Is a Workflow?
-          </h3>
-          <p className="mt-3 text-base leading-[1.8] text-[#4C5264]">
-            {SECTION_2_WORKFLOW.whatIsWorkflow}
-          </p>
-        </div>
-        <div className="neu-card-white rounded-[26px] p-8">
-          <h3 className="font-display text-xl font-bold text-[#1A1D26]">
-            How Different Applications Communicate
-          </h3>
-          <p className="mt-3 text-base leading-[1.8] text-[#4C5264]">
-            {SECTION_2_WORKFLOW.howAppsCommunicate}
-          </p>
-        </div>
-      </div>
+      <Stagger className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        {[
+          { title: "What Is a Workflow?", body: SECTION_2_WORKFLOW.whatIsWorkflow, tag: "Concept" },
+          { title: "How Different Applications Communicate", body: SECTION_2_WORKFLOW.howAppsCommunicate, tag: "APIs · Webhooks · JSON" },
+        ].map((c, i) => (
+          <StaggerItem key={c.title}>
+            <GlassCard tilt className="h-full rounded-[36px] p-9 sm:p-11">
+              <Label tone={i === 0 ? "warm" : "cool"}>{c.tag}</Label>
+              <h3 className="mt-6 font-display text-2xl font-bold tracking-[-0.03em] text-white sm:text-[32px] sm:leading-tight">{c.title}</h3>
+              <p className="mt-4 text-base leading-[1.85] text-white/60">{c.body}</p>
+            </GlassCard>
+          </StaggerItem>
+        ))}
+      </Stagger>
 
-      {/* Reference Slide 5 Style: Sculpted Vertical Cards for Trigger -> Result */}
-      <div className="mt-16">
-        <p className="mb-8 text-center font-display text-xl font-bold text-[#1A1D26]">
-          Trigger → Processing → Decision → Action → Result
-        </p>
-
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-5">
-          {SECTION_2_WORKFLOW.pipelineStages.map((stage, idx) => {
-            const Icon = WORKFLOW_STAGE_ICONS[idx] ?? Zap;
-            return (
-              <div
-                key={stage.name}
-                className="neu-card flex flex-col items-center justify-between rounded-[28px] px-5 py-8 text-center"
-              >
-                <div>
-                  <span className="neu-num-gradient block font-display text-5xl font-extrabold leading-none">
-                    0{stage.step}
-                  </span>
-                  <h4 className="mt-4 font-display text-lg font-bold text-[#1A1D26]">
-                    {stage.name}
-                  </h4>
-                  <p className="mt-1 text-xs font-semibold text-[#5B3DF5]">
-                    {stage.role}
-                  </p>
-                  <p className="mt-3 text-sm leading-relaxed text-[#4C5264]">
-                    {stage.explanation}
-                  </p>
-                </div>
-
-                <div className="mt-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-white/80 text-[#1A1D26] shadow-sm">
-                  <Icon className="h-6 w-6 stroke-[1.6]" />
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Sculpted Manual-to-Automated Transformation Table */}
-      <div className="neu-card-white mt-16 overflow-hidden rounded-[28px]">
-        <div className="border-b border-[#E5E9F3] px-8 py-5">
-          <h3 className="font-display text-lg font-bold text-[#1A1D26]">
-            From Manual Tasks to Automated Processes
-          </h3>
-        </div>
-        <div className="divide-y divide-[#E8ECF5]">
-          {SECTION_2_WORKFLOW.manualToAutomated.map((row) => (
-            <div
-              key={row.task}
-              className="grid grid-cols-1 gap-6 px-8 py-6 md:grid-cols-12 md:items-center"
-            >
-              <div className="md:col-span-3">
-                <p className="font-display text-base font-bold text-[#1A1D26]">
-                  {row.task}
-                </p>
-              </div>
-              <div className="md:col-span-4">
-                <p className="text-xs font-semibold uppercase tracking-wider text-[#70778C]">
-                  Manual Way
-                </p>
-                <p className="mt-1 text-sm leading-relaxed text-[#4C5264]">
-                  {row.before}
-                </p>
-              </div>
-              <div className="md:col-span-5">
-                <p className="text-xs font-semibold uppercase tracking-wider text-[#5B3DF5]">
-                  Automated Workflow
-                </p>
-                <p className="mt-1 text-sm font-medium leading-relaxed text-[#1A1D26]">
-                  {row.after}
-                </p>
-              </div>
+      {/* Pinned pipeline */}
+      <div ref={pinRef} className="relative mt-24 lg:h-[320vh]">
+        <div className="lg:sticky lg:top-0 lg:flex lg:h-screen lg:flex-col lg:justify-center">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <Label>The anatomy of every workflow</Label>
+              <h3 className="mt-5 font-display text-3xl font-bold tracking-[-0.035em] text-white sm:text-5xl">
+                Trigger <span className="text-white/30">→</span> Processing <span className="text-white/30">→</span> Decision{" "}
+                <span className="text-white/30">→</span> Action <span className="text-white/30">→</span>{" "}
+                <span className="text-gradient-warm">Result</span>
+              </h3>
             </div>
+            <span className="hidden font-mono text-xs text-white/40 lg:block">Keep scrolling to execute ↓</span>
+          </div>
+
+          {/* rail */}
+          <div className="relative mt-14 hidden lg:block">
+            <div className="absolute left-[10%] right-[10%] top-1/2 h-[2px] -translate-y-1/2 rounded-full bg-white/[0.08]" />
+            <div className="absolute left-[10%] right-[10%] top-1/2 h-[2px] -translate-y-1/2">
+              <motion.div
+                style={{ width: lineWidth }}
+                className="relative h-full rounded-full bg-gradient-to-r from-[#ff6d5a] via-[#ea4b71] to-[#8b5cf6] shadow-[0_0_20px_rgba(255,109,90,0.8)]"
+              >
+                <span className="absolute -right-2 top-1/2 h-4 w-4 -translate-y-1/2 rounded-full bg-white shadow-[0_0_24px_6px_rgba(255,140,115,0.9)]" />
+              </motion.div>
+            </div>
+            <div className="relative grid grid-cols-5">
+              {stages.map((s, i) => {
+                const Icon = WORKFLOW_STAGE_ICONS[i] ?? Zap;
+                const on = i <= stage;
+                return (
+                  <div key={s.name} className="flex flex-col items-center">
+                    <motion.div
+                      animate={{ scale: i === stage ? 1.12 : 1 }}
+                      transition={{ duration: 0.5, ease: EASE }}
+                      className={cn(
+                        "flex h-24 w-24 items-center justify-center rounded-[30px] transition-all duration-500",
+                        on ? "squircle squircle-hot" : "glass"
+                      )}
+                    >
+                      <Icon className={cn("h-9 w-9 transition-colors duration-500", on ? "text-white" : "text-white/35")} />
+                    </motion.div>
+                    <span className={cn("mt-4 font-display text-lg font-bold transition-colors duration-500", on ? "text-white" : "text-white/35")}>
+                      {s.name}
+                    </span>
+                    <span className="font-mono text-[11px] text-white/35">0{s.step}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* active stage detail (desktop) */}
+          <div className="mt-12 hidden lg:block">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={stage}
+                initial={{ opacity: 0, y: 24, filter: "blur(10px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                exit={{ opacity: 0, y: -24, filter: "blur(10px)" }}
+                transition={{ duration: 0.55, ease: EASE }}
+              >
+                <GlassCard strong className="mx-auto flex max-w-3xl items-center gap-8 rounded-[34px] p-8">
+                  <span className="squircle squircle-hot h-20 w-20 shrink-0 rounded-[26px]">
+                    <CurrentIcon className="h-9 w-9 text-white" />
+                  </span>
+                  <div>
+                    <p className="font-mono text-xs uppercase tracking-[0.18em] text-[#ff8a73]">
+                      Step 0{current.step} · {current.role}
+                    </p>
+                    <h4 className="mt-1 font-display text-3xl font-bold tracking-[-0.03em] text-white">{current.name}</h4>
+                    <p className="mt-2 text-base leading-relaxed text-white/60">{current.explanation}</p>
+                  </div>
+                </GlassCard>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* mobile list */}
+          <Stagger className="mt-10 space-y-4 lg:hidden">
+            {stages.map((s, i) => {
+              const Icon = WORKFLOW_STAGE_ICONS[i] ?? Zap;
+              return (
+                <StaggerItem key={s.name}>
+                  <GlassCard className="flex items-start gap-5 rounded-[28px] p-6">
+                    <span className="squircle squircle-hot h-14 w-14 shrink-0">
+                      <Icon className="h-6 w-6 text-white" />
+                    </span>
+                    <div>
+                      <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-[#ff8a73]">0{s.step} · {s.role}</p>
+                      <h4 className="mt-1 font-display text-xl font-bold text-white">{s.name}</h4>
+                      <p className="mt-1.5 text-sm leading-relaxed text-white/60">{s.explanation}</p>
+                    </div>
+                  </GlassCard>
+                </StaggerItem>
+              );
+            })}
+          </Stagger>
+        </div>
+      </div>
+
+      {/* Manual → automated */}
+      <div className="mt-28">
+        <Label tone="cool">Transformation</Label>
+        <SubHeading className="mt-5">From Manual Tasks to Automated Processes</SubHeading>
+        <div className="mt-12 space-y-5">
+          {SECTION_2_WORKFLOW.manualToAutomated.map((row, i) => (
+            <Reveal key={row.task} delay={i * 0.08}>
+              <GlassCard className="grid grid-cols-1 items-stretch gap-0 rounded-[32px] lg:grid-cols-[1fr_1.3fr_auto_1.5fr]">
+                <div className="flex items-center p-7 lg:p-8">
+                  <p className="font-display text-xl font-bold tracking-[-0.02em] text-white">{row.task}</p>
+                </div>
+                <div className="border-t border-white/[0.07] p-7 lg:border-l lg:border-t-0 lg:p-8">
+                  <p className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.16em] text-white/35">
+                    <X className="h-3.5 w-3.5 text-[#ff6d5a]" /> Manual way
+                  </p>
+                  <p className="mt-2 text-[15px] leading-relaxed text-white/45 line-through decoration-[#ff6d5a]/40">{row.before}</p>
+                </div>
+                <div className="hidden items-center justify-center px-2 lg:flex">
+                  <span className="squircle squircle-hot h-11 w-11 rounded-full">
+                    <ArrowRight className="h-5 w-5 text-white" />
+                  </span>
+                </div>
+                <div className="border-t border-white/[0.07] bg-gradient-to-r from-[#ff6d5a]/[0.07] to-[#8b5cf6]/[0.07] p-7 lg:border-t-0 lg:p-8">
+                  <p className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.16em] text-[#ff8a73]">
+                    <CheckCircle2 className="h-3.5 w-3.5" /> Automated workflow
+                  </p>
+                  <p className="mt-2 text-[15px] font-medium leading-relaxed text-white">{row.after}</p>
+                </div>
+              </GlassCard>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -351,10 +427,11 @@ export function SectionTwoWorkflowAutomation() {
 
 /* ============================================================================
    3. HOW DOES N8N WORK?
-   3D Workflow Hub Render + Sculpted Horizontal Numbered Execution Cards
    ============================================================================ */
 export function SectionThreeHowN8nWorks() {
-  const [showAiBasics, setShowAiBasics] = useState(true);
+  const tlRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: tlRef, offset: ["start 0.7", "end 0.6"] });
+  const fill = useSpring(useTransform(scrollYProgress, [0, 1], [0, 1]), { stiffness: 90, damping: 22 });
 
   return (
     <SectionShell
@@ -363,120 +440,91 @@ export function SectionThreeHowN8nWorks() {
       eyebrow="Main Presentation"
       title="How Does n8n Work?"
       subtitle={SECTION_3_HOW_N8N_WORKS.lead}
-      surface="white"
-      canvasVariant="left-arc"
     >
-      <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
-        {/* Custom 3D n8n Workflow Hub Render */}
-        <div className="lg:col-span-5">
-          <div className="neu-card-white overflow-hidden rounded-[30px] p-3">
-            <div className="overflow-hidden rounded-[22px] bg-white">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/media/visuals/n8n-hub-orb.jpg"
-                alt="n8n central workflow hub connecting external services"
-                loading="lazy"
-                className="h-auto w-full object-cover"
-              />
-            </div>
-          </div>
-          <p className="mt-3 text-center text-xs font-medium text-[#70778C]">
-            Central n8n orchestration hub connecting triggers, services, and APIs
-          </p>
-        </div>
-
-        {/* 4 Sculpted Horizontal Cards (Slide 2 DNA) */}
-        <div className="space-y-4 lg:col-span-7">
-          {SECTION_3_HOW_N8N_WORKS.executionSteps.map((item) => (
-            <div
-              key={item.step}
-              className="neu-card flex items-start gap-5 rounded-[24px] px-6 py-5"
-            >
-              <span className="neu-num-gradient shrink-0 font-display text-4xl font-extrabold leading-none">
-                {item.step}.
-              </span>
-              <div>
-                <h3 className="font-display text-base font-bold text-[#1A1D26] sm:text-lg">
-                  {item.title}
-                </h3>
-                <p className="mt-1.5 text-sm leading-[1.7] text-[#4C5264]">
-                  {item.detail}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Supporting Concept Inside Section 3: How AI Systems Work With n8n */}
-      <div className="neu-card-white mt-16 overflow-hidden rounded-[28px]">
-        <button
-          type="button"
-          onClick={() => setShowAiBasics((v) => !v)}
-          className="flex w-full cursor-pointer items-center justify-between gap-4 px-8 py-6 text-left"
-        >
-          <div className="flex items-center gap-3.5">
-            <span className="neu-purple-orb flex h-10 w-10 items-center justify-center rounded-full text-white">
-              <Cpu className="h-5 w-5" />
-            </span>
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#5B3DF5]">
-                Supporting Explanation
-              </p>
-              <h3 className="mt-0.5 font-display text-lg font-bold text-[#1A1D26]">
-                {SECTION_3_HOW_N8N_WORKS.aiBasics.title}
-              </h3>
-            </div>
-          </div>
-          <ChevronDown
-            className={cn(
-              "h-5 w-5 shrink-0 text-[#5B3DF5] transition-transform duration-200",
-              showAiBasics ? "rotate-180" : ""
-            )}
+      <div className="grid grid-cols-1 items-start gap-16 lg:grid-cols-12">
+        <div className="lg:col-span-5 lg:sticky lg:top-28">
+          <DarkRender
+            src="/media/visuals/n8n-hub-orb.jpg"
+            alt="n8n central workflow hub connecting external services"
+            caption="Central orchestration hub · triggers · services · APIs"
           />
-        </button>
+        </div>
 
-        {showAiBasics && (
-          <div className="border-t border-[#E6EAF4] px-8 py-7">
-            <p className="max-w-3xl text-base leading-[1.75] text-[#4C5264]">
-              {SECTION_3_HOW_N8N_WORKS.aiBasics.summary}
-            </p>
-            <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {SECTION_3_HOW_N8N_WORKS.aiBasics.components.map((comp, idx) => (
-                <div
-                  key={comp.name}
-                  className="neu-card rounded-[22px] p-5"
-                >
-                  <span className="neu-num-gradient font-display text-3xl font-extrabold">
-                    0{idx + 1}
+        {/* scroll-filled timeline */}
+        <div ref={tlRef} className="relative lg:col-span-7">
+          <div className="absolute bottom-6 left-[27px] top-6 w-px bg-white/[0.08]" />
+          <motion.div
+            style={{ scaleY: fill }}
+            className="absolute bottom-6 left-[27px] top-6 w-px origin-top bg-gradient-to-b from-[#ff6d5a] via-[#ea4b71] to-[#8b5cf6] shadow-[0_0_12px_rgba(255,109,90,0.8)]"
+          />
+          <div className="space-y-8">
+            {SECTION_3_HOW_N8N_WORKS.executionSteps.map((item, i) => (
+              <Reveal key={item.step} delay={0.05}>
+                <div className="relative flex gap-7">
+                  <span className="squircle squircle-hot relative z-10 h-14 w-14 shrink-0 font-mono text-sm font-bold text-white">
+                    {item.step}
                   </span>
-                  <h4 className="mt-2 font-display text-base font-bold text-[#1A1D26]">
-                    {comp.name}
-                  </h4>
-                  <p className="mt-2 text-sm leading-relaxed text-[#4C5264]">
-                    {comp.detail}
-                  </p>
+                  <GlassCard className="flex-1 rounded-[30px] p-7">
+                    <h4 className="font-display text-xl font-bold tracking-[-0.02em] text-white sm:text-2xl">{item.title}</h4>
+                    <p className="mt-2.5 text-[15px] leading-[1.75] text-white/60">{item.detail}</p>
+                    {i === 1 && (
+                      <pre className="mt-5 overflow-x-auto rounded-2xl border border-white/[0.06] bg-black/40 p-4 font-mono text-[12px] leading-relaxed text-white/70">
+{`{ "vendor": "Acme Supplies",
+  "total": 1240.50,
+  "status": "validated" }`}
+                      </pre>
+                    )}
+                  </GlassCard>
                 </div>
-              ))}
-            </div>
+              </Reveal>
+            ))}
           </div>
-        )}
+        </div>
       </div>
+
+      {/* AI systems supporting concept */}
+      <div className="mt-32">
+        <Label tone="cool">Supporting Explanation</Label>
+        <SubHeading className="mt-5 max-w-4xl">{SECTION_3_HOW_N8N_WORKS.aiBasics.title}</SubHeading>
+        <Reveal delay={0.1}>
+          <p className="mt-6 max-w-3xl text-lg leading-[1.75] text-white/55">{SECTION_3_HOW_N8N_WORKS.aiBasics.summary}</p>
+        </Reveal>
+
+        <div className="relative mt-14">
+          {/* traveling packet rail */}
+          <div className="absolute left-[12%] right-[12%] top-[52px] hidden h-px bg-gradient-to-r from-white/5 via-white/15 to-white/5 lg:block">
+            <span className="absolute top-1/2 h-2 w-16 -translate-y-1/2 rounded-full bg-gradient-to-r from-transparent via-[#ff8a73] to-transparent blur-[1px] [animation:packetRun_3.2s_ease-in-out_infinite]" />
+          </div>
+          <Stagger className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {SECTION_3_HOW_N8N_WORKS.aiBasics.components.map((comp, idx) => {
+              const Icon = AI_STEP_ICONS[idx] ?? Cpu;
+              return (
+                <StaggerItem key={comp.name}>
+                  <GlassCard tilt className="h-full rounded-[30px] p-7 text-center">
+                    <span className={cn("squircle mx-auto h-[58px] w-[58px]", idx === 2 && "squircle-hot")}>
+                      <Icon className="h-6 w-6 text-white" />
+                    </span>
+                    <p className="mt-6 font-mono text-[11px] text-white/35">0{idx + 1}</p>
+                    <h4 className="mt-1 font-display text-lg font-bold text-white">{comp.name}</h4>
+                    <p className="mt-2 text-sm leading-relaxed text-white/55">{comp.detail}</p>
+                  </GlassCard>
+                </StaggerItem>
+              );
+            })}
+          </Stagger>
+        </div>
+      </div>
+      <style>{`@keyframes packetRun{0%{left:0;opacity:0}10%{opacity:1}90%{opacity:1}100%{left:calc(100% - 4rem);opacity:0}}`}</style>
     </SectionShell>
   );
 }
 
 /* ============================================================================
-   4. IMPORTANT COMPONENTS OF N8N
-   Inspired Directly by Reference Slide 5 ("Strategic Initiatives" 4-Column Cards)
+   4. IMPORTANT COMPONENTS OF N8N — iOS segmented control
    ============================================================================ */
 export function SectionFourComponents() {
-  const [activeGroupId, setActiveGroupId] = useState(
-    SECTION_4_COMPONENTS[0].id
-  );
-  const activeGroup =
-    SECTION_4_COMPONENTS.find((g) => g.id === activeGroupId) ??
-    SECTION_4_COMPONENTS[0];
+  const [activeGroupId, setActiveGroupId] = useState(SECTION_4_COMPONENTS[0].id);
+  const activeGroup = SECTION_4_COMPONENTS.find((g) => g.id === activeGroupId) ?? SECTION_4_COMPONENTS[0];
 
   return (
     <SectionShell
@@ -484,85 +532,104 @@ export function SectionFourComponents() {
       number="04"
       eyebrow="Main Presentation"
       title="Important Components of n8n"
-      subtitle="Twelve core technical building blocks organized into three clean slide groups—four spacious components at a time."
-      surface="subtle"
-      canvasVariant="right-arc"
+      subtitle="Twelve technical building blocks, organized into three groups — tap through each to see what it does, why it matters, and where it shows up."
     >
-      {/* Centered Neumorphic Group Switcher Pills */}
-      <div className="flex flex-wrap justify-center gap-4">
-        {SECTION_4_COMPONENTS.map((group, idx) => {
-          const active = group.id === activeGroup.id;
-          return (
-            <button
-              key={group.id}
-              type="button"
-              onClick={() => setActiveGroupId(group.id)}
-              className={cn(
-                "cursor-pointer rounded-full px-6 py-3 text-sm font-bold transition-all",
-                active
-                  ? "neu-purple-orb text-white"
-                  : "neu-card text-[#1A1D26] hover:text-[#5B3DF5]"
-              )}
-            >
-              0{idx + 1} · {group.groupTitle}
-            </button>
-          );
-        })}
-      </div>
+      <Reveal>
+        <div className="flex justify-center">
+          <div className="glass-strong inline-flex flex-wrap justify-center gap-1 rounded-full p-1.5">
+            {SECTION_4_COMPONENTS.map((group, idx) => {
+              const active = group.id === activeGroup.id;
+              return (
+                <button
+                  key={group.id}
+                  type="button"
+                  onClick={() => setActiveGroupId(group.id)}
+                  className={cn(
+                    "relative cursor-pointer rounded-full px-5 py-3 text-sm font-semibold transition-colors sm:px-7",
+                    active ? "text-white" : "text-white/50 hover:text-white/80"
+                  )}
+                >
+                  {active && (
+                    <motion.span
+                      layoutId="seg-pill"
+                      transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                      className="btn-liquid btn-liquid-primary absolute inset-0 rounded-full"
+                    />
+                  )}
+                  <span className="relative">
+                    <span className="font-mono text-xs opacity-60">0{idx + 1}</span> {group.groupTitle}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </Reveal>
 
-      <p className="mx-auto mt-8 max-w-2xl text-center text-base leading-relaxed text-[#4C5264]">
-        {activeGroup.groupDescription}
-      </p>
+      <AnimatePresence mode="wait">
+        <motion.p
+          key={activeGroup.id + "-d"}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.4, ease: EASE }}
+          className="mx-auto mt-8 max-w-2xl text-center text-lg leading-relaxed text-white/55"
+        >
+          {activeGroup.groupDescription}
+        </motion.p>
+      </AnimatePresence>
 
-      {/* Reference Slide 5 Composition: 4 Sculpted Neumorphic Vertical Cards */}
-      <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {activeGroup.items.map((item, idx) => {
-          const Icon = COMPONENT_ICON_MAP[item.name] ?? Boxes;
-          return (
-            <article
-              key={item.name}
-              className="neu-card flex flex-col justify-between rounded-[28px] p-7 text-center"
-            >
-              <div>
-                <span className="neu-num-gradient block font-display text-5xl font-extrabold leading-none">
-                  0{idx + 1}
-                </span>
-                <h3 className="mt-4 font-display text-xl font-bold text-[#1A1D26]">
-                  {item.name}
-                </h3>
-
-                <div className="mx-auto my-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-white/85 text-[#1A1D26] shadow-sm">
-                  <Icon className="h-6 w-6 stroke-[1.6]" />
-                </div>
-
-                <p className="text-left text-sm leading-[1.7] text-[#374151]">
-                  {item.whatItDoes}
-                </p>
-                <p className="mt-2.5 text-left text-xs leading-relaxed text-[#60677A]">
-                  <strong className="text-[#1A1D26]">Why it matters: </strong>
-                  {item.whyItMatters}
-                </p>
-              </div>
-
-              <div className="mt-5 border-t border-white/80 pt-4 text-left">
-                <span className="block text-[11px] font-bold uppercase tracking-wider text-[#5B3DF5]">
-                  Example
-                </span>
-                <p className="mt-1 text-xs leading-relaxed text-[#4C5264]">
-                  {item.example}
-                </p>
-              </div>
-            </article>
-          );
-        })}
-      </div>
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={activeGroup.id}
+          initial="hidden"
+          animate="show"
+          exit={{ opacity: 0, y: -20, filter: "blur(8px)", transition: { duration: 0.3 } }}
+          variants={{ hidden: {}, show: { transition: { staggerChildren: 0.08 } } }}
+          className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4"
+        >
+          {activeGroup.items.map((item, idx) => {
+            const Icon = COMPONENT_ICON_MAP[item.name] ?? Boxes;
+            return (
+              <motion.div
+                key={item.name}
+                variants={{
+                  hidden: { opacity: 0, y: 40, rotateX: -15, filter: "blur(8px)" },
+                  show: { opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)", transition: { duration: 0.8, ease: EASE } },
+                }}
+                style={{ transformPerspective: 900 }}
+              >
+                <GlassCard tilt className="group flex h-full flex-col rounded-[32px] p-7">
+                  <div className="flex items-start justify-between">
+                    <span className="squircle squircle-hot h-14 w-14 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-[-6deg]">
+                      <Icon className="h-6 w-6 text-white" />
+                    </span>
+                    <span className="font-mono text-xs text-white/30">0{idx + 1}</span>
+                  </div>
+                  <h3 className="mt-8 font-display text-2xl font-bold tracking-[-0.03em] text-white">{item.name}</h3>
+                  <p className="mt-3 text-[15px] leading-[1.7] text-white/70">{item.whatItDoes}</p>
+                  <p className="mt-3 text-sm leading-relaxed text-white/45">
+                    <span className="font-semibold text-white/75">Why it matters — </span>
+                    {item.whyItMatters}
+                  </p>
+                  <div className="mt-auto pt-6">
+                    <div className="rounded-2xl border border-white/[0.06] bg-black/25 p-4">
+                      <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#ff8a73]">Example</span>
+                      <p className="mt-1.5 text-[13px] leading-relaxed text-white/65">{item.example}</p>
+                    </div>
+                  </div>
+                </GlassCard>
+              </motion.div>
+            );
+          })}
+        </motion.div>
+      </AnimatePresence>
     </SectionShell>
   );
 }
 
 /* ============================================================================
    5. N8N AND AI
-   Sculpted Numbered Tiles + 3D AI Neural Core + Clean Comparison Slide
    ============================================================================ */
 export function SectionFiveN8nAndAI() {
   return (
@@ -572,88 +639,76 @@ export function SectionFiveN8nAndAI() {
       eyebrow="Main Presentation"
       title="n8n and AI"
       subtitle={SECTION_5_N8N_AND_AI.lead}
-      surface="white"
-      canvasVariant="center"
     >
-      <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
-        {/* Left: 4 Sculpted Horizontal Numbered Cards (Slide 2 DNA) */}
-        <div className="space-y-4 lg:col-span-7">
+      <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-12">
+        <Stagger className="space-y-4 lg:col-span-7">
           {SECTION_5_N8N_AND_AI.pillars.map((pillar, idx) => (
-            <div
-              key={pillar.title}
-              className="neu-card flex items-start gap-5 rounded-[24px] px-6 py-5"
-            >
-              <span className="neu-num-gradient shrink-0 font-display text-4xl font-extrabold leading-none">
-                0{idx + 1}.
-              </span>
-              <div>
-                <h3 className="font-display text-base font-bold text-[#1A1D26] sm:text-lg">
-                  {pillar.title}
-                </h3>
-                <p className="mt-1.5 text-sm leading-[1.7] text-[#4C5264]">
-                  {pillar.detail}
-                </p>
-              </div>
-            </div>
+            <StaggerItem key={pillar.title}>
+              <GlassCard className="group flex items-start gap-6 rounded-[30px] p-7">
+                <span className="num-gradient shrink-0 font-display text-5xl font-extrabold leading-none tracking-[-0.04em]">
+                  0{idx + 1}
+                </span>
+                <div>
+                  <h3 className="font-display text-xl font-bold tracking-[-0.02em] text-white transition-colors group-hover:text-[#ffb4a6]">
+                    {pillar.title}
+                  </h3>
+                  <p className="mt-2 text-[15px] leading-[1.75] text-white/55">{pillar.detail}</p>
+                </div>
+              </GlassCard>
+            </StaggerItem>
           ))}
-        </div>
-
-        {/* Right: Custom 3D AI Neural Core Studio Render */}
+        </Stagger>
         <div className="lg:col-span-5">
-          <div className="neu-card-white overflow-hidden rounded-[30px] p-3">
-            <div className="overflow-hidden rounded-[22px] bg-white">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/media/visuals/ai-neural-core.jpg"
-                alt="3D frosted purple glass AI neural core"
-                loading="lazy"
-                className="h-auto w-full object-cover"
-              />
-            </div>
-          </div>
-          <p className="mt-3 text-center text-xs font-medium text-[#70778C]">
-            AI models interpret unstructured text, documents, and context inside workflows
-          </p>
+          <DarkRender
+            src="/media/visuals/ai-neural-core.jpg"
+            alt="3D glass AI neural core"
+            glow="cool"
+            caption="AI interprets unstructured text, documents & context"
+          />
         </div>
       </div>
 
-      {/* Sculpted Traditional vs AI-Powered Comparison Table */}
-      <div className="neu-card-white mt-16 overflow-hidden rounded-[28px]">
-        <div className="border-b border-[#E5E9F3] px-8 py-5">
-          <h3 className="font-display text-lg font-bold text-[#1A1D26]">
-            Traditional Automation vs. AI-Powered Automation
-          </h3>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[640px] border-collapse text-left">
-            <thead>
-              <tr className="border-b border-[#E8ECF5] text-xs font-semibold uppercase tracking-wider text-[#70778C]">
-                <th className="w-[24%] px-8 py-4">Dimension</th>
-                <th className="w-[38%] px-6 py-4">Traditional Automation</th>
-                <th className="w-[38%] bg-[#F4F1FF] px-6 py-4 text-[#5B3DF5]">
-                  AI-Powered Automation
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-[#EDF0F7] text-sm sm:text-base">
-              {SECTION_5_N8N_AND_AI.comparison.map((row) => (
-                <tr key={row.aspect}>
-                  <td className="px-8 py-4 font-bold text-[#1A1D26]">
-                    {row.aspect}
-                  </td>
-                  <td className="px-6 py-4 text-[#4C5264]">
-                    {row.traditional}
-                  </td>
-                  <td className="bg-[#F9F7FF] px-6 py-4 font-medium text-[#1A1D26]">
-                    <span className="inline-flex items-start gap-2">
-                      <CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-[#5B3DF5]" />
-                      <span>{row.aiPowered}</span>
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      {/* Versus comparison */}
+      <div className="mt-32">
+        <Label tone="cool">Side by side</Label>
+        <SubHeading className="mt-5">Traditional Automation vs. AI-Powered Automation</SubHeading>
+
+        <div className="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-2">
+          <Reveal>
+            <GlassCard className="h-full rounded-[36px] p-8 sm:p-10">
+              <div className="flex items-center gap-3">
+                <span className="squircle h-11 w-11"><SlidersHorizontal className="h-5 w-5 text-white/60" /></span>
+                <h4 className="font-display text-2xl font-bold text-white/70">Traditional Automation</h4>
+              </div>
+              <div className="mt-8 divide-y divide-white/[0.06]">
+                {SECTION_5_N8N_AND_AI.comparison.map((row) => (
+                  <div key={row.aspect} className="py-5">
+                    <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-white/35">{row.aspect}</p>
+                    <p className="mt-1.5 text-base text-white/50">{row.traditional}</p>
+                  </div>
+                ))}
+              </div>
+            </GlassCard>
+          </Reveal>
+          <Reveal delay={0.12}>
+            <GlassCard strong className="ring-glow h-full rounded-[36px] p-8 sm:p-10">
+              <div className="flex items-center gap-3">
+                <span className="squircle squircle-hot h-11 w-11"><Cpu className="h-5 w-5 text-white" /></span>
+                <h4 className="font-display text-2xl font-bold text-white">AI-Powered Automation</h4>
+              </div>
+              <div className="mt-8 divide-y divide-white/[0.08]">
+                {SECTION_5_N8N_AND_AI.comparison.map((row) => (
+                  <div key={row.aspect} className="py-5">
+                    <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-[#ff8a73]">{row.aspect}</p>
+                    <p className="mt-1.5 flex items-start gap-2.5 text-base font-medium text-white">
+                      <CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-emerald-400" />
+                      {row.aiPowered}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </GlassCard>
+          </Reveal>
         </div>
       </div>
     </SectionShell>
