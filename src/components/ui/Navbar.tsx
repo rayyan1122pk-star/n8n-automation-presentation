@@ -22,6 +22,7 @@ import {
 } from "@/content/navigation";
 import { cn } from "@/lib/utils";
 import { EASE, scrollToId } from "@/components/premium/motion";
+import { LogoMark } from "@/components/premium/Logo";
 
 interface NavbarProps {
   activeSectionId: string;
@@ -118,7 +119,7 @@ export function Navbar({
                 </linearGradient>
               </defs>
             </svg>
-            <span className="h-2.5 w-2.5 rounded-full bg-gradient-to-br from-[#ff6d5a] to-[#ea4b71] shadow-[0_0_12px_rgba(255,109,90,0.9)]" />
+            <LogoMark className="h-[26px] w-[26px] drop-shadow-[0_0_10px_rgba(255,109,90,0.55)]" />
           </span>
           <span className="hidden flex-col text-left sm:flex">
             <span className="font-display text-[13px] font-bold uppercase tracking-[0.16em] text-white">{SITE_BRAND.name}</span>

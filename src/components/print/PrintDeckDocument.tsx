@@ -14,7 +14,7 @@ import {
 } from "@/content/presentation-sections";
 import { TECH_STACK_ITEMS } from "@/content/tech-stack";
 import { SOLUTIONS, type SolutionConfig, type WorkflowNodeDoc } from "@/content/solutions";
-import { PresentationHexMark } from "@/components/ui/NeumorphicSlideCanvas";
+import { LogoMark } from "@/components/premium/Logo";
 
 function chunkArray<T>(arr: T[], size: number): T[][] {
   const chunks: T[][] = [];
@@ -150,7 +150,7 @@ function SlideFrame({
       <header className="relative z-10 flex h-[44px] shrink-0 items-center justify-between border-b border-white/85 pb-2.5">
         <div className="flex items-center gap-3">
           <span className="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-[0.14em] text-[#171924]">
-            <PresentationHexMark className="h-4 w-4" />
+            <LogoMark className="h-4 w-4" />
             <span>{SITE_BRAND.name}</span>
           </span>
           <span className="h-4 w-px bg-white" />
@@ -309,7 +309,7 @@ export function PrintDeckDocument({ previewMode = false }: { previewMode?: boole
         </div>
 
         <div className="relative z-10 flex items-center justify-center gap-2 text-[12px] font-bold tracking-[0.16em] text-[#171924]">
-          <PresentationHexMark className="h-5 w-5" />
+          <LogoMark className="h-5 w-5" />
           <span>{SITE_BRAND.name}</span>
         </div>
 

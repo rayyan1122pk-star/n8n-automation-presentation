@@ -504,51 +504,60 @@ export function FinFlowLiveDemo() {
     return true;
   });
 
+  const loadSample = async (path: string, name: string) => {
+    try {
+      const res = await fetch(path);
+      const blob = await res.blob();
+      await handleFileUpload(new File([blob], name, { type: "application/pdf" }));
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
-    <div className="space-y-8">
-      {/* Live n8n Status & Controls Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-[#ff6d5a]/25 bg-white/[0.035] px-6 py-4">
-        <div className="flex flex-wrap items-center gap-3">
+    <div className="space-y-6">
+      {/* Status bar */}
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center gap-2.5">
           <span
             className={cn(
-              "inline-flex items-center gap-2 rounded-full px-3.5 py-1 text-xs font-semibold",
+              "inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold",
               n8nConnected
-                ? "bg-emerald-400/10 text-emerald-300 border border-emerald-400/30"
-                : "bg-[#ff6d5a]/10 text-[#ffb4a6] border border-[#ff6d5a]/25"
+                ? "border-emerald-400/30 bg-emerald-400/10 text-emerald-300"
+                : "border-white/10 bg-white/[0.05] text-white/70"
             )}
           >
-            <span
-              className={cn(
-                "h-2 w-2 rounded-full",
-                n8nConnected ? "bg-emerald-500 animate-pulse" : "bg-[#ff5a6e] animate-pulse"
-              )}
-            />
-            {n8nConnected ? "Connected to Local n8n (localhost:5678)" : "Presentation Demo Mode (Pre-Loaded Live Data)"}
+            <span className={cn("h-2 w-2 rounded-full", n8nConnected ? "animate-pulse bg-emerald-400" : "bg-amber-400")} />
+            {n8nConnected ? "Live · n8n connected" : "Demo data"}
           </span>
           {lastExecId && (
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#ff6d5a]/25 bg-white/[0.04] px-3 py-1 font-mono text-xs font-medium text-[#ffb4a6]">
-              <Database className="h-3.5 w-3.5 text-[#ff8a73]" />
-              Last n8n Execution #{lastExecId}
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 font-mono text-[11px] text-white/60">
+              <Database className="h-3 w-3 text-[#ff8a73]" />
+              Run #{lastExecId}
             </span>
           )}
-          <span className="text-xs text-white/50">
-            Persistent SQLite Data Tables · Deterministic Multi-Currency Accounting
-          </span>
+          {!n8nConnected && (
+            <button
+              type="button"
+              onClick={loadDashboard}
+              className="cursor-pointer rounded-full px-2 text-xs font-semibold text-[#ff8a73] transition-colors hover:text-white"
+            >
+              Connect n8n →
+            </button>
+          )}
         </div>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2">
           {dashboard && dashboard.currencies.length > 1 && (
-            <div className="flex items-center gap-1 rounded-xl border border-white/10 bg-white/[0.04] p-1">
+            <div className="flex items-center gap-0.5 rounded-full border border-white/10 bg-white/[0.04] p-1">
               {dashboard.currencies.map((ccy) => (
                 <button
                   key={ccy}
                   type="button"
                   onClick={() => setSelectedCurrency(ccy)}
                   className={cn(
-                    "cursor-pointer rounded-lg px-2.5 py-1 font-mono text-xs font-semibold transition-colors",
-                    selectedCurrency === ccy
-                      ? "bg-[#ff5a6e] text-white"
-                      : "text-white/65 hover:bg-[#ff6d5a]/10"
+                    "cursor-pointer rounded-full px-3 py-1 font-mono text-[11px] font-semibold transition-colors",
+                    selectedCurrency === ccy ? "bg-white text-[#ea4b71]" : "text-white/55 hover:text-white"
                   )}
                 >
                   {ccy}
@@ -556,290 +565,179 @@ export function FinFlowLiveDemo() {
               ))}
             </div>
           )}
-
           <button
             type="button"
             onClick={loadDashboard}
             disabled={loadingDashboard}
-            className="inline-flex cursor-pointer items-center gap-1.5 rounded-xl border border-white/10 bg-white/[0.04] px-3.5 py-2 text-xs font-semibold text-white/75 transition-colors hover:border-[#ff6d5a]/40 hover:text-[#ff8a73] disabled:opacity-50"
+            aria-label="Refresh CRM"
+            className="btn-liquid h-9 w-9 disabled:opacity-50"
           >
             <RefreshCw className={cn("h-3.5 w-3.5", loadingDashboard && "animate-spin")} />
-            <span>Refresh CRM</span>
           </button>
         </div>
       </div>
 
-      {!n8nConnected && (
-        <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#ff6d5a]/25 bg-[#ff6d5a]/10 px-5 py-3 text-xs text-[#ffb4a6]">
-          <div className="flex items-center gap-2">
-            <Sparkles className="h-4 w-4 shrink-0 text-[#ff8a73]" />
-            <span>
-              <strong>Presentation Demo Data Active:</strong> Displaying realistic accounting records, category analytics, and human review items. Start local n8n on port 5678 to enable live webhook execution.
+      {/* Two actions */}
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+        {/* Upload */}
+        <div className="flex flex-col rounded-[24px] border border-white/10 bg-white/[0.03] p-6">
+          <div className="flex items-center gap-3">
+            <span className="squircle h-11 w-11">
+              <Upload className="h-5 w-5 text-white" />
             </span>
+            <div>
+              <h4 className="font-display text-lg font-bold text-white">Upload an invoice</h4>
+              <p className="text-sm text-white/50">AI reads it and files it in seconds.</p>
+            </div>
           </div>
-          <button
-            type="button"
-            onClick={loadDashboard}
-            className="cursor-pointer rounded-lg border border-[#ff6d5a]/40 bg-white/[0.04] px-3 py-1 font-semibold text-[#ff8a73] transition-colors hover:bg-[#ff6d5a]/15"
+
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".pdf,.jpg,.jpeg,.png,.webp,.csv,.xlsx,.xls,.json,.txt"
+            onChange={(e) => {
+              const f = e.target.files?.[0];
+              if (f) handleFileUpload(f);
+            }}
+            className="hidden"
+            id="finflow-file-upload"
+          />
+          <label
+            htmlFor="finflow-file-upload"
+            className={cn(
+              "mt-5 flex flex-1 cursor-pointer flex-col items-center justify-center rounded-[18px] border border-dashed border-white/15 bg-black/20 px-5 py-8 text-center transition-colors hover:border-[#ff6d5a]/60 hover:bg-[#ff6d5a]/[0.06]",
+              uploading && "pointer-events-none opacity-60"
+            )}
           >
-            Connect Live n8n
-          </button>
-        </div>
-      )}
+            {uploading ? (
+              <>
+                <RefreshCw className="h-6 w-6 animate-spin text-[#ff8a73]" />
+                <p className="mt-3 text-sm font-semibold text-white">Running the n8n workflow…</p>
+              </>
+            ) : (
+              <>
+                <FileText className="h-6 w-6 text-[#ff8a73]" />
+                <p className="mt-3 text-sm font-semibold text-white">Drop a file or click to browse</p>
+                <p className="mt-1 text-xs text-white/40">PDF · Image · CSV · Excel</p>
+              </>
+            )}
+          </label>
 
-      {/* Dual Live Interactive Action Panels */}
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        {/* 1. Live Invoice / Receipt Upload */}
-        <div className="flex flex-col justify-between rounded-2xl border border-white/10 bg-white/[0.04] p-6 shadow-xs">
-          <div>
-            <div className="flex items-center justify-between gap-2">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#ff6d5a]/10 px-3 py-1 text-xs font-semibold text-[#ff8a73]">
-                <Upload className="h-3.5 w-3.5" />
-                Live Document Upload
-              </span>
-              <span className="font-mono text-xs text-white/50">PDF · JPG · PNG · CSV · XLSX</span>
-            </div>
-            <h4 className="mt-3 font-display text-xl font-bold text-white">
-              Upload Invoice or Financial Receipt
-            </h4>
-            <p className="mt-1.5 text-sm leading-relaxed text-white/65">
-              Sends the real file directly to your local n8n FinFlow webhook for text extraction,
-              AI/structured parsing, duplicate detection, arithmetic verification, and persistent CRM storage.
-            </p>
-          </div>
-
-          <div className="mt-5">
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept=".pdf,.jpg,.jpeg,.png,.webp,.csv,.xlsx,.xls,.json,.txt"
-              onChange={(e) => {
-                const f = e.target.files?.[0];
-                if (f) handleFileUpload(f);
-              }}
-              className="hidden"
-              id="finflow-file-upload"
-            />
-            <label
-              htmlFor="finflow-file-upload"
-              className={cn(
-                "flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-[#ff6d5a]/25 bg-white/[0.035] px-5 py-7 text-center transition-colors hover:border-[#ff6d5a] hover:bg-[#ff6d5a]/10",
-                uploading && "pointer-events-none opacity-60"
-              )}
+          <div className="mt-4 flex flex-wrap items-center gap-2 text-xs">
+            <span className="text-white/40">Try a sample:</span>
+            <button
+              type="button"
+              disabled={uploading}
+              onClick={() => loadSample("/samples/sample_invoice_cloud_services.pdf", "sample_invoice_cloud_services.pdf")}
+              className="cursor-pointer rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 font-medium text-white/75 transition-colors hover:border-[#ff6d5a]/50 hover:text-white disabled:opacity-50"
             >
-              {uploading ? (
-                <>
-                  <RefreshCw className="h-7 w-7 animate-spin text-[#ff8a73]" />
-                  <p className="mt-2.5 text-sm font-semibold text-white">
-                    Executing n8n FinFlow Document Pipeline…
-                  </p>
-                </>
-              ) : (
-                <>
-                  <FileText className="h-7 w-7 text-[#ff8a73]" />
-                  <p className="mt-2.5 text-sm font-semibold text-white">
-                    Click to select a real invoice, receipt, CSV, or Excel file
-                  </p>
-                  <p className="mt-1 text-xs text-white/50">
-                    Sample files ready in D:\AI-Automation\projects\test-data\ · Duplicates blocked automatically
-                  </p>
-                </>
-              )}
-            </label>
-
-            {/* Quick-Test Sample Invoice Shortcuts */}
-            <div className="mt-3 flex flex-wrap items-center gap-2 text-xs">
-              <span className="font-medium text-white/50">Quick Test Samples:</span>
-              <button
-                type="button"
-                disabled={uploading}
-                onClick={async () => {
-                  try {
-                    const res = await fetch("/samples/sample_invoice_cloud_services.pdf");
-                    const blob = await res.blob();
-                    const file = new File([blob], "sample_invoice_cloud_services.pdf", {
-                      type: "application/pdf",
-                    });
-                    await handleFileUpload(file);
-                  } catch (e) {
-                    console.error(e);
-                  }
-                }}
-                className="inline-flex cursor-pointer items-center gap-1 rounded-lg border border-[#ff6d5a]/25 bg-[#ff6d5a]/10 px-2.5 py-1 font-medium text-[#ff8a73] transition-colors hover:bg-[#ff6d5a]/15 disabled:opacity-50"
-              >
-                <FileText className="h-3 w-3" />
-                <span>Cloud Invoice ($1,595)</span>
-              </button>
-              <button
-                type="button"
-                disabled={uploading}
-                onClick={async () => {
-                  try {
-                    const res = await fetch("/samples/sample_invoice_ai_services.pdf");
-                    const blob = await res.blob();
-                    const file = new File([blob], "sample_invoice_ai_services.pdf", {
-                      type: "application/pdf",
-                    });
-                    await handleFileUpload(file);
-                  } catch (e) {
-                    console.error(e);
-                  }
-                }}
-                className="inline-flex cursor-pointer items-center gap-1 rounded-lg border border-[#ff6d5a]/25 bg-[#ff6d5a]/10 px-2.5 py-1 font-medium text-[#ff8a73] transition-colors hover:bg-[#ff6d5a]/15 disabled:opacity-50"
-              >
-                <FileText className="h-3 w-3" />
-                <span>AI Services ($935)</span>
-              </button>
-              <a
-                href="/samples/sample_invoice_cloud_services.pdf"
-                download="sample_invoice_cloud_services.pdf"
-                className="inline-flex items-center gap-1 text-[#ff8a73] hover:underline ml-auto font-medium"
-              >
-                <span>Download PDF ↗</span>
-              </a>
-            </div>
+              Cloud invoice
+            </button>
+            <button
+              type="button"
+              disabled={uploading}
+              onClick={() => loadSample("/samples/sample_invoice_ai_services.pdf", "sample_invoice_ai_services.pdf")}
+              className="cursor-pointer rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 font-medium text-white/75 transition-colors hover:border-[#ff6d5a]/50 hover:text-white disabled:opacity-50"
+            >
+              AI services invoice
+            </button>
           </div>
         </div>
 
-        {/* 2. Live Vendor Workflow Demonstration */}
-        <div className="flex flex-col justify-between rounded-2xl border border-[#ff6d5a]/25 bg-gradient-to-br from-white/[0.06] to-white/[0.02] p-6 shadow-xs">
-          <div>
-            <div className="flex items-center justify-between gap-2">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#ff6d5a]/15 px-3 py-1 text-xs font-semibold text-[#ffb4a6]">
-                <Sparkles className="h-3.5 w-3.5" />
-                Live n8n Execution
-              </span>
-              <span className="rounded-full border border-amber-400/30 bg-amber-400/10 px-2.5 py-0.5 font-mono text-[11px] font-semibold text-amber-200">
-                Labels Records: DEMO DATA
-              </span>
+        {/* Run workflow */}
+        <div className="flex flex-col rounded-[24px] border border-white/10 bg-gradient-to-br from-[#ff6d5a]/[0.08] to-[#8b5cf6]/[0.06] p-6">
+          <div className="flex items-center gap-3">
+            <span className="squircle squircle-hot h-11 w-11">
+              <Sparkles className="h-5 w-5 text-white" />
+            </span>
+            <div>
+              <h4 className="font-display text-lg font-bold text-white">Run a live workflow</h4>
+              <p className="text-sm text-white/50">Creates a vendor + invoice and updates the CRM.</p>
             </div>
-            <h4 className="mt-3 font-display text-xl font-bold text-white">
-              Vendor Onboarding &amp; Expense Workflow
-            </h4>
-            <p className="mt-1.5 text-sm leading-relaxed text-white/65">
-              Generates a unique realistic vendor and associated expense invoice, sends them into your
-              live local n8n webhook, saves both to SQLite Data Tables, and updates CRM metrics in real time.
-            </p>
           </div>
 
-          <div className="mt-5 space-y-3">
+          <div className="mt-5 flex flex-1 flex-col justify-center">
             <button
               type="button"
               onClick={handleRunVendorWorkflow}
               disabled={runningVendor}
-              className="quantum-cta-btn flex w-full cursor-pointer items-center justify-center gap-2.5 rounded-xl px-6 py-4 text-base font-bold text-white disabled:cursor-not-allowed disabled:opacity-50"
+              className="btn-liquid btn-liquid-primary w-full py-4 text-base disabled:cursor-not-allowed disabled:opacity-60"
             >
               {runningVendor ? (
                 <>
                   <RefreshCw className="h-5 w-5 animate-spin" />
-                  <span>Executing Live n8n Vendor Workflow…</span>
+                  Running…
                 </>
               ) : (
                 <>
                   <Play className="h-5 w-5 fill-current" />
-                  <span>Run Vendor Workflow</span>
+                  Run Vendor Workflow
                 </>
               )}
             </button>
-            <p className="text-center text-xs text-white/50">
-              Triggers POST <code className="font-mono text-[#ffb4a6]">/webhook/finflow</code>{" "}
-              (real n8n execution — unique sample vendor &amp; invoice every click)
-            </p>
+            <p className="mt-3 text-center font-mono text-[11px] text-white/35">POST /webhook/finflow</p>
           </div>
         </div>
       </div>
 
-      {/* Live Execution Feedback Banner */}
+      {/* Result */}
       {lastExecution && (
         <div
           className={cn(
-            "rounded-2xl border p-6",
-            lastExecution.kind === "success" && "border-emerald-400/30 bg-emerald-50/60",
-            lastExecution.kind === "duplicate" && "border-amber-400/30 bg-amber-50/70",
-            lastExecution.kind === "review" && "border-[#ff6d5a]/25 bg-white/[0.035]",
-            lastExecution.kind === "error" && "border-red-400/30 bg-red-50/70"
+            "rounded-[22px] border p-5",
+            lastExecution.kind === "success" && "border-emerald-400/30 bg-emerald-400/[0.07]",
+            lastExecution.kind === "duplicate" && "border-amber-400/30 bg-amber-400/[0.07]",
+            lastExecution.kind === "review" && "border-[#ff6d5a]/30 bg-[#ff6d5a]/[0.07]",
+            lastExecution.kind === "error" && "border-red-400/30 bg-red-400/[0.07]"
           )}
         >
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div className="flex items-start gap-3">
-              {lastExecution.kind === "success" && (
-                <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-300" />
-              )}
-              {lastExecution.kind === "duplicate" && (
-                <CopyCheck className="mt-0.5 h-5 w-5 shrink-0 text-amber-300" />
-              )}
-              {lastExecution.kind === "review" && (
-                <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-[#ff8a73]" />
-              )}
-              {lastExecution.kind === "error" && (
-                <XCircle className="mt-0.5 h-5 w-5 shrink-0 text-red-300" />
-              )}
+              {lastExecution.kind === "success" && <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-300" />}
+              {lastExecution.kind === "duplicate" && <CopyCheck className="mt-0.5 h-5 w-5 shrink-0 text-amber-300" />}
+              {lastExecution.kind === "review" && <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-[#ff8a73]" />}
+              {lastExecution.kind === "error" && <XCircle className="mt-0.5 h-5 w-5 shrink-0 text-red-300" />}
               <div>
-                <div className="flex flex-wrap items-center gap-2">
-                  <h5 className="font-display text-base font-bold text-white">
-                    {lastExecution.title}
-                  </h5>
+                <h5 className="flex items-center gap-2 font-display text-base font-bold text-white">
+                  {lastExecution.title}
                   {lastExecution.isDemo && (
-                    <span className="rounded-full bg-amber-400/15 px-2.5 py-0.5 font-mono text-[11px] font-bold text-amber-200">
-                      DEMO DATA
-                    </span>
+                    <span className="rounded-full bg-amber-400/15 px-2 py-0.5 font-mono text-[10px] text-amber-200">DEMO</span>
                   )}
-                </div>
-                <p className="mt-1 text-sm text-white/75">{lastExecution.message}</p>
+                </h5>
+                <p className="mt-0.5 text-sm text-white/60">{lastExecution.message}</p>
               </div>
             </div>
             {lastExecution.executionId && (
-              <span className="rounded-lg border border-white/10 bg-white/[0.04] px-3 py-1 font-mono text-xs font-semibold text-white">
-                n8n Execution #{lastExecution.executionId}
-              </span>
+              <span className="font-mono text-[11px] text-white/45">Run #{lastExecution.executionId}</span>
             )}
           </div>
 
           {lastExecution.record && (
-            <div className="mt-4 grid grid-cols-2 gap-3 rounded-xl border border-white/10 bg-white/[0.04] p-4 text-xs sm:grid-cols-4">
-              <div>
-                <span className="text-white/50">Vendor</span>
-                <p className="mt-0.5 font-semibold text-white">
-                  {lastExecution.record.vendor_name || "Missing (Review)"}
-                </p>
-              </div>
-              <div>
-                <span className="text-white/50">Invoice #</span>
-                <p className="mt-0.5 font-mono font-semibold text-white">
-                  {lastExecution.record.invoice_number || "Missing"}
-                </p>
-              </div>
-              <div>
-                <span className="text-white/50">Total / Currency</span>
-                <p className="mt-0.5 font-semibold text-white">
-                  {lastExecution.record.total_amount
-                    ? fmtMoney(
-                        Number(lastExecution.record.total_amount),
-                        lastExecution.record.currency || "USD"
-                      )
-                    : "Missing (Not Invented)"}
-                </p>
-              </div>
-              <div>
-                <span className="text-white/50">Category / Method</span>
-                <p className="mt-0.5 font-semibold text-white">
-                  {lastExecution.record.expense_category || "Uncategorized"}
-                  {lastExecution.record.extraction_method
-                    ? ` · ${lastExecution.record.extraction_method}`
-                    : ""}
-                </p>
-              </div>
+            <div className="mt-4 grid grid-cols-2 gap-4 border-t border-white/10 pt-4 text-xs sm:grid-cols-4">
+              {[
+                ["Vendor", lastExecution.record.vendor_name || "Needs review"],
+                ["Invoice", lastExecution.record.invoice_number || "—"],
+                [
+                  "Total",
+                  lastExecution.record.total_amount
+                    ? fmtMoney(Number(lastExecution.record.total_amount), lastExecution.record.currency || "USD")
+                    : "Needs review",
+                ],
+                ["Category", lastExecution.record.expense_category || "Uncategorized"],
+              ].map(([k, v]) => (
+                <div key={k}>
+                  <span className="text-white/40">{k}</span>
+                  <p className="mt-0.5 truncate font-semibold text-white">{v}</p>
+                </div>
+              ))}
             </div>
           )}
 
           {lastExecution.missingFields && lastExecution.missingFields.length > 0 && (
-            <div className="mt-3 flex flex-wrap items-center gap-2 text-xs">
-              <span className="font-semibold text-white">Missing Fields Flagged:</span>
+            <div className="mt-3 flex flex-wrap items-center gap-1.5 text-xs">
+              <span className="text-white/45">Flagged:</span>
               {lastExecution.missingFields.map((f) => (
-                <span
-                  key={f}
-                  className="rounded-md border border-[#ff6d5a]/25 bg-white/[0.04] px-2 py-0.5 font-mono text-[#ff8a73]"
-                >
+                <span key={f} className="rounded-full bg-white/[0.06] px-2 py-0.5 font-mono text-[#ff8a73]">
                   {f}
                 </span>
               ))}
@@ -848,124 +746,73 @@ export function FinFlowLiveDemo() {
         </div>
       )}
 
-      {/* ================================================================
-          FINFLOW LIVE CRM DASHBOARD (100% REAL STORED RECORDS)
-          ================================================================ */}
-      <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04]">
-        <div className="border-b border-white/10 bg-white/[0.035] px-6 py-5 sm:px-8">
-          <div className="flex flex-wrap items-center justify-between gap-3">
+      {/* CRM dashboard */}
+      <div className="overflow-hidden rounded-[26px] border border-white/10 bg-white/[0.025]">
+        <div className="px-6 pb-2 pt-6 sm:px-8">
+          <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#ff8a73]">
-                Live Accounting CRM Dashboard
-              </p>
-              <h4 className="mt-1 font-display text-2xl font-bold text-white">
-                FinFlow Financial &amp; Vendor Ledger ({selectedCurrency})
-              </h4>
+              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#ff8a73]">Live CRM</p>
+              <h4 className="mt-1 font-display text-2xl font-bold tracking-[-0.02em] text-white">Finance dashboard</h4>
             </div>
-            <div className="flex items-center gap-2 text-xs text-white/50">
-              <span>
-                Real Records:{" "}
-                <strong className="text-white">
-                  {dashboard?.overview.real_records_count ?? 0}
-                </strong>
-              </span>
-              <span>·</span>
-              <span>
-                Demo Records:{" "}
-                <strong className="text-amber-300">
-                  {dashboard?.overview.demo_records_count ?? 0}
-                </strong>
-              </span>
-            </div>
+            <span className="text-xs text-white/40">
+              {dashboard?.overview.total_transactions ?? 0} records · {selectedCurrency}
+            </span>
           </div>
 
-          {/* Overview KPI Cards (6 Required Metrics) */}
-          <div className="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-6">
-            <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-              <p className="text-xs font-medium text-white/50">Total Income</p>
-              <p className="mt-2 font-display text-xl font-bold text-emerald-300">
-                {fmtMoney(activeCurrencyTotals.total_income, selectedCurrency)}
-              </p>
-              <p className="mt-1 text-[11px] text-white/50">
-                {activeCurrencyTotals.income_count} income entries
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-              <p className="text-xs font-medium text-white/50">Total Expenses</p>
-              <p className="mt-2 font-display text-xl font-bold text-white">
-                {fmtMoney(activeCurrencyTotals.total_expenses, selectedCurrency)}
-              </p>
-              <p className="mt-1 text-[11px] text-white/50">
-                {activeCurrencyTotals.expense_count} expense invoices
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-[#ff6d5a]/25 bg-[#ff6d5a]/10 p-4">
-              <p className="text-xs font-medium text-[#ffb4a6]">Net Profit</p>
-              <p
+          <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+            {[
+              { label: "Income", value: fmtMoney(activeCurrencyTotals.total_income, selectedCurrency), tone: "text-emerald-300" },
+              { label: "Expenses", value: fmtMoney(activeCurrencyTotals.total_expenses, selectedCurrency), tone: "text-white" },
+              {
+                label: "Net profit",
+                value: fmtMoney(activeCurrencyTotals.net_profit, selectedCurrency),
+                tone: activeCurrencyTotals.net_profit >= 0 ? "text-gradient-warm" : "text-red-300",
+                hot: true,
+              },
+              { label: "Vendors", value: String(dashboard?.overview.total_vendors ?? 0), tone: "text-white" },
+              { label: "Transactions", value: String(dashboard?.overview.total_transactions ?? 0), tone: "text-white" },
+              { label: "To review", value: String(dashboard?.overview.pending_reviews ?? 0), tone: "text-amber-300" },
+            ].map((k) => (
+              <div
+                key={k.label}
                 className={cn(
-                  "mt-2 font-display text-xl font-bold",
-                  activeCurrencyTotals.net_profit >= 0 ? "text-white" : "text-red-300"
+                  "rounded-[18px] border p-4",
+                  k.hot ? "border-[#ff6d5a]/30 bg-[#ff6d5a]/[0.08]" : "border-white/[0.07] bg-white/[0.03]"
                 )}
               >
-                {fmtMoney(activeCurrencyTotals.net_profit, selectedCurrency)}
-              </p>
-              <p className="mt-1 text-[11px] text-[#ff8a73]">Income − Expenses ({selectedCurrency})</p>
-            </div>
-
-            <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-              <p className="text-xs font-medium text-white/50">Total Vendors</p>
-              <p className="mt-2 font-display text-xl font-bold text-white">
-                {dashboard?.overview.total_vendors ?? 0}
-              </p>
-              <p className="mt-1 text-[11px] text-white/50">Persisted directory</p>
-            </div>
-
-            <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-              <p className="text-xs font-medium text-white/50">Total Transactions</p>
-              <p className="mt-2 font-display text-xl font-bold text-white">
-                {dashboard?.overview.total_transactions ?? 0}
-              </p>
-              <p className="mt-1 text-[11px] text-white/50">Duplicates excluded</p>
-            </div>
-
-            <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-              <p className="text-xs font-medium text-white/50">Pending Reviews</p>
-              <p className="mt-2 font-display text-xl font-bold text-amber-300">
-                {dashboard?.overview.pending_reviews ?? 0}
-              </p>
-              <p className="mt-1 text-[11px] text-white/50">Human review queue</p>
-            </div>
+                <p className="text-xs text-white/45">{k.label}</p>
+                <p className={cn("mt-1.5 font-display text-xl font-bold tracking-[-0.02em]", k.tone)}>{k.value}</p>
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* CRM Navigation Tabs */}
-        <div className="flex flex-wrap items-center gap-2 border-b border-white/10 bg-white/[0.04] px-6 py-3 sm:px-8">
-          {(
-            [
-              { key: "transactions", label: "Transactions", icon: ListChecks },
-              { key: "vendors", label: "Vendor Management", icon: Building2 },
-              { key: "expense_analytics", label: "Expense Analytics", icon: PieChartIcon },
-              { key: "financial_analytics", label: "Financial Analytics", icon: TrendingUp },
-              { key: "activity", label: "Recent Activity & Reviews", icon: Activity },
-            ] as const
-          ).map(({ key, label, icon: Icon }) => (
-            <button
-              key={key}
-              type="button"
-              onClick={() => setActiveTab(key)}
-              className={cn(
-                "inline-flex cursor-pointer items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition-colors",
-                activeTab === key
-                  ? "bg-[#ff5a6e] text-white"
-                  : "text-white/65 hover:bg-[#ff6d5a]/10 hover:text-[#ffb4a6]"
-              )}
-            >
-              <Icon className="h-4 w-4" />
-              <span>{label}</span>
-            </button>
-          ))}
+        {/* Tabs */}
+        <div className="overflow-x-auto px-6 pb-1 pt-5 sm:px-8">
+          <div className="inline-flex gap-1 rounded-full border border-white/10 bg-white/[0.03] p-1">
+            {(
+              [
+                { key: "transactions", label: "Transactions", icon: ListChecks },
+                { key: "vendors", label: "Vendors", icon: Building2 },
+                { key: "expense_analytics", label: "Expenses", icon: PieChartIcon },
+                { key: "financial_analytics", label: "Finance", icon: TrendingUp },
+                { key: "activity", label: "Activity", icon: Activity },
+              ] as const
+            ).map(({ key, label, icon: Icon }) => (
+              <button
+                key={key}
+                type="button"
+                onClick={() => setActiveTab(key)}
+                className={cn(
+                  "inline-flex cursor-pointer items-center gap-2 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-all",
+                  activeTab === key ? "btn-liquid btn-liquid-primary" : "text-white/55 hover:text-white"
+                )}
+              >
+                <Icon className="h-4 w-4" />
+                {label}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Tab Content Body */}
@@ -975,7 +822,7 @@ export function FinFlowLiveDemo() {
             <div className="space-y-4">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <p className="text-sm text-white/65">
-                  All validated transactions stored in local n8n SQLite (<code className="font-mono text-xs">finflow_crm_transactions</code>).
+                  Every invoice and payment the workflow has processed.
                 </p>
                 <div className="flex items-center gap-1 rounded-xl border border-white/10 bg-white/[0.035] p-1 text-xs">
                   {(["all", "real", "demo"] as const).map((f) => (
@@ -1325,7 +1172,7 @@ export function FinFlowLiveDemo() {
                   (dashboard?.pending_reviews || []).slice(0, 8).map((rev) => (
                     <div
                       key={rev.queue_id}
-                      className="rounded-xl border border-amber-200/80 bg-amber-50/40 p-4 text-xs"
+                      className="rounded-xl border border-amber-400/25 bg-amber-400/[0.06] p-4 text-xs"
                     >
                       <div className="flex items-center justify-between gap-2">
                         <span className="font-semibold text-white">{rev.source_filename}</span>
